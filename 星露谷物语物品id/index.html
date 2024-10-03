@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <title>星露谷物语物品id大全</title>
+</head>
+
+<body>
+    <div class="container mt-5 d-flex justify-content-center">
+        <div>
+            <a href="https://space.bilibili.com/355197530" target="_blank">
+                <img src="avatar.jpg" alt="" style="width: 80px;height: 80px;border-radius: 50%;">
+            </a>
+            <div>By.L落魄书生</div>
+        </div>
+    </div>
+    <div class="container mt-5 d-flex justify-content-center">
+        <div class="btn-group-toggle btn-group btn-group-lg d-none d-lg-inline-flex jin" data-toggle="buttons"
+            id="btnBox">
+            <label class="btn btn-secondary active">
+                <input type="radio" name="options" id="option1" checked class="change" data-type="O"> 对象类
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option2" class="change" data-type="BC"> 大型工艺品
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="F"> 家具
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="W"> 武器
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="T"> 工具
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="B"> 鞋子
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="P"> 裤子
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="H"> 帽子
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="S"> 衣服
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="TR"> 饰品
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="buff"> Buff
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="qian">钱包
+            </label>
+        </div>
+        <div class="btn-group-toggle btn-group btn-group-sm d-lg-none" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+                <input type="radio" name="options" id="option1" checked class="change" data-type="O"> 对象类
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option2" class="change" data-type="BC"> 大型工艺品
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="F"> 家具
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="W"> 武器
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="T"> 工具
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="B"> 鞋子
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="P"> 裤子
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="H"> 帽子
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="S"> 衣服
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="TR"> 饰品
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="buff">buff
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" class="change" data-type="qian">钱包
+            </label>
+        </div>
+    </div>
+    <div>
+
+    </div>
+    <div class="container mt-5">
+        <div class="input-group mb-3">
+            <!-- <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                aria-expanded="false">收集包：无</button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">....</a>
+            </div> -->
+            <input type="text" class="form-control searchTxt" placeholder="查找物品" aria-label="Recipient's username"
+                aria-describedby="button-addon2" id="keyval">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary search" type="button" id="button-addon2">搜索</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <table class="table table-striped table-bordered" id="itemTable">
+            <thead>
+                <tr>
+                    <th>物品名</th>
+                    <th>复制/批量/多选</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Table content will be generated here -->
+            </tbody>
+        </table>
+        <table class="table table-striped table-bordered d-none" id="buffTable">
+            <thead>
+                <tr>
+                    <th>buff名</th>
+                    <th>效果详情</th>
+                    <th>复制</th>
+                </tr>
+            </thead>
+            <tbody id="bufftableBody">
+                <!-- Table content will be generated here -->
+            </tbody>
+        </table>
+        <table class="table table-striped table-bordered d-none" id="qianbaoTable">
+            <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>用途</th>
+                    <th>复制</th>
+                </tr>
+            </thead>
+            <tbody id="qianbaoBody">
+                <!-- Table content will be generated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="position-fixed d-flex justify-content-center align-items-center"
+        style="z-index: 5; bottom: 50%;right: 0;width: 100vw;">
+        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="1500">
+            <div class="toast-header">
+                <strong class="mr-auto">已复制</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                已选择
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">刷取数量</span>
+                        </div>
+                        <input name="numPut" type="number" class="form-control" max="999" min="1">
+                    </div>
+                    <div style="margin-top: 18px;">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                value="0" checked>
+                            <label class="form-check-label" for="inlineRadio1">普通</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                value="1">
+                            <label class="form-check-label" for="inlineRadio2">银星</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+                                value="2">
+                            <label class="form-check-label" for="inlineRadio3">金星</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4"
+                                value="3">
+                            <label class="form-check-label" for="inlineRadio4">铱星</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="bgCopy(event)">复制代码</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="position-fixed emptySel d-none" onclick="doEmpty(event)"
+        style="bottom: 35%;left: 0;padding: 12px 18px;background-color: #fa3534dd;border-radius: 0 20px 20px 0;color: #fff;">
+        <span style="pointer-events: none;">清空多选 </span>
+    </div>
+
+    <script src="jquery.js"></script>
+    <script src="bootstrap.js"></script>
+    <script src="utils.js"></script>
+    <script>
+        let current = 'O';
+        let copyId = null, num = 1, count = 0;
+        let isClip = null;
+        let itemsList = '', itemArr = [],selTypeArr=[];
+        const code = '#$action AddItem ';
+        if (navigator.clipboard && navigator.permissions) {
+            isClip = true
+        } else {
+            isClip = false
+        }
+        fetch('output.json')
+            .then(response => response.json()) // 将响应转换为JSON
+            .then(d => {
+                initTable(d, true)
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+        fetch('bufu.json')
+            .then(response => response.json())
+            .then(d => {
+                buffTable(d)
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+        fetch('qianbao.json')
+            .then(response => response.json())
+            .then(d => {
+                qianbaoTable(d)
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+        fetch('BC.json')
+            .then(response => response.json())
+            .then(d => {
+                BCdata = d
+                initTable(BCdata)
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+        fetch('Tools.json')
+            .then(response => response.json())
+            .then(d => {
+                initTable(d)
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+        fetch('wuqi.json')
+            .then(response => response.json())
+            .then(d => {
+                initTable(d)
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+        fetch('jiaju.json')
+            .then(response => response.json())
+            .then(d => {
+                initTable(d)
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+        fetch('shipin.json')
+            .then(response => response.json())
+            .then(d => {
+                initTable(d)
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+        fetch('kuzi.json')
+            .then(response => response.json())
+            .then(d => {
+                initTable(d)
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+        fetch('xiezi.json')
+            .then(response => response.json())
+            .then(d => {
+                initTable(d)
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+        fetch('maozi.json')
+            .then(response => response.json())
+            .then(d => {
+                initTable(d)
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+        fetch('yifu.json')
+            .then(response => response.json())
+            .then(d => {
+                initTable(d)
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+        const tableBody = document.getElementById("tableBody");
+        const bufftableBody = document.getElementById("bufftableBody");
+        var isItemTable = true
+        function initTable(data, isO) {
+            Object.keys(data).forEach(key => {
+                const row = document.createElement("tr");
+                if (data[key].type == 'T') {
+                    row.innerHTML = `
+                        <td class="col-6 col-lg-8">${data[key].zName}</td>
+                        <td>
+                            <span id="copy">
+                                <svg t="1713375618622" onclick="doCopy(event)" data-id=${key} data-type=${data[key].type} class="icon iconStyle" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4293" width="36" height="36"><path d="M608.256 345.6H286.208c-16.896 0-30.72 13.824-30.72 30.72s13.824 30.72 30.72 30.72h322.048c16.896 0 30.72-13.824 30.72-30.72s-13.824-30.72-30.72-30.72zM504.832 540.672H286.208c-16.896 0-30.72 13.824-30.72 30.72s13.824 30.72 30.72 30.72h218.624c16.896 0 30.72-13.824 30.72-30.72s-13.824-30.72-30.72-30.72z" fill="#8a8a8a" p-id="4294"></path><path d="M779.264 788.48V143.36c0-50.688-41.472-92.16-92.16-92.16H225.792c-50.688 0-92.16 41.472-92.16 92.16v645.12c0 50.688 41.472 92.16 92.16 92.16h461.312c50.688 0 92.16-41.472 92.16-92.16z m-584.192 0V143.36c0-16.896 13.824-30.72 30.72-30.72h461.312c16.896 0 30.72 13.824 30.72 30.72v645.12c0 16.896-13.824 30.72-30.72 30.72H225.792c-16.896 0-30.72-13.824-30.72-30.72z" fill="#8a8a8a" p-id="4295"></path><path d="M873.984 309.248c-16.896 0-30.72 13.824-30.72 30.72v562.688c0 21.504-17.408 38.912-38.912 38.912H346.112c-16.896 0-30.72 13.824-30.72 30.72s13.824 30.72 30.72 30.72h458.24c55.296 0 100.352-45.056 100.352-100.352V339.968c0-16.896-13.824-30.72-30.72-30.72z" fill="#8a8a8a" p-id="4296"></path></svg>
+                            </span>
+                            <span>
+                                <svg t="1713377700943" onclick="beforShow(event)" data-id=${key} data-type=${data[key].type} data-name=${data[key].zName}  class="icon iconStyle" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="22382" width="36" height="36"><path d="M822.7 129.5H165.2c-19.8 0-35.9 16.1-35.9 35.9s16.1 35.9 35.9 35.9h657.5v657.5c0 19.8 16.1 35.9 35.9 35.9 19.8 0 35.9-16.1 35.9-35.9V201.3c0-39.6-32.2-71.8-71.8-71.8z" fill="#8a8a8a" p-id="22383" data-spm-anchor-id="a313x.search_index.0.i28.4a633a81oEhwfZ" class="selected"></path><path d="M950.2 2H360.3c-19.8 0-35.9 16.1-35.9 35.9s16.1 35.9 35.9 35.9h589.9v595c0 19.8 16.1 35.9 35.9 35.9 19.8 0 35.9-16.1 35.9-35.9v-595C1022 34.2 989.8 2 950.2 2z" fill="#8a8a8a" p-id="22384" data-spm-anchor-id="a313x.search_index.0.i29.4a633a81oEhwfZ" class="selected"></path><path d="M695.2 257H73.8C34.2 257 2 289.2 2 328.8v621.3c0 39.7 32.2 71.8 71.8 71.8h621.4c39.7 0 71.8-32.2 71.8-71.8V328.8c0-39.6-32.2-71.8-71.8-71.8zM571.5 675.2H197.1c-19.8 0-35.9-16.1-35.9-35.9 0-19.8 16.1-35.9 35.9-35.9h374.4c19.8 0 35.9 16.1 35.9 35.9 0 19.8-16.1 35.9-35.9 35.9z" fill="#8a8a8a" p-id="22385" data-spm-anchor-id="a313x.search_index.0.i27.4a633a81oEhwfZ" class="selected"></path></svg>
+                            </span>
+                            <span style="position: relative;">
+                                <span style="position: absolute;left: 12px;top: 0px;z-index:5;color:#fa3534;pointer-events: none;" class="d-none" data-id=${key} data-type=${data[key].type} id="sel">
+                                    X
+                                </span>
+                                <svg t="1713603070900" onclick="selCopy(event)" data-id=${key} data-type=${data[key].type} class="icon iconStyle" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="18802" width="36" height="36"><path d="M279.272727 884.363636l279.272727 0c0-16.058182 2.048-31.650909 5.864727-46.545455L279.272727 837.818182 279.272727 884.363636zM791.272727 1024 791.272727 930.909091 884.363636 930.909091 884.363636 837.818182 791.272727 837.818182 791.272727 744.727273 698.181818 744.727273 698.181818 837.818182 605.090909 837.818182 605.090909 930.909091 698.181818 930.909091 698.181818 1024ZM744.727273 698.181818 279.272727 698.181818l0 46.545455 342.295273 0C654.382545 715.776 697.530182 698.181818 744.727273 698.181818zM279.272727 279.272727l465.454545 0 0 46.545455-465.454545 0 0-46.545455ZM279.272727 558.545455l465.454545 0 0 46.545455-465.454545 0 0-46.545455ZM884.363636 204.8 681.239273 0 162.210909 0C162.210909 0 139.636364 0 139.636364 22.760727L139.636364 1001.192727C139.636364 1024 162.210909 1024 162.210909 1024l459.357091 0c-15.080727-13.312-27.973818-29.044364-38.120727-46.545455L186.181818 977.454545 186.181818 46.545455l465.454545 0 0 139.636364c0 46.545455 46.545455 46.545455 46.545455 46.545455l139.636364 0 0 490.356364c17.501091 10.146909 33.233455 23.04 46.545455 38.120727L884.363636 204.8zM279.272727 139.636364l279.272727 0 0 46.545455-279.272727 0 0-46.545455ZM279.272727 418.909091l465.454545 0 0 46.545455-465.454545 0 0-46.545455Z" fill="#8a8a8a" p-id="18803"></path></svg>
+                            </span>
+                            <span>
+                                <svg t="1713520351888" class="icon iconStyle" onclick="delTool(event)" viewBox="0 0 1024 1024" data-id=${key} data-type=${data[key].type} version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2422" width="36" height="36"><path d="M92.748283 203.507071h838.503434v44.140606H92.748283zM644.402424 115.238788v44.127677h44.127677V115.238788c0-24.384646-19.75596-44.127677-43.998384-44.127677h-265.050505a43.97899 43.97899 0 0 0-31.172525 12.916364 43.918222 43.918222 0 0 0-12.825859 31.211313v44.127677h44.127677V115.238788h264.791919z m0 0" fill="#707070" p-id="2423"></path><path d="M203.073939 909.614545v-661.979798H158.946263V909.575758c0 24.410505 19.639596 44.179394 44.179394 44.179394h617.761616c24.410505 0 44.179394-19.639596 44.179394-44.179394V247.634747H820.926061v661.979798H203.073939z m0 0" fill="#707070" p-id="2424"></path><path d="M313.412525 335.90303h44.127677V733.090909h-44.127677V335.90303z m176.523637 0h44.127676V733.090909H489.936162V335.90303z m176.523636 0h44.127677V733.090909h-44.127677V335.90303z m0 0" fill="#707070" p-id="2425"></path></svg>
+                            </span>
+                        </Td>
+                    `;
+                } else {
+                    row.innerHTML = `
+                    <td class="col-6 col-lg-8">${data[key].zName}</td>
+                    <td>
+                        <span id="copy">
+                            <svg t="1713375618622" onclick="doCopy(event)" data-id=${key} data-type=${data[key].type} class="icon iconStyle" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4293" width="36" height="36"><path d="M608.256 345.6H286.208c-16.896 0-30.72 13.824-30.72 30.72s13.824 30.72 30.72 30.72h322.048c16.896 0 30.72-13.824 30.72-30.72s-13.824-30.72-30.72-30.72zM504.832 540.672H286.208c-16.896 0-30.72 13.824-30.72 30.72s13.824 30.72 30.72 30.72h218.624c16.896 0 30.72-13.824 30.72-30.72s-13.824-30.72-30.72-30.72z" fill="#8a8a8a" p-id="4294"></path><path d="M779.264 788.48V143.36c0-50.688-41.472-92.16-92.16-92.16H225.792c-50.688 0-92.16 41.472-92.16 92.16v645.12c0 50.688 41.472 92.16 92.16 92.16h461.312c50.688 0 92.16-41.472 92.16-92.16z m-584.192 0V143.36c0-16.896 13.824-30.72 30.72-30.72h461.312c16.896 0 30.72 13.824 30.72 30.72v645.12c0 16.896-13.824 30.72-30.72 30.72H225.792c-16.896 0-30.72-13.824-30.72-30.72z" fill="#8a8a8a" p-id="4295"></path><path d="M873.984 309.248c-16.896 0-30.72 13.824-30.72 30.72v562.688c0 21.504-17.408 38.912-38.912 38.912H346.112c-16.896 0-30.72 13.824-30.72 30.72s13.824 30.72 30.72 30.72h458.24c55.296 0 100.352-45.056 100.352-100.352V339.968c0-16.896-13.824-30.72-30.72-30.72z" fill="#8a8a8a" p-id="4296"></path></svg>
+                        </span>
+                        <span>
+                            <svg t="1713377700943" onclick="beforShow(event)" data-id=${key} data-type=${data[key].type} data-name=${data[key].zName}  class="icon iconStyle" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="22382" width="36" height="36"><path d="M822.7 129.5H165.2c-19.8 0-35.9 16.1-35.9 35.9s16.1 35.9 35.9 35.9h657.5v657.5c0 19.8 16.1 35.9 35.9 35.9 19.8 0 35.9-16.1 35.9-35.9V201.3c0-39.6-32.2-71.8-71.8-71.8z" fill="#8a8a8a" p-id="22383" data-spm-anchor-id="a313x.search_index.0.i28.4a633a81oEhwfZ" class="selected"></path><path d="M950.2 2H360.3c-19.8 0-35.9 16.1-35.9 35.9s16.1 35.9 35.9 35.9h589.9v595c0 19.8 16.1 35.9 35.9 35.9 19.8 0 35.9-16.1 35.9-35.9v-595C1022 34.2 989.8 2 950.2 2z" fill="#8a8a8a" p-id="22384" data-spm-anchor-id="a313x.search_index.0.i29.4a633a81oEhwfZ" class="selected"></path><path d="M695.2 257H73.8C34.2 257 2 289.2 2 328.8v621.3c0 39.7 32.2 71.8 71.8 71.8h621.4c39.7 0 71.8-32.2 71.8-71.8V328.8c0-39.6-32.2-71.8-71.8-71.8zM571.5 675.2H197.1c-19.8 0-35.9-16.1-35.9-35.9 0-19.8 16.1-35.9 35.9-35.9h374.4c19.8 0 35.9 16.1 35.9 35.9 0 19.8-16.1 35.9-35.9 35.9z" fill="#8a8a8a" p-id="22385" data-spm-anchor-id="a313x.search_index.0.i27.4a633a81oEhwfZ" class="selected"></path></svg>
+                        </span>
+                        <span style="position: relative;">
+                            <span style="position: absolute;left: 12px;top: 0px;z-index:5;color:#fa3534;pointer-events: none;" class="d-none kkl" data-id=${key} data-type=${data[key].type} id="sel">
+                                X
+                            </span>
+                            <svg t="1713603070900" onclick="selCopy(event)" data-id=${key} data-type=${data[key].type} class="icon iconStyle" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="18802" width="36" height="36"><path d="M279.272727 884.363636l279.272727 0c0-16.058182 2.048-31.650909 5.864727-46.545455L279.272727 837.818182 279.272727 884.363636zM791.272727 1024 791.272727 930.909091 884.363636 930.909091 884.363636 837.818182 791.272727 837.818182 791.272727 744.727273 698.181818 744.727273 698.181818 837.818182 605.090909 837.818182 605.090909 930.909091 698.181818 930.909091 698.181818 1024ZM744.727273 698.181818 279.272727 698.181818l0 46.545455 342.295273 0C654.382545 715.776 697.530182 698.181818 744.727273 698.181818zM279.272727 279.272727l465.454545 0 0 46.545455-465.454545 0 0-46.545455ZM279.272727 558.545455l465.454545 0 0 46.545455-465.454545 0 0-46.545455ZM884.363636 204.8 681.239273 0 162.210909 0C162.210909 0 139.636364 0 139.636364 22.760727L139.636364 1001.192727C139.636364 1024 162.210909 1024 162.210909 1024l459.357091 0c-15.080727-13.312-27.973818-29.044364-38.120727-46.545455L186.181818 977.454545 186.181818 46.545455l465.454545 0 0 139.636364c0 46.545455 46.545455 46.545455 46.545455 46.545455l139.636364 0 0 490.356364c17.501091 10.146909 33.233455 23.04 46.545455 38.120727L884.363636 204.8zM279.272727 139.636364l279.272727 0 0 46.545455-279.272727 0 0-46.545455ZM279.272727 418.909091l465.454545 0 0 46.545455-465.454545 0 0-46.545455Z" fill="#8a8a8a" p-id="18803"></path></svg>
+                        </span>
+                    </Td>
+                `;
+                }
+                row.className = data[key].type
+
+                if (!isO) row.classList.add('d-none')
+                tableBody.appendChild(row);
+            });
+        }
+
+        function buffTable(data) {
+            Object.keys(data).forEach(key => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td class="col-2">${data[key].zName}</td>
+                    <td class="col-8">${data[key].info}</td>
+                    <td>
+                        <span id="copy">
+                            <svg t="1713375618622" onclick="copyBuff(event)" data-id=${key} class="icon iconStyle" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4293" width="36" height="36"><path d="M608.256 345.6H286.208c-16.896 0-30.72 13.824-30.72 30.72s13.824 30.72 30.72 30.72h322.048c16.896 0 30.72-13.824 30.72-30.72s-13.824-30.72-30.72-30.72zM504.832 540.672H286.208c-16.896 0-30.72 13.824-30.72 30.72s13.824 30.72 30.72 30.72h218.624c16.896 0 30.72-13.824 30.72-30.72s-13.824-30.72-30.72-30.72z" fill="#8a8a8a" p-id="4294"></path><path d="M779.264 788.48V143.36c0-50.688-41.472-92.16-92.16-92.16H225.792c-50.688 0-92.16 41.472-92.16 92.16v645.12c0 50.688 41.472 92.16 92.16 92.16h461.312c50.688 0 92.16-41.472 92.16-92.16z m-584.192 0V143.36c0-16.896 13.824-30.72 30.72-30.72h461.312c16.896 0 30.72 13.824 30.72 30.72v645.12c0 16.896-13.824 30.72-30.72 30.72H225.792c-16.896 0-30.72-13.824-30.72-30.72z" fill="#8a8a8a" p-id="4295"></path><path d="M873.984 309.248c-16.896 0-30.72 13.824-30.72 30.72v562.688c0 21.504-17.408 38.912-38.912 38.912H346.112c-16.896 0-30.72 13.824-30.72 30.72s13.824 30.72 30.72 30.72h458.24c55.296 0 100.352-45.056 100.352-100.352V339.968c0-16.896-13.824-30.72-30.72-30.72z" fill="#8a8a8a" p-id="4296"></path></svg>
+                        </span>
+                        
+                    </Td>
+                `;
+                bufftableBody.appendChild(row);
+            });
+        }
+        function qianbaoTable(data) {
+            Object.keys(data).forEach(key => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td class="col-2">${data[key].zName}</td>
+                    <td class="col-8">${data[key].info}</td>
+                    <td>
+                        <span id="copy">
+                            <svg t="1713375618622" onclick="copyqianbao(event)" data-id=${key} class="icon iconStyle" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4293" width="36" height="36"><path d="M608.256 345.6H286.208c-16.896 0-30.72 13.824-30.72 30.72s13.824 30.72 30.72 30.72h322.048c16.896 0 30.72-13.824 30.72-30.72s-13.824-30.72-30.72-30.72zM504.832 540.672H286.208c-16.896 0-30.72 13.824-30.72 30.72s13.824 30.72 30.72 30.72h218.624c16.896 0 30.72-13.824 30.72-30.72s-13.824-30.72-30.72-30.72z" fill="#8a8a8a" p-id="4294"></path><path d="M779.264 788.48V143.36c0-50.688-41.472-92.16-92.16-92.16H225.792c-50.688 0-92.16 41.472-92.16 92.16v645.12c0 50.688 41.472 92.16 92.16 92.16h461.312c50.688 0 92.16-41.472 92.16-92.16z m-584.192 0V143.36c0-16.896 13.824-30.72 30.72-30.72h461.312c16.896 0 30.72 13.824 30.72 30.72v645.12c0 16.896-13.824 30.72-30.72 30.72H225.792c-16.896 0-30.72-13.824-30.72-30.72z" fill="#8a8a8a" p-id="4295"></path><path d="M873.984 309.248c-16.896 0-30.72 13.824-30.72 30.72v562.688c0 21.504-17.408 38.912-38.912 38.912H346.112c-16.896 0-30.72 13.824-30.72 30.72s13.824 30.72 30.72 30.72h458.24c55.296 0 100.352-45.056 100.352-100.352V339.968c0-16.896-13.824-30.72-30.72-30.72z" fill="#8a8a8a" p-id="4296"></path></svg>
+                        </span>
+                        
+                    </Td>
+                `;
+                document.getElementById('qianbaoBody').appendChild(row);
+            });
+        }
+
+        $('.change').click((e) => {
+            console.log(e.target.dataset.type);
+            if (e.target.dataset.type == "buff") {
+                document.getElementById("itemTable").classList.add('d-none')
+                document.getElementById("qianbaoTable").classList.add('d-none')
+                document.getElementById("buffTable").classList.remove('d-none')
+                isItemTable = false
+            } else if(e.target.dataset.type == "qian"){
+                document.getElementById("itemTable").classList.add('d-none')
+                document.getElementById("qianbaoTable").classList.remove('d-none')
+                document.getElementById("buffTable").classList.add('d-none')
+                isItemTable = false
+            } else {
+                if (!isItemTable) {
+                    document.getElementById("itemTable").classList.remove('d-none')
+                    document.getElementById("buffTable").classList.add('d-none')
+                    document.getElementById("qianbaoTable").classList.add('d-none')
+                }
+                $('.' + current).addClass('d-none')
+                $('.' + e.target.dataset.type).removeClass('d-none')
+                current = e.target.dataset.type
+            }
+        })
+
+
+        $(document).ready(function () {
+            $(".search").click(search);
+            $('#copy').click(function (e) {
+                console.log(e.target.dataset.id);
+                // let str = '[(' + e.target.dataset.type + ')' + e.target.dataset.id + ']'
+                // let long = ''
+                // if (str.length > 12) {
+                //     long = str.replace(RegExp(`(.{7})`, 'g'), '$1${^^\n}$')
+                //     copyToClipboard(long)
+                // } else {
+                //     copyToClipboard(str)
+                // }
+            })
+        });
+        function search(e) {
+            var value = $('.searchTxt').val().toLowerCase();
+            $("#tableBody tr").filter(function () {
+                if ($(this).text().toLowerCase().indexOf(value) > -1) $(this).removeClass('d-none')
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        }
+
+        setTimeout(() => {
+
+            $('#btnBox')[0].classList.remove('jin')
+            $('.modalShow').click(function (e) {
+                console.log(e);
+                $('#exampleModalLabel')[0].innerText = '刷取：' + e.target.dataset.ming
+                // console.log(e.target.dataset.id);
+                // $('#exampleModal').modal('show')
+            })
+        }, 100);
+
+        function doCopy(e) {
+            let str = '[(' + e.target.dataset.type + ')' + e.target.dataset.id + ']'
+            let long = ''
+            if (str.length > 12) {
+                // long = str.replace(RegExp(`(.{7})`, 'g'), '$1${^^\n}$')
+                long = splitId(str)
+                copyToClipboard(long)
+            } else {
+                copyToClipboard(str)
+            }
+            e.target.classList.add('suer')
+            setTimeout(() => {
+                e.target.classList.remove('suer')
+            }, 1000);
+        }
+
+        function copyBuff(e) {
+            let temp = '#$action AddBuff ' + e.target.dataset.id + ' 900000  0'
+            // let str = temp.replace(RegExp(`(.{7})`, 'g'), '$1${^^\n}$')
+            let str = splitId(temp)
+            copyToClipboard(str)
+            e.target.classList.add('suer')
+            setTimeout(() => {
+                e.target.classList.remove('suer')
+            }, 1000);
+        }
+        function copyqianbao(e) {
+            let temp = '#$action AddMail Current ' + e.target.dataset.id + ' now  0'
+            // let str = temp.replace(RegExp(`(.{7})`, 'g'), '$1${^^\n}$')
+            let str = splitId(temp)
+            copyToClipboard(str)
+            e.target.classList.add('suer')
+            setTimeout(() => {
+                e.target.classList.remove('suer')
+            }, 1000);
+        }
+
+        function beforShow(e) {
+            $('#exampleModalLabel')[0].innerText = '刷取：' + e.target.dataset.name
+            copyId = '(' + e.target.dataset.type + ')' + e.target.dataset.id
+            $('#exampleModal').modal('show')
+        }
+
+        function selCopy(e) {
+            let temp = '[(' + e.target.dataset.type + ')' + e.target.dataset.id + ']'
+
+            if (itemsList.indexOf(temp) != -1) {
+                itemsList = itemsList.replace(temp, "")
+                let index = itemArr.indexOf(e.target.dataset.id)
+                itemArr.splice(index, 1)
+                selTypeArr.splice(index, 1)
+                e.target.parentNode.parentNode.parentNode.classList.remove('isSel')
+                e.target.parentNode.childNodes[1].classList.add('d-none')
+                --count
+                $('.mr-auto')[0].innerText = '已删除'
+                $('.toast-body')[0].innerHTML = '已选择' + count + '个物品'
+            } else {
+                itemsList += temp
+                itemArr.push(e.target.dataset.id)
+                selTypeArr.push(e.target.dataset.type)
+                ++count
+                $('.mr-auto')[0].innerText = '已复制'
+                $('.toast-body')[0].innerHTML = '已选择' + count + '个物品'
+                e.target.parentNode.childNodes[1].classList.remove('d-none')
+                e.target.parentNode.parentNode.parentNode.classList.add('isSel')
+                $('.emptySel')[0].classList.remove('d-none')
+            }
+
+            let long = splitId(itemsList)
+            copyToClipboard(long)
+            $('#liveToast').toast('show')
+        }
+
+        function doEmpty(e) {
+            itemArr.forEach((item,i) => {
+                let idname = '[data-id="' + item + '"][data-type="' + selTypeArr[i] + '"]' + '#sel'
+                let dom = $(idname)[0]
+                dom.classList.add('d-none')
+                dom.parentNode.parentNode.parentNode.classList.remove('isSel')
+            })
+            itemsList = ''
+            itemArr = []
+            selTypeArr = []
+            e.target.classList.add('d-none')
+        }
+
+        function bgCopy(e) {
+            var level = $('input[name=inlineRadioOptions]:checked').val();
+            num = $('input[name=numPut]').val()
+            let tempCode = code + copyId + ' ' + num + ' ' + level + ' 0'
+            // let long = tempCode.replace(RegExp(`(.{8})`, 'g'), '$1${^^\n}$')
+            let long = splitId(tempCode)
+            $('#exampleModal').modal('hide')
+            setTimeout(() => {
+                copyToClipboard(long)
+            }, 100);
+        }
+
+        function delTool(e) {
+            let str = '#$action RemoveItem  (' + e.target.dataset.type + ')' + e.target.dataset.id + ' 1 0'
+            let long = splitId(str)
+            copyToClipboard(long)
+        }
+
+
+        var if_blur;
+        $("#keyval").focus(function () {
+            if_blur = true
+            document.onkeydown = function (ev) {
+                var event = ev || event
+                if (event.keyCode == 13 && if_blur) {
+                    search();
+                }
+            };
+        })
+
+        // 1.2 失去焦点
+        $("#keyval").blur(function () {
+            if_blur = false;
+        })
+
+        // function copyToClipboard(text) {
+        //     navigator.clipboard.writeText(text)
+        //         .then(() => {
+        //         })
+        //         .catch(err => {
+        //             alert(err)
+        //             console.error('Error copying text: ', err);
+        //         });
+        // }
+
+
+        function copyToClipboard(text) {
+            if (isClip) {
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                    })
+                    .catch(err => {
+                        alert(err)
+                        console.error('Error copying text: ', err);
+                    });
+            } else {
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+            }
+        }
+
+
+
+
+    </script>
+    <style>
+        .iconStyle {
+            padding: 5px;
+            border-radius: 10px;
+            -moz-user-select: none;
+            /* Firefox私有属性 */
+            -webkit-user-select: none;
+            /* WebKit内核私有属性 */
+            -ms-user-select: none;
+            /* IE私有属性(IE10及以后) */
+            -khtml-user-select: none;
+            /* KHTML内核私有属性 */
+            -o-user-select: none;
+            /* Opera私有属性 */
+            user-select: none;
+            /* CSS3属性 */
+        }
+
+        .suer path {
+            fill: #218838 !important;
+        }
+
+        .iconStyle:hover {
+            background-color: #fff;
+            transform: scale(1.2);
+            transition: transform 0.3s ease;
+        }
+
+        #tableBody tr:hover {
+            background-color: #dddddd;
+        }
+
+        .iconStyle path {
+            pointer-events: none;
+        }
+
+        .isSel {
+            background-color: #dbf1e1 !important;
+        }
+
+        .table th {
+            background-color: #18b566;
+            color: white;
+        }
+
+        .jin {
+            pointer-events: none;
+        }
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+{
+    "canReadJunimoText": {
+        "id": "canReadJunimoText",
+        "name": "ForestMagic",
+        "type": "powers",
+        "info": "你拥有森林的魔法……",
+        "zName": "森林魔法"
+    },
+    "HasDwarvishTranslationGuide": {
+        "id": "HasDwarvishTranslationGuide",
+        "name": "DwarvishTranslationGuide",
+        "type": "powers",
+        "info": "可以与矿井中的矮人和火山地牢商店的矮人交流。",
+        "zName": "矮人语教程"
+    },
+    "HasRustyKey": {
+        "id": "HasRustyKey",
+        "name": "RustyKey",
+        "type": "powers",
+        "info": "用来进入下水道。",
+        "zName": "生锈的钥匙"
+    },
+    "HasClubCard": {
+        "id": "HasClubCard",
+        "name": "ClubCard",
+        "type": "powers",
+        "info": "用来进入赌场。",
+        "zName": "会员卡"
+    },
+    "HasSpecialCharm": {
+        "id": "HasSpecialCharm",
+        "name": "SpecialCharm",
+        "type": "powers",
+        "info": "永久提升每天的运气。+0.025",
+        "zName": "特殊的魅力"
+    },
+    "HasSkullKey": {
+        "id": "HasSkullKey",
+        "name": "SkullKey",
+        "type": "powers",
+        "info": "打开骷髅洞穴的门，解锁星之果实餐吧里的祝尼魔赛车游戏机。",
+        "zName": "头骨钥匙"
+    },
+    "HasMagnifyingGlass": {
+        "id": "HasMagnifyingGlass",
+        "name": "MagnifyingGlass",
+        "type": "powers",
+        "info": "获得找到秘密纸条的能力。",
+        "zName": "放大镜"
+    },
+    "HasDarkTalisman": {
+        "id": "HasDarkTalisman",
+        "name": "DarkTalisman",
+        "type": "powers",
+        "info": "任务物品，开放女巫小屋的三个祭坛。",
+        "zName": "黑暗护身符"
+    },
+    "HasMagicInk": {
+        "id": "HasMagicInk",
+        "name": "MagicInk",
+        "type": "powers",
+        "info": "任务物品，开放魔法建筑。",
+        "zName": "魔法墨水"
+    },
+    "HasTownKey": {
+        "id": "HasTownKey",
+        "name": "KeyToTheTown",
+        "type": "powers",
+        "info": "允许玩家在任何时间进入小镇上的任何建筑物。",
+        "zName": "小镇钥匙"
+    }
+}

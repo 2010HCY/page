@@ -1,0 +1,176 @@
+{
+    "6": {
+        "id": "6",
+        "zName": "满",
+        "info": ".....",
+        "type": "buff"
+    },
+    "7": {
+        "id": "7",
+        "zName": "淬火",
+        "info": ".....",
+        "type": "buff"
+    },
+    "12": {
+        "id": "12",
+        "zName": "烧伤",
+        "info": ".....",
+        "type": "buff"
+    },
+    "13": {
+        "id": "13",
+        "zName": "粘滑的",
+        "info": ".....",
+        "type": "buff"
+    },
+    "14": {
+        "id": "14",
+        "zName": "倒霉的",
+        "info": ".....",
+        "type": "buff"
+    },
+    "17": {
+        "id": "17",
+        "zName": "眩晕",
+        "info": ".....",
+        "type": "buff"
+    },
+    "18": {
+        "id": "18",
+        "zName": "受惊的",
+        "info": ".....",
+        "type": "buff"
+    },
+    "19": {
+        "id": "19",
+        "zName": "冻结的",
+        "info": ".....",
+        "type": "buff"
+    },
+    "20": {
+        "id": "20",
+        "zName": "战士能量",
+        "info": ".....",
+        "type": "buff"
+    },
+    "21": {
+        "id": "21",
+        "zName": "由巴的祝福",
+        "info": "无敌",
+        "type": "buff"
+    },
+    "22": {
+        "id": "22",
+        "zName": "肾上腺冲击",
+        "info": ".....",
+        "type": "buff"
+    },
+    "23": {
+        "id": "23",
+        "zName": "蒜油",
+        "info": "你的皮肤散发刺激的气味",
+        "type": "buff"
+    },
+    "24": {
+        "id": "24",
+        "zName": "怪兽香水",
+        "info": "怪物无法抗拒你的气味。",
+        "type": "buff"
+    },
+    "25": {
+        "id": "25",
+        "zName": "恶心",
+        "info": "呃……你非常难受，什么都吃不下",
+        "type": "buff"
+    },
+    "26": {
+        "id": "26",
+        "zName": "黑暗",
+        "info": "黑暗笼罩了你的视野，让你难以视物",
+        "type": "buff"
+    },
+    "27": {
+        "id": "27",
+        "zName": "虚弱",
+        "info": ".....",
+        "type": "buff"
+    },
+    "28": {
+        "id": "28",
+        "zName": "墨汁意大利饺",
+        "info": "你免疫负面效果。",
+        "type": "buff"
+    },
+    "dwarfStatue_0": {
+        "id": "dwarfStatue_0",
+        "zName": "矮人之王雕像",
+        "info": "每个采矿点+1个矿石。",
+        "type": "buff"
+    },
+    "dwarfStatue_1": {
+        "id": "dwarfStatue_1",
+        "zName": "矮人之王雕像",
+        "info": "找到梯子和竖井的几率更高。",
+        "type": "buff"
+    },
+    "dwarfStatue_2": {
+        "id": "dwarfStatue_2",
+        "zName": "矮人之王雕像",
+        "info": "找到煤炭的几率更高。",
+        "type": "buff"
+    },
+    "dwarfStatue_3": {
+        "id": "dwarfStatue_3",
+        "zName": "矮人之王雕像",
+        "info": "炸弹无法对你造成伤害。",
+        "type": "buff"
+    },
+    "dwarfStatue_4": {
+        "id": "dwarfStatue_4",
+        "zName": "矮人之王雕像",
+        "info": "找到晶球的几率更高。",
+        "type": "buff"
+    },
+    "statue_of_blessings_0": {
+        "id": "statue_of_blessings_0",
+        "zName": "速度祝福",
+        "info": ".....",
+        "type": "buff"
+    },
+    "statue_of_blessings_1": {
+        "id": "statue_of_blessings_1",
+        "zName": "幸运祝福",
+        "info": ".....",
+        "type": "buff"
+    },
+    "statue_of_blessings_2": {
+        "id": "statue_of_blessings_2",
+        "zName": "能量祝福",
+        "info": "你的能量无限。",
+        "type": "buff"
+    },
+    "statue_of_blessings_3": {
+        "id": "statue_of_blessings_3",
+        "zName": "水域祝福",
+        "info": "你今天钓前三条鱼时会更轻松。（还有{0}条）",
+        "type": "buff"
+    },
+    "statue_of_blessings_4": {
+        "id": "statue_of_blessings_4",
+        "zName": "友谊祝福",
+        "info": "你与人交谈时可以增进更多友谊。",
+        "type": "buff"
+    },
+    "statue_of_blessings_5": {
+        "id": "statue_of_blessings_5",
+        "zName": "利齿祝福",
+        "info": "+10% 暴击几率",
+        "type": "buff"
+    },
+    "statue_of_blessings_6": {
+        "id": "statue_of_blessings_6",
+        "zName": "蝴蝶祝福",
+        "info": "山谷某处有一只五彩蝴蝶等待着你……",
+        "type": "buff"
+    }
+}

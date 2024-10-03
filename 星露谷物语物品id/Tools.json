@@ -1,0 +1,194 @@
+{
+    "Axe": {
+        "id": "Axe",
+        "name": "Axe",
+        "type": "T",
+        "zName": "斧头"
+    },
+    "CopperAxe": {
+        "id": "CopperAxe",
+        "name": "Copper Axe",
+        "type": "T",
+        "zName": "铜斧头"
+    },
+    "SteelAxe": {
+        "id": "SteelAxe",
+        "name": "Steel Axe",
+        "type": "T",
+        "zName": "铁斧头"
+    },
+    "GoldAxe": {
+        "id": "GoldAxe",
+        "name": "Gold Axe",
+        "type": "T",
+        "zName": "金斧头"
+    },
+    "IridiumAxe": {
+        "id": "IridiumAxe",
+        "name": "Iridium Axe",
+        "type": "T",
+        "zName": "铱斧头"
+    },
+    "BambooPole": {
+        "id": "BambooPole",
+        "name": "Bamboo Pole",
+        "type": "T",
+        "zName": "竹鱼竿"
+    },
+    "TrainingRod": {
+        "id": "TrainingRod",
+        "name": "Training Rod",
+        "type": "T",
+        "zName": "训练用鱼竿"
+    },
+    "FiberglassRod": {
+        "id": "FiberglassRod",
+        "name": "Fiberglass Rod",
+        "type": "T",
+        "zName": "玻璃纤维棒"
+    },
+    "IridiumRod": {
+        "id": "IridiumRod",
+        "name": "Iridium Rod",
+        "type": "T",
+        "zName": "铱金鱼竿"
+    },
+    "AdvancedIridiumRod": {
+        "id": "AdvancedIridiumRod",
+        "name": "Advanced Iridium Rod",
+        "type": "T",
+        "zName": "高级铱金鱼竿"
+    },
+    "Hoe": {
+        "id": "Hoe",
+        "name": "Hoe",
+        "type": "T",
+        "zName": "锄头"
+    },
+    "CopperHoe": {
+        "id": "CopperHoe",
+        "name": "Copper Hoe",
+        "type": "T",
+        "zName": "铜锄头"
+    },
+    "SteelHoe": {
+        "id": "SteelHoe",
+        "name": "Steel Hoe",
+        "type": "T",
+        "zName": "铁锄头"
+    },
+    "GoldHoe": {
+        "id": "GoldHoe",
+        "name": "Gold Hoe",
+        "type": "T",
+        "zName": "金锄头"
+    },
+    "IridiumHoe": {
+        "id": "IridiumHoe",
+        "name": "Iridium Hoe",
+        "type": "T",
+        "zName": "铱锄头"
+    },
+    "MilkPail": {
+        "id": "MilkPail",
+        "name": "Milk Pail",
+        "type": "T",
+        "zName": "挤奶桶"
+    },
+    "Pan": {
+        "id": "Pan",
+        "name": "Pan",
+        "type": "T",
+        "zName": "淘盘"
+    },
+    "SteelPan": {
+        "id": "SteelPan",
+        "name": "Steel Pan",
+        "type": "T",
+        "zName": "铁淘盘"
+    },
+    "GoldPan": {
+        "id": "GoldPan",
+        "name": "Gold Pan",
+        "type": "T",
+        "zName": "金淘盘"
+    },
+    "IridiumPan": {
+        "id": "IridiumPan",
+        "name": "Iridium Pan",
+        "type": "T",
+        "zName": "铱淘盘"
+    },
+    "Pickaxe": {
+        "id": "Pickaxe",
+        "name": "Pickaxe",
+        "type": "T",
+        "zName": "十字镐"
+    },
+    "CopperPickaxe": {
+        "id": "CopperPickaxe",
+        "name": "Copper Pickaxe",
+        "type": "T",
+        "zName": "铜十字镐"
+    },
+    "SteelPickaxe": {
+        "id": "SteelPickaxe",
+        "name": "Steel Pickaxe",
+        "type": "T",
+        "zName": "铁十字镐"
+    },
+    "GoldPickaxe": {
+        "id": "GoldPickaxe",
+        "name": "Gold Pickaxe",
+        "type": "T",
+        "zName": "金十字镐"
+    },
+    "IridiumPickaxe": {
+        "id": "IridiumPickaxe",
+        "name": "Iridium Pickaxe",
+        "type": "T",
+        "zName": "铱十字镐"
+    },
+    "ReturnScepter": {
+        "id": "ReturnScepter",
+        "name": "Return Scepter",
+        "type": "T",
+        "zName": "回程魔杖"
+    },
+    "Shears": {
+        "id": "Shears",
+        "name": "Shears",
+        "type": "T",
+        "zName": "剪刀"
+    },
+    "WateringCan": {
+        "id": "WateringCan",
+        "name": "Watering Can",
+        "type": "T",
+        "zName": "喷壶"
+    },
+    "CopperWateringCan": {
+        "id": "CopperWateringCan",
+        "name": "Copper Watering Can",
+        "type": "T",
+        "zName": "铜喷壶"
+    },
+    "SteelWateringCan": {
+        "id": "SteelWateringCan",
+        "name": "Steel Watering Can",
+        "type": "T",
+        "zName": "铁喷壶"
+    },
+    "GoldWateringCan": {
+        "id": "GoldWateringCan",
+        "name": "Gold Watering Can",
+        "type": "T",
+        "zName": "金喷壶"
+    },
+    "IridiumWateringCan": {
+        "id": "IridiumWateringCan",
+        "name": "Iridium Watering Can",
+        "type": "T",
+        "zName": "铱喷壶"
+    }
+}
