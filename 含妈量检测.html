@@ -81,7 +81,15 @@
     <script>
         function detectMa() {
             const inputText = document.getElementById("textInput").value;
-            const targetChars = ["妈", "媽", "ma", "妈妈", "NM", "nm", "mom", "mama", "momma", "mamma", "m", "M", "🐎", "码", "泥马", "马", "尼姆", "母", "母亲", "姆", "尼玛", "尼马", "TM", "TMD", "NM", "他妈的", "踏马的", "她妈的", "它妈的", "妈的", "玛德", "nmsl", "NMSL", "草泥马", "操你妈", "草你妈", "死妈", "司马", "私募", "去你妈"];
+            const targetChars = [
+                "妈", "媽", "ma", "NM", "nm", "mom", "mama", "momma", "Mamma", 
+                "m", "M", "🐎", "码", "泥马", "尼姆", "母", "母亲", "姆", "尼玛", 
+                "尼马", "TM", "TMD", "NM", "Mom", "Mother", "Mum", "Maman", "Mère", 
+                "Mutter", "Mamá", "Madre", "Mamãe", "Mãe", "お母さん", "おかあさん", 
+                "はは", "ママ", "엄마", "eomma", "어머니", "eomeoni", "أم", "um", "ماما", 
+                "Мать", "mat", "แม่", "mái", "มาม่า", "mā-mā", "Mẹ", "mā", "māmā", "māmī", "lǎomā",
+                "玛德", "nmsl", "NMSL", "草泥马", "司马", "私募"
+            ];
             let totalChars = inputText.length;
 
             if (totalChars === 0) {
