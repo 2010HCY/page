@@ -1,9 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" href="https://100713.xyz/medias/Hlogo徽章.svg">
+    <meta name="keywords" content="静水深流, svg在线预览, 在线预览svg, svg如何打开, 在线工具">
+    <meta name="description" content="svg在线预览">
+    <meta name="author" content="Ethaniel">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SVG 在线预览工具</title>
+    <!-- Google分析 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2PPF1NPLTJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-2PPF1NPLTJ');
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,6 +52,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            margin-bottom: 10px;
         }
         button:hover {
             background-color: #45a049;
@@ -63,6 +77,7 @@
     <h1>SVG 在线预览工具</h1>
     <textarea id="svgSource" placeholder="在此粘贴SVG源码..."></textarea>
     <button onclick="previewSVG()">预览SVG</button>
+    <button onclick="toggleBackgroundColor()">切换背景颜色</button>
 
     <div class="preview-container" id="previewContainer">
         <!-- SVG预览显示区域 -->
@@ -71,6 +86,8 @@
 </div>
 
 <script>
+    let isLightBackground = true;  // 用于跟踪当前背景颜色状态
+
     function previewSVG() {
         const svgSource = document.getElementById('svgSource').value;
         const previewContainer = document.getElementById('previewContainer');
@@ -90,6 +107,19 @@
     // 检查SVG格式的简单验证
     function isValidSVG(svg) {
         return svg.startsWith('<svg') && svg.endsWith('</svg>');
+    }
+
+    // 切换背景颜色
+    function toggleBackgroundColor() {
+        const previewContainer = document.getElementById('previewContainer');
+        if (isLightBackground) {
+            previewContainer.style.backgroundColor = '#333'; // 深色背景
+            previewContainer.style.color = '#fff'; // 白色字体
+        } else {
+            previewContainer.style.backgroundColor = '#f0f0f0'; // 浅色背景
+            previewContainer.style.color = '#000'; // 黑色字体
+        }
+        isLightBackground = !isLightBackground; // 切换背景状态
     }
 </script>
 
