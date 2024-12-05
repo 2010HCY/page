@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG 在线预览工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            font-family: monospace;
+            font-size: 14px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .preview-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            min-height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>SVG 在线预览工具</h1>
+    <textarea id="svgSource" placeholder="在此粘贴SVG源码..."></textarea>
+    <button onclick="previewSVG()">预览SVG</button>
+
+    <div class="preview-container" id="previewContainer">
+        <!-- SVG预览显示区域 -->
+        <p>请在上方输入SVG源码并点击预览按钮。</p>
+    </div>
+</div>
+
+<script>
+    function previewSVG() {
+        const svgSource = document.getElementById('svgSource').value;
+        const previewContainer = document.getElementById('previewContainer');
+
+        // 清空当前预览
+        previewContainer.innerHTML = '';
+
+        // 检查是否为有效的SVG
+        if (isValidSVG(svgSource)) {
+            const svgElement = new DOMParser().parseFromString(svgSource, 'image/svg+xml').documentElement;
+            previewContainer.appendChild(svgElement);
+        } else {
+            previewContainer.innerHTML = '<p style="color: red;">无效的SVG源码！</p>';
+        }
+    }
+
+    // 检查SVG格式的简单验证
+    function isValidSVG(svg) {
+        return svg.startsWith('<svg') && svg.endsWith('</svg>');
+    }
+</script>
+
+</body>
+</html>
