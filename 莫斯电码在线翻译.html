@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>摩斯密码翻译工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>摩斯密码翻译工具</h1>
+        <label for="inputText">输入文本或摩斯密码：</label>
+        <textarea id="inputText" placeholder="输入英文或摩斯密码..."></textarea>
+        <button onclick="translateToMorse()">翻译为摩斯密码</button>
+        <button onclick="translateToText()">翻译为普通文本</button>
+        <label for="outputText">输出结果：</label>
+        <textarea id="outputText" readonly placeholder="翻译结果..."></textarea>
+    </div>
+
+    <script>
+        const morseCodeMap = {
+            'A': '·-', 'B': '-···', 'C': '-·-·', 'D': '-··', 'E': '·', 'F': '··-·',
+            'G': '--·', 'H': '····', 'I': '··', 'J': '·---', 'K': '-·-', 'L': '·-··',
+            'M': '--', 'N': '-·', 'O': '---', 'P': '·--·', 'Q': '--·-', 'R': '·-·',
+            'S': '···', 'T': '-', 'U': '··-', 'V': '···-', 'W': '·--', 'X': '-··-',
+            'Y': '-·--', 'Z': '--··',
+            '1': '·----', '2': '··---', '3': '···--', '4': '····-', '5': '·····',
+            '6': '-····', '7': '--···', '8': '---··', '9': '----·', '0': '-----',
+            '·': '·-·-·-', ',': '--··--', '?': '··--··', "'": '·----·', '!': '-·-·--',
+            '/': '-··-·', '(': '-·--·', ')': '-·--·-', '&': '·-···', ':': '---···',
+            ';': '-·-·-·', '=': '-···-', '+': '·-·-·', '-': '-····-', '_': '··--·-',
+            '"': '·-··-·', '$': '···-··-', '@': '·--·-·', ' ': '/'
+        };
+
+        const textToMorse = (text) => {
+            return text.toUpperCase().split('').map(char => morseCodeMap[char] || '').join(' ');
+        };
+
+        const morseToText = (morse) => {
+            const reverseMorseCodeMap = Object.entries(morseCodeMap).reduce((acc, [key, value]) => {
+                acc[value] = key;
+                return acc;
+            }, {});
+
+            return morse.split(' ').map(code => reverseMorseCodeMap[code] || '').join('');
+        };
+
+        function translateToMorse() {
+            const input = document.getElementById('inputText').value;
+            const result = textToMorse(input);
+            document.getElementById('outputText').value = result;
+        }
+
+        function translateToText() {
+            const input = document.getElementById('inputText').value;
+            const result = morseToText(input);
+            document.getElementById('outputText').value = result;
+        }
+    </script>
+</body>
+</html>
