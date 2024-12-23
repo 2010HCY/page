@@ -14,9 +14,11 @@
             <key>PayloadUUID</key>
             <string>033d09f9-d4c5-4924-a5bc-a427e4d30c87</string>
             <key>PayloadDisplayName</key>
-            <string>Z站官网</string>
+            <string>Z-library官网</string>
             <key>label</key>
-            <string>Z站官网</string>
+            <string>Z-library官网</string>
+            <key>Label</key>
+            <string>Z-library官网</string>
             <key>URL</key>
             <string>https://zh.z-lib.nz</string>
             <key>isRemovable</key>
@@ -30,7 +32,7 @@
         </dict>
     </array>
     <key>PayloadDisplayName</key>
-    <string>Z站官网描述文件</string>
+    <string>Z-library官网描述文件</string>
     <key>PayloadIdentifier</key>
     <string>com.example.zsite.profile</string>
     <key>PayloadUUID</key>
