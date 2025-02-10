@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三体数据生成器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>三体数据生成器</h1>
+    <h2>给人看的版本:</h2>
+    <pre id="humanReadable"></pre>
+    
+    <h2>给JS运算的版本:</h2>
+    <pre id="jsReadable"></pre>
+
+    <script>
+        // 随机生成三体数据
+        function generateRandomBodies() {
+            const G = 1; // 引力常数，不需要在此处更改
+
+            // 随机生成质量，质量差距不能太大
+            const mass1 = Math.random() * 50 + 100; // 质量范围为100到150
+            const mass2 = Math.random() * 50 + 100; // 质量范围为100到150
+            const mass3 = Math.random() * 50 + 100; // 质量范围为100到150
+
+            // 计算画布中心点
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+
+            // 随机生成位置，相对画布中心
+            let x1 = Math.random() * 400 - 200; // 偏移范围从 -200 到 +200
+            let y1 = Math.random() * 400 - 200;
+            let x2 = Math.random() * 400 - 200;
+            let y2 = Math.random() * 400 - 200;
+            let x3 = Math.random() * 400 - 200;
+            let y3 = Math.random() * 400 - 200;
+
+            // 确保初始位置的物体之间不能太近
+            while (distance(x1, y1, x2, y2) < 150 || distance(x1, y1, x3, y3) < 150 || distance(x2, y2, x3, y3) < 150) {
+                // 如果物体太近，重新生成位置
+                x1 = Math.random() * 400 - 200;
+                y1 = Math.random() * 400 - 200;
+                x2 = Math.random() * 400 - 200;
+                y2 = Math.random() * 400 - 200;
+                x3 = Math.random() * 400 - 200;
+                y3 = Math.random() * 400 - 200;
+            }
+
+            // 随机生成初始速度，确保速度较低
+            const speedMax = 0.1; // 速度最大值
+            const dx1 = (Math.random() - 0.5) * speedMax;
+            const dy1 = (Math.random() - 0.5) * speedMax;
+            const dx2 = (Math.random() - 0.5) * speedMax;
+            const dy2 = (Math.random() - 0.5) * speedMax;
+            const dx3 = (Math.random() - 0.5) * speedMax;
+            const dy3 = (Math.random() - 0.5) * speedMax;
+
+            return [
+                { x: centerX + x1, y: centerY + y1, dx: dx1, dy: dy1, m: mass1 },
+                { x: centerX + x2, y: centerY + y2, dx: dx2, dy: dy2, m: mass2 },
+                { x: centerX + x3, y: centerY + y3, dx: dx3, dy: dy3, m: mass3 }
+            ];
+        }
+
+        // 计算两点之间的距离
+        function distance(x1, y1, x2, y2) {
+            return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+        }
+
+        // 页面加载完成时生成并输出数据
+        window.onload = () => {
+            // 使用随机生成器生成三体数据
+            const bodies = generateRandomBodies();
+
+            // 生成“给人看的版本”
+            const humanReadable = bodies.map((body, index) => `
+物体${index + 1}:
+  质量:${body.m.toFixed(2)}
+  位置:(${body.x.toFixed(2)}, ${body.y.toFixed(2)})
+  初始速度:(${body.dx.toFixed(2)}, ${body.dy.toFixed(2)})`).join("\n");
+
+            // 输出“给人看的版本”到页面
+            document.getElementById("humanReadable").textContent = humanReadable;
+
+            // 生成“给JS运算的版本”
+            const jsReadable = `const points = [
+    { x: centerX + ${bodies[0].x.toFixed(2) - window.innerWidth / 2}, y: centerY + ${bodies[0].y.toFixed(2) - window.innerHeight / 2}, dx: ${bodies[0].dx.toFixed(2)}, dy: ${bodies[0].dy.toFixed(2)}, m: ${bodies[0].m.toFixed(2)} },
+    { x: centerX + ${bodies[1].x.toFixed(2) - window.innerWidth / 2}, y: centerY + ${bodies[1].y.toFixed(2) - window.innerHeight / 2}, dx: ${bodies[1].dx.toFixed(2)}, dy: ${bodies[1].dy.toFixed(2)}, m: ${bodies[1].m.toFixed(2)} },
+    { x: centerX + ${bodies[2].x.toFixed(2) - window.innerWidth / 2}, y: centerY + ${bodies[2].y.toFixed(2) - window.innerHeight / 2}, dx: ${bodies[2].dx.toFixed(2)}, dy: ${bodies[2].dy.toFixed(2)}, m: ${bodies[2].m.toFixed(2)} }
+];`;
+
+            // 输出“给JS运算的版本”到页面
+            document.getElementById("jsReadable").textContent = jsReadable;
+        };
+    </script>
+</body>
+</html>
