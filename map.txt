@@ -10,7 +10,7 @@ https://page.100713.xyz/页面动画/轻度装逼/
 https://page.100713.xyz/HTML5模拟现实物理效果/
 https://page.100713.xyz/html便签/
 https://page.100713.xyz/网页版捕鱼达人/
-https://page.100713.xyz/柔韧的图片滑�/�瀑布流布局/
+https://page.100713.xyz/柔韧的图片滑动瀑布流布局/
 https://page.100713.xyz/网页边栏过渡动画/
 https://page.100713.xyz/阴影效果/
 https://page.100713.xyz/含妈量检测/
@@ -19,3 +19,4 @@ https://page.100713.xyz/svg在线预览/
 https://page.100713.xyz/3D模型简化工具/
 https://page.100713.xyz/三体模拟器/
 https://page.100713.xyz/中国传统颜色/
+<a style="margin-left: 80px;" href="https://page.100713.xyz/示例/">网站访问量统计工具示例</a><br>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>访问次数计数示例</title>
+    <link rel="icon" href="https://100713.xyz/medias/Hlogo徽章.svg">
+    <script async src="https://100713.xyz/js/blog-count.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 30px;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        .stats-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .stats-item:last-child {
+            border-bottom: none;
+        }
+        .stats-title {
+            font-weight: bold;
+            font-size: 16px;
+            color: #666;
+        }
+        .stats-value {
+            font-size: 18px;
+            color: #111;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>访问次数计数示例</h1>
+        <div class="stats-item">
+            <span class="stats-title">本站总阅读量：</span>
+            <span class="stats-value" id="PageMeter_site_pv">加载中...</span>
+        </div>
+        <div class="stats-item">
+            <span class="stats-title">本站访客数：</span>
+            <span class="stats-value" id="PageMeter_site_uv">加载中...</span>
+        </div>
+        <div class="stats-item">
+            <span class="stats-title">本文总阅读量：</span>
+            <span class="stats-value" id="PageMeter_page_pv">加载中...</span>
+        </div>
+        <div class="stats-item">
+            <span class="stats-title">本文总访客数：</span>
+            <span class="stats-value" id="PageMeter_page_uv">加载中...</span>
+        </div>
+        <div class="stats-item">
+            <span class="stats-title">有关信息</span>
+            <a href="https://github.com/2010HCY/PageMeter">GitHub项目地址</a>
+            <a href="https://100713.xyz">我的博客</a>
+        </div>
+    </div>
+</body>
+</html>
