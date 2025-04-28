@@ -1,150 +1,280 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>静水深流 | 静态页面索引</title>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-2PPF1NPLTJ');
-</script>
-<link rel="icon" href="https://100713.xyz/medias/Hlogo徽章.svg">
-<meta name="keywords" content="静水深流, 静态页面索引, 在线小游戏, web动画, 在线工具">
-<meta name="description" content="静水深流静态页面索引">
-<meta name="author" content="Ethaniel">
-<meta name="yandex-verification" content="a7df0a1903eaf996" />
-<meta name="360-site-verification" content="d096fe5e66fe60bde102f9dfbbd9911c" />
-<meta name="google-site-verification" content="mD2l3_aOmwjXLEvIAyB7bLGNGBnq7u88vPoK2oNuy3c" />
+    <meta charset="UTF-8">
+    <title>静水深流 | 静态页面索引</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-2PPF1NPLTJ');
+    </script>
+    <link rel="icon" href="https://100713.xyz/medias/Hlogo徽章.svg">
+    <meta name="keywords" content="静水深流, 静态页面索引, 在线小游戏, web动画, 在线工具">
+    <meta name="description" content="静水深流静态页面索引">
+    <meta name="author" content="Ethaniel">
+    <meta name="yandex-verification" content="a7df0a1903eaf996" />
+    <meta name="360-site-verification" content="d096fe5e66fe60bde102f9dfbbd9911c" />
+    <meta name="google-site-verification" content="mD2l3_aOmwjXLEvIAyB7bLGNGBnq7u88vPoK2oNuy3c" />
+    <link rel="stylesheet" href="/api/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .blog-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 25px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: var(--transition);
+            border: 2px solid white;
+        }
+        .blog-link:hover {
+            background-color: white;
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        .card-header {
+            padding: 15px;
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .card-1 .card-header { background-color: #8ecd51; }
+        .card-2 .card-header { background-color: #61bb8d; }
+        .card-3 .card-header { background-color: #6ec095; }
+        .card-4 .card-header { background-color: #68b0aa; }
+        .card-5 .card-header { background-color: #8cc269; }
+        .link-item {
+            display: block;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #333;
+            transition: var(--transition);
+            position: relative;
+            padding-left: 35px;
+        }
+        .link-item:hover {
+            background-color: #e9ecef;
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+        .link-item:before {
+            content: "";
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+        }
+        .quote {
+            font-size: 0.85rem;
+            color: #6c757d;
+            font-style: italic;
+            margin-left: 35px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #dee2e6;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+        }
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
-<h1 align="center">静水深流</h1>
-<div align="center">
-    <a align="center" href="https://100713.xyz/">前往博客</a>
-</div>
-<h2 align="center">HTML静态页面索引</h2>
-<body style="background-color: #f7f9f9;"></body>
-<style>
-    /* 设置一些全局样式 */
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0; 
-        padding: 0; 
-    }
-    
-    /* 容器1的样式 */
-    .container1 {
-        width: 50%;
-        height: auto;
-        background-color: #8ecd51;
-        margin: 0 auto; 
-        padding: 1px;
-        box-sizing: border-box; 
-    }
-    
-    /* 容器2的样式 */
-    .container2 {
-        width: 50%;
-        height: auto;
-        background-color: #61bb8d;
-        margin: 0 auto; 
-        padding: 1px;
-        box-sizing: border-box; 
-    }
-    
-    /* 容器3的样式 */
-    .container3 {
-        width: 50%;
-        height: auto;
-        background-color: #6ec095;
-        margin: 0 auto; 
-        padding: 1px;
-        box-sizing: border-box; 
-    }
-    
-    /* 容器4的样式 */
-    .container4 {
-        width: 50%;
-        height: auto;
-        background-color: #68b0aa;
-        margin: 0 auto; 
-        padding: 1px;
-        box-sizing: border-box; 
-    }
+    <div class="header">
+        <h1>静水深流</h1>
+        <p>HTML静态页面索引</p>
+        <a href="https://100713.xyz/" class="blog-link">前往博客</a>
+    </div>
 
-    /* 容器5的样式 */
-    .container5 {
-        width: 50%;
-        height: auto;
-        background-color:#8cc269;
-        margin: 0 auto; 
-        padding: 1px;
-        box-sizing: border-box; 
-    }
-    </style>
-    
+    <div class="container">
+        <div class="card card-1">
+            <div class="card-header">
+                <i class="fas fa-seedling"></i> 星露谷物语实用工具
+            </div>
+            <div class="card-body">
+                <a href="https://page.100713.xyz/星露谷物语物品id/" class="link-item">星露谷物语物品id</a>
+                <a href="https://checkup.100713.xyz/" class="link-item">星露谷物语查缺补漏</a>
+            </div>
+        </div>
 
-<div class="container1">    
-<h3 align="center">星露谷物语实用工具</h3>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/星露谷物语物品id/">星露谷物语物品id</a><br>
-<a style="margin-left: 80px;" href="https://checkup.100713.xyz/">星露谷物语查缺补漏</a><br>
-</div>
+        <div class="card card-2">
+            <div class="card-header">
+                <i class="fas fa-gamepad"></i> 游戏
+            </div>
+            <div class="card-body">
+                <a href="https://page.100713.xyz/跑酷游戏" class="link-item">跑酷游戏</a>
+                <a href="https://page.100713.xyz/FlappyBird/" class="link-item">飞翔的小鸟</a>
+                <a href="https://page.100713.xyz/网页版捕鱼达人/" class="link-item">网页版捕鱼达人</a>
+            </div>
+        </div>
 
-<div class="container2">  
-<h3 align="center">游戏</h3>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/跑酷游戏">跑酷游戏</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/FlappyBird/">飞翔的小鸟</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/网页版捕鱼达人/">网页版捕鱼达人</a><br>
-</div>
+        <div class="card card-5">
+            <div class="card-header">
+                <i class="fas fa-tools"></i> 实用工具
+            </div>
+            <div class="card-body">
+                <a href="https://page.100713.xyz/svg在线预览/" class="link-item">svg在线预览</a>
+                <a href="https://page.100713.xyz/必装软件.html" class="link-item">新电脑配置站</a>
+                <a href="https://page.100713.xyz/3D模型简化工具/" class="link-item">3D模型简化</a>
+                <a href="https://page.100713.xyz/中国传统颜色/" class="link-item">中国传统颜色</a>
+                <a href="https://page.100713.xyz/示例/" class="link-item">网站访问量统计工具示例</a>
+            </div>
+        </div>
 
-<div class="container5">
-<h3 align="center">实用工具</h3>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/svg在线预览/">svg在线预览</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/必装软件.html">新电脑配置站</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/3D模型简化工具/">3D模型简化</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/中国传统颜色/">中国传统颜色</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/示例/">网站访问量统计工具示例</a><br>
-</div>
+        <div class="card card-3">
+            <div class="card-header">
+                <i class="fas fa-magic"></i> 界面动画
+            </div>
+            <div class="card-body">
+                <a href="https://page.100713.xyz/页面动画/轻度装逼" class="link-item">黑客帝国代码雨</a>
+                <a href="https://page.100713.xyz/页面动画/heise" class="link-item">黑色炫酷时钟</a>
+                <a href="https://page.100713.xyz/页面动画/shuibo" class="link-item">水波纹动画</a>
+                <a href="https://page.100713.xyz/页面动画/jishuqi" class="link-item">响应式计数器</a>
+                <a href="https://page.100713.xyz/页面动画/jiandan" class="link-item">简单模拟时钟</a>
+                <a href="https://page.100713.xyz/超大二维码/" class="link-item">超大二维码</a>
+                <a href="https://page.100713.xyz/网页边栏过渡动画/" class="link-item">网页边栏过渡动画</a>
+                <a href="https://page.100713.xyz/阴影效果/" class="link-item">阴影效果</a>
+                <a href="https://page.100713.xyz/柔韧的图片滑动瀑布流布局/" class="link-item">柔韧的图片滑动瀑布流布局</a>
+                <a href="https://page.100713.xyz/html便签/" class="link-item">HTML便签</a>
+                <a href="https://page.100713.xyz/HTML5模拟现实物理效果/" class="link-item">HTML5模拟现实物理效果</a>
+                <a href="https://page.100713.xyz/三体模拟器" class="link-item">三体模拟器</a>
+            </div>
+        </div>
 
-<div class="container3">
-<h3 align="center">界面动画</h3>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/页面动画/轻度装逼">黑客帝国代码雨</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/页面动画/heise">黑色炫酷时钟</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/页面动画/shuibo">水波纹动画</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/页面动画/jishuqi">响应式计数器</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/页面动画/jiandan">简单模拟时钟</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/超大二维码/">超大二维码</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/网页边栏过渡动画/">网页边栏过渡动画</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/博客/Page/阴影效果/">阴影效果</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/柔韧的图片滑动瀑布流布局/">柔韧的图片滑动瀑布流布局</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/html便签/">HTML便签</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/HTML5模拟现实物理效果/">HTML5模拟现实物理效果</a><br>
-<a style="margin-left: 80px;" href="https://page.100713.xyz/三体模拟器">三体模拟器</a><br>
-</div>
+        <div class="card card-4">
+            <div class="card-header">
+                <i class="fas fa-smile-wink"></i> 鸡肋小工具
+            </div>
+            <div class="card-body">
+                <a href="https://100713.xyz/含妈量检测.html" class="link-item">含妈量检测</a>
+                <div class="quote">检测语句的含妈量</div>
 
-<div class="container4">  
-<h3 align="center">鸡肋小工具</h3>
-<a style="margin-left: 80px;" href="https://100713.xyz/含妈量检测.html">含妈量检测</a><br>
-<a style="margin-left: 80px;" href="https://100713.xyz/images/HTML/鸡肋网页工具/常规图片盲水印查看器.html">常规图片盲水印查看器</a><br>
-<q style="margin-left: 90px;" cite="https://www.example.com/source">害怕图片里有盲水印？用它！不过只能查看常规的，一些改动少量像素的就不行了</q><br>
-<a style="margin-left: 80px;" href="https://100713.xyz/images/HTML/鸡肋网页工具/RGB转Hex.html">RGB转Hex</a><br>
-<q style="margin-left: 90px;" cite="https://www.example.com/source">转换两种颜色编码</q><br>
-<a style="margin-left: 80px;" href="https://100713.xyz/images/HTML/鸡肋网页工具/单词数量统计.html">单词数量统计</a><br>
-<q style="margin-left: 90px;" cite="https://www.example.com/source">挺鸡肋的，文本文档、word都自带这功能</q><br>
-<a style="margin-left: 80px;" href="https://100713.xyz/images/HTML/鸡肋网页工具/计算器.html">计算器</a><br>
-<q style="margin-left: 90px;" cite="https://www.example.com/source">这个更没用了......</q><br>
-<a style="margin-left: 80px;" href="https://100713.xyz/images/HTML/鸡肋网页工具/任务日程.html">任务日程</a><br>
-<q style="margin-left: 90px;" cite="https://www.example.com/source">友情提示，刷新页面了可能会消失，建议用谷歌家的任务日程</q><br>
-<a style="margin-left: 80px;" href="https://100713.xyz/images/HTML/鸡肋网页工具/温度单位转换.html">温度单位转换</a><br>
-<q style="margin-left: 90px;" cite="https://www.example.com/source">嗯......搜索引擎搜到或许更准确</q><br>
-</div>
-    
-<div id="footer" style="clear:both;text-align:center;">
-    <a href="https://page.100713.xyz/泉州概况.htm">泉州</a>
-  -静水深流 © 100713.xyz</div>
+                <a href="/HTML/鸡肋网页工具/常规图片盲水印查看器.html" class="link-item">常规图片盲水印查看器</a>
+                <div class="quote">害怕图片里有盲水印？用它！不过只能查看常规的，一些改动少量像素的就不行了</div>
+                
+                <a href="/HTML/鸡肋网页工具/RGB转Hex.html" class="link-item">RGB转Hex</a>
+                <div class="quote">转换两种颜色编码</div>
+                
+                <a href="/HTML/鸡肋网页工具/单词数量统计.html" class="link-item">单词数量统计</a>
+                <div class="quote">挺鸡肋的，文本文档、word都自带这功能</div>
+                
+                <a href="/HTML/鸡肋网页工具/计算器.html" class="link-item">计算器</a>
+                <div class="quote">这个更没用了......</div>
+                
+                <a href="/HTML/鸡肋网页工具/任务日程.html" class="link-item">任务日程</a>
+                <div class="quote">友情提示，刷新页面了可能会消失，建议用谷歌家的任务日程</div>
+                
+                <a href="/HTML/鸡肋网页工具/温度单位转换.html" class="link-item">温度单位转换</a>
+                <div class="quote">嗯......搜索引擎搜到或许更准确</div>
+            </div>
+        </div>
+    </div>
 
+    <div class="footer">
+        <a href="https://page.100713.xyz/泉州概况.htm">泉州</a> - 静水深流 <span id="year"></span> © 100713.xyz
+        <p>Created by <a href="https://100713.xyz">静水深流</a> &amp; <a href="https://100713.xyz/about">Ethaniel</a> | System <a href="https://status.100713.xyz/" target="_blank">Status</a></p>
+        <span id="sitetime">载入运行时间...</span>
+        <span id="busuanzi_container_site_pv">
+          |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+          <span class="stats-value" id="PageMeter_site_pv">加载中...</span>&nbsp;次
+        </span>
+        <span id="busuanzi_container_site_uv">
+          |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+          <span class="stats-value" id="PageMeter_site_uv">加载中...</span>&nbsp;人
+        </span>
+    </div>
+    <script type="text/javascript" src="/api/sitetime.js"></script>
+    <script type="text/javascript" src="https://100713.xyz/js/blog-count.js"></script>
 </body>
 </html>
-    

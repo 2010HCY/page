@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>温度转换器</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    input { padding: 10px; margin: 5px; width: 120px; font-size: 16px; }
+    button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    #result { margin-top: 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>温度转换器</h1>
+  <input type="number" id="celsius" placeholder="°C">
+  <button onclick="convertToCelsius()">转换成华氏度</button>
+  <br>
+  <input type="number" id="fahrenheit" placeholder="°F">
+  <button onclick="convertToFahrenheit()">转换成摄氏度</button>
+
+  <div id="result"></div>
+
+  <script>
+    function convertToCelsius() {
+      const f = document.getElementById('fahrenheit').value;
+      if (f !== '') {
+        const celsius = ((f - 32) * 5/9).toFixed(2);
+        document.getElementById('result').innerText = f + '°F 是 ' + celsius + '°C';
+      }
+    }
+
+    function convertToFahrenheit() {
+      const c = document.getElementById('celsius').value;
+      if (c !== '') {
+        const fahrenheit = (c * 9/5 + 32).toFixed(2);
+        document.getElementById('result').innerText = c + '°C 是 ' + fahrenheit + '°F';
+      }
+    }
+  </script>
+</body>
+</html>

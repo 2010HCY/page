@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RGB转Hex</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    input { padding: 10px; margin: 5px; width: 100px; font-size: 16px; }
+    button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    #output { margin-top: 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>RGB转Hex</h1>
+  <p>在此输入(背景颜色会随输入值变化):</p>
+  <input type="number" id="r" placeholder="R" min="0" max="255">
+  <input type="number" id="g" placeholder="G" min="0" max="255">
+  <input type="number" id="b" placeholder="B" min="0" max="255">
+  <br>
+  <button onclick="convertRGBToHex()">转换</button>
+  <div id="output"></div>
+
+  <script>
+    function rgbToHex(r, g, b) {
+      return "#" + [r, g, b].map(x => {
+        const hex = x.toString(16);
+        return hex.length === 1 ? '0' + hex : hex;
+      }).join('');
+    }
+
+    function convertRGBToHex() {
+      const r = document.getElementById('r').value;
+      const g = document.getElementById('g').value;
+      const b = document.getElementById('b').value;
+      if (r !== '' && g !== '' && b !== '') {
+        const hex = rgbToHex(parseInt(r), parseInt(g), parseInt(b));
+        document.getElementById('output').innerText = 'Hex: ' + hex;
+        document.body.style.backgroundColor = hex;
+      } else {
+        document.getElementById('output').innerText = 'Please enter valid RGB values.';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>任务列表</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+    }
+    h1 {
+      margin: 20px 0;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px;
+      margin-left: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      padding: 10px;
+      font-size: 18px;
+      margin: 5px 0;
+      background-color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    li.completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <h1>我的日程</h1>
+  <input type="text" id="taskInput" placeholder="新的任务...">
+  <button onclick="addTask()">添加任务</button>
+
+  <ul id="taskList"></ul>
+
+  <script>
+    function addTask() {
+      const taskInput = document.getElementById('taskInput');
+      const task = taskInput.value;
+      if (task.trim() !== "") {
+        const li = document.createElement('li');
+        li.innerHTML = task + '<button onclick="toggleComplete(this)">标记完成</button>';
+        document.getElementById('taskList').appendChild(li);
+        taskInput.value = '';
+      }
+    }
+
+    function toggleComplete(button) {
+      const li = button.parentElement;
+      li.classList.toggle('completed');
+    }
+  </script>
+</body>
+</html>

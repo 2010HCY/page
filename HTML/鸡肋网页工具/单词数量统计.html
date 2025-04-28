@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>单词数量统计</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    textarea { width: 90%; height: 150px; margin: 20px 0; padding: 10px; font-size: 16px; }
+    p { font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>单词数量统计</h1>
+  <textarea id="textArea" placeholder="在此输入" oninput="countWords()"></textarea>
+  <p>单词数: <span id="wordCount">0</span></p>
+
+  <script>
+    function countWords() {
+      let text = document.getElementById('textArea').value.trim();
+      let wordCount = text.length === 0 ? 0 : text.split(/\s+/).length;
+      document.getElementById('wordCount').innerText = wordCount;
+    }
+  </script>
+</body>
+</html>

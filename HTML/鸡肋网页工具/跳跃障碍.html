@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magic Creature Race</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #e0f7fa;
+      overflow: hidden;
+    }
+    #gameCanvas {
+      background-color: #8bc34a;
+      border: 2px solid #333;
+    }
+    h1 {
+      margin-top: 10px;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Magic Creature Race</h1>
+  <canvas id="gameCanvas" width="800" height="400"></canvas>
+  <p id="score">Score: 0</p>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Game variables
+    let player = { x: 50, y: 300, width: 50, height: 50, dy: 0, gravity: 0.6, jumpPower: -10, isJumping: false };
+    let obstacles = [];
+    let frameCount = 0;
+    let score = 0;
+    let gameOver = false;
+
+    // Listen for key presses to control player jump
+    document.addEventListener('keydown', function(e) {
+      if (e.code === 'Space' || e.code === 'ArrowUp') {
+        if (!player.isJumping) {
+          player.dy = player.jumpPower;
+          player.isJumping = true;
+        }
+      }
+    });
+
+    // Function to spawn obstacles
+    function spawnObstacle() {
+      let obstacleHeight = Math.floor(Math.random() * 50) + 30;
+      obstacles.push({ x: canvas.width, y: canvas.height - obstacleHeight, width: 30, height: obstacleHeight });
+    }
+
+    // Function to update the game state
+    function updateGame() {
+      if (gameOver) return;
+
+      frameCount++;
+
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Move player
+      player.y += player.dy;
+      player.dy += player.gravity;
+
+      // Prevent player from falling below the ground
+      if (player.y > canvas.height - player.height) {
+        player.y = canvas.height - player.height;
+        player.dy = 0;
+        player.isJumping = false;
+      }
+
+      // Draw player
+      ctx.fillStyle = 'blue';
+      ctx.fillRect(player.x, player.y, player.width, player.height);
+
+      // Spawn obstacles periodically
+      if (frameCount % 120 === 0) {
+        spawnObstacle();
+      }
+
+      // Move and draw obstacles
+      for (let i = 0; i < obstacles.length; i++) {
+        obstacles[i].x -= 5;
+        ctx.fillStyle = 'red';
+        ctx.fillRect(obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
+
+        // Check for collision with player
+        if (player.x < obstacles[i].x + obstacles[i].width &&
+          player.x + player.width > obstacles[i].x &&
+          player.y < obstacles[i].y + obstacles[i].height &&
+          player.y + player.height > obstacles[i].y) {
+          gameOver = true;
+        }
+
+        // Remove obstacles that are off screen
+        if (obstacles[i].x + obstacles[i].width < 0) {
+          obstacles.splice(i, 1);
+          score++;
+          document.getElementById('score').textContent = 'Score: ' + score;
+        }
+      }
+
+      // End the game if gameOver is true
+      if (gameOver) {
+        ctx.fillStyle = 'black';
+        ctx.font = '48px Arial';
+        ctx.fillText('Game Over', canvas.width / 3, canvas.height / 2);
+        return;
+      }
+
+      // Continue game loop
+      requestAnimationFrame(updateGame);
+    }
+
+    // Start the game loop
+    updateGame();
+  </script>
+</body>
+</html>
