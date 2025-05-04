@@ -18,156 +18,7 @@
     <meta name="360-site-verification" content="d096fe5e66fe60bde102f9dfbbd9911c" />
     <meta name="google-site-verification" content="mD2l3_aOmwjXLEvIAyB7bLGNGBnq7u88vPoK2oNuy3c" />
     <link rel="stylesheet" href="/api/all.min.css">
-    <style>
-        :root {
-            --primary-color: #3498db;
-            --secondary-color: #2ecc71;
-            --accent-color: #e74c3c;
-            --dark-color: #2c3e50;
-            --light-color: #ecf0f1;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            background-color: #f9f9f9;
-            color: #333;
-            padding: 20px;
-        }
-        .header {
-            text-align: center;
-            padding: 30px 0;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: var(--shadow);
-        }
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-        }
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        .blog-link {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 25px;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: bold;
-            transition: var(--transition);
-            border: 2px solid white;
-        }
-        .blog-link:hover {
-            background-color: white;
-            color: var(--primary-color);
-            transform: translateY(-3px);
-        }
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-        .card-header {
-            padding: 15px;
-            text-align: center;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-        .card-body {
-            padding: 20px;
-        }
-        .card-1 .card-header { background-color: #8ecd51; }
-        .card-2 .card-header { background-color: #61bb8d; }
-        .card-3 .card-header { background-color: #6ec095; }
-        .card-4 .card-header { background-color: #68b0aa; }
-        .card-5 .card-header { background-color: #8cc269; }
-        .link-item {
-            display: block;
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            background-color: #f8f9fa;
-            border-radius: 6px;
-            text-decoration: none;
-            color: #333;
-            transition: var(--transition);
-            position: relative;
-            padding-left: 35px;
-        }
-        .link-item:hover {
-            background-color: #e9ecef;
-            color: var(--primary-color);
-            transform: translateX(5px);
-        }
-        .link-item:before {
-            content: "";
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 6px;
-            height: 6px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-        }
-        .quote {
-            font-size: 0.85rem;
-            color: #6c757d;
-            font-style: italic;
-            margin-left: 35px;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px dashed #dee2e6;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            color: #6c757d;
-            border-top: 1px solid #dee2e6;
-        }
-        .footer a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-        .footer a:hover {
-            text-decoration: underline;
-        }
-        @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-            .header h1 {
-                font-size: 2rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/api/index.css">
 </head>
 
 <body>
@@ -183,7 +34,7 @@
                 <i class="fas fa-seedling"></i> 星露谷物语实用工具
             </div>
             <div class="card-body">
-                <a href="https://page.100713.xyz/星露谷物语物品id/" class="link-item">星露谷物语物品id</a>
+                <a href="/星露谷物语物品id/" class="link-item">星露谷物语物品id</a>
                 <a href="https://checkup.100713.xyz/" class="link-item">星露谷物语查缺补漏</a>
             </div>
         </div>
@@ -193,9 +44,9 @@
                 <i class="fas fa-gamepad"></i> 游戏
             </div>
             <div class="card-body">
-                <a href="https://page.100713.xyz/跑酷游戏" class="link-item">跑酷游戏</a>
-                <a href="https://page.100713.xyz/FlappyBird/" class="link-item">飞翔的小鸟</a>
-                <a href="https://page.100713.xyz/网页版捕鱼达人/" class="link-item">网页版捕鱼达人</a>
+                <a href="/跑酷游戏" class="link-item">跑酷游戏</a>
+                <a href="/FlappyBird/" class="link-item">飞翔的小鸟</a>
+                <a href="/网页版捕鱼达人/" class="link-item">网页版捕鱼达人</a>
             </div>
         </div>
 
@@ -204,11 +55,12 @@
                 <i class="fas fa-tools"></i> 实用工具
             </div>
             <div class="card-body">
-                <a href="https://page.100713.xyz/svg在线预览/" class="link-item">svg在线预览</a>
-                <a href="https://page.100713.xyz/必装软件.html" class="link-item">新电脑配置站</a>
-                <a href="https://page.100713.xyz/3D模型简化工具/" class="link-item">3D模型简化</a>
-                <a href="https://page.100713.xyz/中国传统颜色/" class="link-item">中国传统颜色</a>
-                <a href="https://page.100713.xyz/示例/" class="link-item">网站访问量统计工具示例</a>
+                <a href="/svg在线预览/" class="link-item">svg在线预览</a>
+                <a href="/必装软件.html" class="link-item">新电脑配置站</a>
+                <a href="/3D模型简化工具/" class="link-item">3D模型简化</a>
+                <a href="/中国传统颜色/" class="link-item">中国传统颜色</a>
+                <a href="/示例/" class="link-item">网站访问量统计工具示例</a>
+                <a href="/图片压缩/" class="link-item">压缩、转换图片</a>
             </div>
         </div>
 
@@ -217,18 +69,18 @@
                 <i class="fas fa-magic"></i> 界面动画
             </div>
             <div class="card-body">
-                <a href="https://page.100713.xyz/页面动画/轻度装逼" class="link-item">黑客帝国代码雨</a>
-                <a href="https://page.100713.xyz/页面动画/heise" class="link-item">黑色炫酷时钟</a>
-                <a href="https://page.100713.xyz/页面动画/shuibo" class="link-item">水波纹动画</a>
-                <a href="https://page.100713.xyz/页面动画/jishuqi" class="link-item">响应式计数器</a>
-                <a href="https://page.100713.xyz/页面动画/jiandan" class="link-item">简单模拟时钟</a>
-                <a href="https://page.100713.xyz/超大二维码/" class="link-item">超大二维码</a>
-                <a href="https://page.100713.xyz/网页边栏过渡动画/" class="link-item">网页边栏过渡动画</a>
-                <a href="https://page.100713.xyz/阴影效果/" class="link-item">阴影效果</a>
-                <a href="https://page.100713.xyz/柔韧的图片滑动瀑布流布局/" class="link-item">柔韧的图片滑动瀑布流布局</a>
-                <a href="https://page.100713.xyz/html便签/" class="link-item">HTML便签</a>
-                <a href="https://page.100713.xyz/HTML5模拟现实物理效果/" class="link-item">HTML5模拟现实物理效果</a>
-                <a href="https://page.100713.xyz/三体模拟器" class="link-item">三体模拟器</a>
+                <a href="/页面动画/轻度装逼" class="link-item">黑客帝国代码雨</a>
+                <a href="/页面动画/heise" class="link-item">黑色炫酷时钟</a>
+                <a href="/页面动画/shuibo" class="link-item">水波纹动画</a>
+                <a href="/页面动画/jishuqi" class="link-item">响应式计数器</a>
+                <a href="/页面动画/jiandan" class="link-item">简单模拟时钟</a>
+                <a href="/超大二维码/" class="link-item">超大二维码</a>
+                <a href="/网页边栏过渡动画/" class="link-item">网页边栏过渡动画</a>
+                <a href="/阴影效果/" class="link-item">阴影效果</a>
+                <a href="/柔韧的图片滑动瀑布流布局/" class="link-item">柔韧的图片滑动瀑布流布局</a>
+                <a href="/html便签/" class="link-item">HTML便签</a>
+                <a href="/HTML5模拟现实物理效果/" class="link-item">HTML5模拟现实物理效果</a>
+                <a href="/三体模拟器" class="link-item">三体模拟器</a>
             </div>
         </div>
 
@@ -237,7 +89,7 @@
                 <i class="fas fa-smile-wink"></i> 鸡肋小工具
             </div>
             <div class="card-body">
-                <a href="https://100713.xyz/含妈量检测.html" class="link-item">含妈量检测</a>
+                <a href="/含妈量检测.html" class="link-item">含妈量检测</a>
                 <div class="quote">检测语句的含妈量</div>
 
                 <a href="/HTML/鸡肋网页工具/常规图片盲水印查看器.html" class="link-item">常规图片盲水印查看器</a>
@@ -262,7 +114,7 @@
     </div>
 
     <div class="footer">
-        <a href="https://page.100713.xyz/泉州概况.htm">泉州</a> - 静水深流 <span id="year"></span> © 100713.xyz
+        <a href="/泉州概况.htm">泉州</a> - 静水深流 <span id="year"></span> © 100713.xyz
         <p>Created by <a href="https://100713.xyz">静水深流</a> &amp; <a href="https://100713.xyz/about">Ethaniel</a> | System <a href="https://status.100713.xyz/" target="_blank">Status</a></p>
         <span id="sitetime">载入运行时间...</span>
         <span id="busuanzi_container_site_pv">
