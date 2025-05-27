@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D黑洞效果</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { position: fixed; top: 0; left: 0; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        let scene, camera, renderer;
+        let blackHole;
+        
+        const blackHoleVertexShader = `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `;
+
+        const blackHoleFragmentShader = `
+            uniform float time;
+            uniform float aspect;
+            varying vec2 vUv;
+            
+            void main() {
+                vec2 uv = vUv * 2.0 - 1.0;
+                uv.x *= aspect;
+                float dist = length(uv);
+                
+                float angle = atan(uv.y, uv.x);
+                float rotationSpeed = 1.0 - smoothstep(0.0, 1.6, dist);
+                angle += time * rotationSpeed * 2.0;
+                
+                float distortion = 0.15 / (dist + 0.1);
+                vec2 rotatedUv = vec2(
+                    cos(angle) * dist + distortion * cos(angle + time),
+                    sin(angle) * dist + distortion * sin(angle + time)
+                );
+                
+                vec3 color = vec3(0.0);
+                
+                if (dist < 0.25) {
+                    color = vec3(0.0);
+                } 
+                else {
+                    float glow = 0.04 / (abs(dist - 0.5) + 0.05);
+                    color = vec3(1.0, 0.3, 0.1) * glow * 1.5;
+                    
+                    float band = sin(angle * 8.0 + time * 3.0) * 0.5 + 0.5;
+                    color += vec3(1.0, 0.5, 0.2) * band * glow * 0.8;
+                    
+                    float outerGlow = 0.02 / (abs(dist - 0.7) + 0.1);
+                    color += vec3(0.8, 0.3, 0.1) * outerGlow;
+                }
+                
+                color *= 1.2;
+                
+                gl_FragColor = vec4(color, 1.0);
+            }
+        `;
+
+        function init() {
+            scene = new THREE.Scene();
+            
+            const aspect = window.innerWidth / window.innerHeight;
+            const frustumSize = 2;
+            camera = new THREE.OrthographicCamera(
+                -frustumSize * aspect,
+                frustumSize * aspect,
+                frustumSize,
+                -frustumSize,
+                0.1,
+                100
+            );
+            camera.position.z = 1;
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.body.appendChild(renderer.domElement);
+
+            createBlackHole();
+
+            window.addEventListener('resize', onWindowResize, false);
+            animate();
+        }
+
+        function createBlackHole() {
+            const aspect = window.innerWidth / window.innerHeight;
+            const width = 4 * aspect;
+            const height = 4;
+            const geometry = new THREE.PlaneGeometry(width, height);
+            
+            const material = new THREE.ShaderMaterial({
+                uniforms: {
+                    time: { value: 0 },
+                    aspect: { value: aspect }
+                },
+                vertexShader: blackHoleVertexShader,
+                fragmentShader: blackHoleFragmentShader,
+                transparent: true
+            });
+            blackHole = new THREE.Mesh(geometry, material);
+            scene.add(blackHole);
+        }
+
+        function onWindowResize() {
+            const aspect = window.innerWidth / window.innerHeight;
+            const frustumSize = 2;
+            
+            camera.left = -frustumSize * aspect;
+            camera.right = frustumSize * aspect;
+            camera.top = frustumSize;
+            camera.bottom = -frustumSize;
+            camera.updateProjectionMatrix();
+            
+            const width = 4 * aspect;
+            const height = 4;
+            blackHole.geometry = new THREE.PlaneGeometry(width, height);
+            blackHole.material.uniforms.aspect.value = aspect;
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            blackHole.material.uniforms.time.value += 0.01;
+            renderer.render(scene, camera);
+        }
+
+        init();
+    </script>
+</body>
+</html>
