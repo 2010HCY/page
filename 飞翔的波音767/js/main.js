@@ -121,8 +121,16 @@ function getCookie(e) {
   }
   function setMedal() {
     var e = $("#medal");
+    e.empty();
+    e.removeClass("special-medal");
+
+    if (score === 0) {
+      e.addClass("special-medal");
+      e.append('<img src="assets/The best pilot in the Middle East.png" alt="The best pilot in the Middle East">');
+      return true;
+    }
+
     return (
-      e.empty(),
       10 > score
         ? !1
         : (score >= 10 && (medal = "bronze"),
