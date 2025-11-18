@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>目录结构树生成器</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>目录结构树生成器</h1>
+            <p class="description">选择目录，生成Markdown格式的目录结构树</p>
+        </header>
+        
+        <main>
+            <div class="section">
+                <h2 class="section-title">1. 选择目录</h2>
+                <div class="file-input-area" id="dropArea">
+                    <p>将文件夹拖放到此处，或点击选择文件夹</p>
+                    <button class="btn" id="selectFolderBtn">选择文件夹</button>
+                    <input type="file" id="directoryInput" webkitdirectory directory style="display: none;">
+                </div>
+                <div id="directoryDisplay">未选择目录</div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">2. 配置选项</h2>
+                <div class="options">
+                    <div class="option-group">
+                        <div class="form-group">
+                            <label for="rootName">根目录显示名称:</label>
+                            <input type="text" id="rootName" placeholder="默认使用选择的文件夹名称">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="ignorePatterns">忽略的文件或目录（每行一个）:</label>
+                            <textarea id="ignorePatterns">\.git
+node_modules
+\.DS_Store
+__pycache__
+\.vscode</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <div class="form-group">
+                            <label for="commentsArea">文件/目录注释（格式：路径 # 注释）:</label>
+                            <textarea id="commentsArea" placeholder="例如:
+src # 源代码目录
+src/components # 组件目录"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="includeEmpty" checked>
+                                    <span>包含空目录</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="directoriesOnly">
+                                    <span>只读取目录（不包含文件）</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="inline-form-control">
+                                <label for="maxDepth">目录层级深度限制:</label>
+                                <div class="number-input-container">
+                                    <input type="number" id="maxDepth" min="1" max="10" value="10">
+                                    <span class="input-hint">（1-10级）</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn" id="generateBtn" disabled>生成目录结构</button>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">3. 生成的目录结构</h2>
+                <div id="successMessage" class="success-message">结构生成成功！</div>
+                <div id="errorMessage" class="error-message">生成结构时出错，请重试。</div>
+                <pre id="preview">目录结构将显示在这里...</pre>
+                <button class="btn" id="copyBtn" disabled>复制到剪贴板</button>
+                <button class="btn btn-secondary" id="downloadBtn" disabled>下载为MD文件</button>
+            </div>
+        </main>
+        
+        <footer>
+            <p>© 2025 目录结构树生成器 | 所有操作在本地完成，不会上传您的文件</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
