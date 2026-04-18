@@ -1,34 +1,217 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="https://100713.xyz/medias/Hlogo徽章.svg">
-    <meta name="keywords" content="静水深流, 三体运动, 三体运动模拟器, 三体, JS物理模拟, 天体模拟">
-    <meta name="description" content="使用浏览器模拟三体运动">
-    <meta name="author" content="Ethaniel">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>三体运动模拟器</title>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-    
-        gtag('config', 'G-2PPF1NPLTJ');
-    </script>
-    <script defer src="https://umami.hcyhub.com/script.js" data-website-id="ca405925-8fb8-4024-921b-b4a62002bd4d"></script>
-    <script async src="/api/blog-count.js"></script>
+    <title>H5 优雅三体模拟器 - 极致丝滑版</title>
     <style>
-        body {
+        body, html {
             margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
+            background-color: #ffffff;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
         }
         canvas {
             display: block;
+            width: 100%;
+            height: 100%;
+        }
+        #tips {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            text-align: center;
+            color: #cccccc;
+            font-size: 14px;
+            pointer-events: none;
+            letter-spacing: 2px;
+            user-select: none;
         }
     </style>
 </head>
 <body>
-    <canvas id="gravityCanvas"></canvas>
-    <script src="simulation.js"></script>
+
+    <canvas id="simCanvas"></canvas>
+    <div id="tips">点击屏幕随机生成 | 按 F12 打开控制台查看/设置轨迹参数</div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // 物理参数
+        const G = 1;                
+        const dt = 0.002;           
+        const stepsPerFrame = 30;   // 每帧计算次数
+        const soften = 0.15;        
+        const maxSpeed = 2.5;       
+        
+        // 渲染参数
+        const trailLength = 400;    // 增加历史数组长度，因为我们提高了采样率
+        const sampleRate = 4;       // 每计算4次物理步长，记录一次轨迹（使轨迹点极其密集，消除折线感）
+
+        let width, height, centerX, centerY, scale;
+        let bodies = [];
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.scale(dpr, dpr);
+            
+            centerX = width / 2;
+            centerY = height / 2;
+            scale = Math.min(width, height) / 3.5; 
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        function initRandom() {
+            let config = [];
+            let sumX = 0, sumY = 0, sumVx = 0, sumVy = 0;
+            
+            for (let i = 0; i < 3; i++) {
+                config.push({
+                    x: (Math.random() - 0.5) * 2,
+                    y: (Math.random() - 0.5) * 2,
+                    vx: (Math.random() - 0.5) * 1.5,
+                    vy: (Math.random() - 0.5) * 1.5
+                });
+                sumX += config[i].x; sumY += config[i].y;
+                sumVx += config[i].vx; sumVy += config[i].vy;
+            }
+            
+            for (let i = 0; i < 3; i++) {
+                config[i].x -= sumX / 3;
+                config[i].y -= sumY / 3;
+                config[i].vx -= sumVx / 3;
+                config[i].vy -= sumVy / 3;
+            }
+
+            loadConfig(config, false);
+
+            console.log("%c新宇宙已生成！", "color: #999; font-weight: bold; font-size: 16px;");
+            console.log("%c遇到喜欢的轨迹？复制下方代码，下次在控制台输入即可恢复：", "color: #aaa;");
+            console.log(`%cloadConfig(${JSON.stringify(config)})`, "color: #4CAF50; background: #f4f4f4; padding: 4px; border-radius: 4px;");
+        }
+
+        window.loadConfig = function(configArray, isManual = true) {
+            bodies = [];
+            for(let i = 0; i < 3; i++) {
+                bodies.push({
+                    x: configArray[i].x,
+                    y: configArray[i].y,
+                    vx: configArray[i].vx,
+                    vy: configArray[i].vy,
+                    mass: 1,
+                    history: []
+                });
+            }
+            if(isManual) {
+                console.log("%c宇宙已按照指定参数重组！", "color: #2196F3; font-weight: bold; font-size: 14px;");
+            }
+        };
+
+        function updatePhysics() {
+            for (let step = 0; step < stepsPerFrame; step++) {
+
+                for (let i = 0; i < 3; i++) {
+                    bodies[i].ax = 0;
+                    bodies[i].ay = 0;
+                    for (let j = 0; j < 3; j++) {
+                        if (i === j) continue;
+                        let dx = bodies[j].x - bodies[i].x;
+                        let dy = bodies[j].y - bodies[i].y;
+                        let distSq = dx * dx + dy * dy;
+                        let dist = Math.sqrt(distSq);
+                        
+                        let force = (G * bodies[j].mass) / (distSq + soften);
+                        bodies[i].ax += force * (dx / dist);
+                        bodies[i].ay += force * (dy / dist);
+                    }
+                }
+                
+                for (let i = 0; i < 3; i++) {
+                    bodies[i].vx += bodies[i].ax * dt;
+                    bodies[i].vy += bodies[i].ay * dt;
+                    
+                    let speedSq = bodies[i].vx * bodies[i].vx + bodies[i].vy * bodies[i].vy;
+                    if (speedSq > maxSpeed * maxSpeed) {
+                        let speed = Math.sqrt(speedSq);
+                        bodies[i].vx = (bodies[i].vx / speed) * maxSpeed;
+                        bodies[i].vy = (bodies[i].vy / speed) * maxSpeed;
+                    }
+
+                    bodies[i].x += bodies[i].vx * dt;
+                    bodies[i].y += bodies[i].vy * dt;
+                }
+
+                if (step % sampleRate === 0) {
+                    for (let i = 0; i < 3; i++) {
+                        bodies[i].history.push({ x: bodies[i].x, y: bodies[i].y });
+                        if (bodies[i].history.length > trailLength) {
+                            bodies[i].history.shift(); 
+                        }
+                    }
+                }
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let i = 0; i < 3; i++) {
+                const hist = bodies[i].history;
+                if (hist.length < 2) continue;
+
+                ctx.lineCap = 'butt';  
+                ctx.lineJoin = 'round';
+
+                for (let j = 1; j < hist.length; j++) {
+                    ctx.beginPath();
+                    ctx.moveTo(centerX + hist[j - 1].x * scale, centerY + hist[j - 1].y * scale);
+                    ctx.lineTo(centerX + hist[j].x * scale, centerY + hist[j].y * scale);
+                    
+                    let alpha = (j / hist.length) * 0.7; 
+                    ctx.strokeStyle = `rgba(180, 180, 180, ${alpha})`;
+                    ctx.lineWidth = 1.8;
+                    ctx.stroke();
+                }
+            }
+
+            for (let i = 0; i < 3; i++) {
+                const b = bodies[i];
+                const drawX = centerX + b.x * scale;
+                const drawY = centerY + b.y * scale;
+
+                ctx.beginPath();
+                ctx.arc(drawX, drawY, 6, 0, Math.PI * 2);
+                
+                ctx.fillStyle = '#999999';
+                ctx.shadowColor = 'rgba(150, 150, 150, 0.6)';
+                ctx.shadowBlur = 12;
+                ctx.fill();
+                ctx.shadowBlur = 0; 
+            }
+        }
+
+        function loop() {
+            updatePhysics();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        canvas.addEventListener('click', initRandom);
+
+        const defaultOrbit = [{"x":0.97000436,"y":-0.24308753,"vx":0.466203685,"vy":0.43236573},{"x":-0.97000436,"y":0.24308753,"vx":0.466203685,"vy":0.43236573},{"x":0,"y":0,"vx":-0.93240737,"vy":-0.86473146}];
+        loadConfig(defaultOrbit, false);
+        loop();
+
+    </script>
 </body>
 </html>

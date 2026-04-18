@@ -1,0 +1,110 @@
+{
+    "504": {
+        "id": "504",
+        "name": "Sneakers",
+        "type": "B",
+        "zName": "运动鞋"
+    },
+    "505": {
+        "id": "505",
+        "name": "Rubber Boots",
+        "type": "B",
+        "zName": "橡胶靴"
+    },
+    "506": {
+        "id": "506",
+        "name": "Leather Boots",
+        "type": "B",
+        "zName": "皮靴"
+    },
+    "507": {
+        "id": "507",
+        "name": "Work Boots",
+        "type": "B",
+        "zName": "工作靴"
+    },
+    "508": {
+        "id": "508",
+        "name": "Combat Boots",
+        "type": "B",
+        "zName": "战靴"
+    },
+    "509": {
+        "id": "509",
+        "name": "Tundra Boots",
+        "type": "B",
+        "zName": "冻土靴"
+    },
+    "510": {
+        "id": "510",
+        "name": "Thermal Boots",
+        "type": "B",
+        "zName": "热能靴"
+    },
+    "511": {
+        "id": "511",
+        "name": "Dark Boots",
+        "type": "B",
+        "zName": "黑暗之靴"
+    },
+    "512": {
+        "id": "512",
+        "name": "Firewalker Boots",
+        "type": "B",
+        "zName": "蹈火者靴"
+    },
+    "513": {
+        "id": "513",
+        "name": "Genie Shoes",
+        "type": "B",
+        "zName": "神怪之鞋"
+    },
+    "514": {
+        "id": "514",
+        "name": "Space Boots",
+        "type": "B",
+        "zName": "太空之靴"
+    },
+    "515": {
+        "id": "515",
+        "name": "Cowboy Boots",
+        "type": "B",
+        "zName": "牛仔之靴"
+    },
+    "804": {
+        "id": "804",
+        "name": "Emily's Magic Boots",
+        "type": "B",
+        "zName": "艾米丽的魔法靴"
+    },
+    "806": {
+        "id": "806",
+        "name": "Leprechaun Shoes",
+        "type": "B",
+        "zName": "矮精灵鞋子"
+    },
+    "853": {
+        "id": "853",
+        "name": "Cinderclown Shoes",
+        "type": "B",
+        "zName": "灰烬小丑鞋"
+    },
+    "854": {
+        "id": "854",
+        "name": "Mermaid Boots",
+        "type": "B",
+        "zName": "美人鱼靴"
+    },
+    "855": {
+        "id": "855",
+        "name": "Dragonscale Boots",
+        "type": "B",
+        "zName": "龙鳞靴"
+    },
+    "878": {
+        "id": "878",
+        "name": "Crystal Shoes",
+        "type": "B",
+        "zName": "水晶鞋"
+    }
+}
