@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>静水深流 | 3D模型简化缩小 | 静水深流</title>
+    <link rel="stylesheet" href="/api/all.min.css">
+    <link rel="icon" href="https://hcyhub.com/medias/Hlogo徽章.svg">
+    <meta name="author" content="Ethaniel">
+    <meta charset="utf-8">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            width: 100%;
+            color: #747806;
+            height: 64px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 999;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            width: 96%;
+            margin: 0 auto;
+            position: relative;
+        }
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .brand-logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+        }
+        .logo-img {
+            height: 45px;
+            width: 40px;
+            margin-right: 8px;
+        }
+        .logo-span {
+            color: #747806;
+            font-size: 24px;
+            font-weight: 400;
+        }
+        .center-nav {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        .center-nav a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 24px;
+            color: #747806;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .center-nav a i {
+            margin-right: 8px;
+            font-size: 20px;
+        }
+        .header-info {
+            text-align: right;
+            font-size: 11px;
+            color: #999999;
+            line-height: 1.4;
+            flex-shrink: 0;
+        }
+        .header-info a {
+            color: #999999;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .header-info a:hover {
+            color: #747806;
+            text-decoration: underline;
+        }
+        .header-info p {
+            margin: 0;
+        }
+        .header-info i {
+            font-size: 10px;
+        }
+        .stats-value {
+            font-weight: bold;
+        }
+        .content-frame {
+            flex-grow: 1;
+            width: 100%;
+            border: none;
+            background-color: #f5f5f5;
+        }
+        .mobile-info-btn,
+        .mobile-close-btn,
+        .info-mask {
+            display: none;
+        }
+        @media (max-width: 900px) {
+            .logo-span {
+                font-size: 18px;
+            }
+            .mobile-info-btn {
+                display: block;
+                background: none;
+                border: none;
+                color: #999999;
+                font-size: 24px;
+                cursor: pointer;
+                padding: 0 10px;
+                z-index: 10;
+                flex-shrink: 0;
+            }
+            .header-info {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #ffffff;
+                z-index: 2120;
+                padding: 35px 20px 20px 20px;
+                border-radius: 8px;
+                box-shadow: 0 12px 36px rgba(0,0,0,0.2);
+                text-align: center;
+                width: 80%;
+                max-width: 320px;
+                font-size: 13px;
+            }
+            .header-info.active {
+                display: block;
+            }
+            .header-info div, 
+            .header-info p {
+                margin-top: 10px;
+                line-height: 1.6;
+            }
+            .mobile-close-btn {
+                display: block;
+                position: absolute;
+                top: 10px;
+                right: 12px;
+                background: none;
+                border: none;
+                font-size: 22px;
+                color: #aaaaaa;
+                cursor: pointer;
+            }
+            .info-mask {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 100;
+            }
+            .info-mask.active {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="brand-logo">
+                <a href="/">
+                    <img src="/api/Hlogo徽章.svg" alt="Flash收藏站Logo" class="logo-img" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iI2Q1ZGNhMSIvPjwvc3ZnPg=='"> 
+                    <span class="logo-span">Page</span>
+                </a>
+            </div>
+            <div class="center-nav">
+                <a href="/"><i class="fas fa-home"></i><span>返回首页</span></a>
+            </div>
+            <div class="header-info">
+                <button class="mobile-close-btn" id="mobileCloseBtn"><i class="fas fa-times"></i></button>
+                <a href="/泉州概况.htm">泉州</a> - 静水深流 <span id="year"></span> © hcyhub.com
+                <p>Created by <a href="https://hcyhub.com">静水深流</a> &amp; <a href="https://hcyhub.com/about">Ethaniel</a> | System <a href="https://status.hcyhub.com/" target="_blank">Status</a></p>
+                <div>
+                    <span id="sitetime">载入运行时间...</span>
+                    <span id="busuanzi_container_site_pv">&nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span class="stats-value" id="PageMeter_site_pv">加载中...</span>&nbsp;次</span>
+                    <span id="busuanzi_container_site_uv">&nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span class="stats-value" id="PageMeter_site_uv">加载中...</span>&nbsp;人</span>
+                </div>
+            </div>
+            <button class="mobile-info-btn" id="mobileInfoBtn" aria-label="查看站点信息"><i class="fas fa-info-circle"></i></button>
+        </div>
+    </header>
+
+    <div class="info-mask" id="infoMask"></div>
+    <iframe class="content-frame" src="index-index.html" title="静水深流 | 3D模型简化缩小"></iframe>
+
+    <script type="text/javascript" src="/api/sitetime.js"></script>
+    <script type="text/javascript" src="/api/blog-count.js"></script> 
+    <script>
+                document.addEventListener('DOMContentLoaded', function() {
+            const infoBtn = document.getElementById('mobileInfoBtn');
+            const closeBtn = document.getElementById('mobileCloseBtn');
+            const infoModal = document.querySelector('.header-info');
+            const mask = document.getElementById('infoMask');
+
+            function toggleInfoModal(show) {
+                if (show) {
+                    infoModal.classList.add('active');
+                    mask.classList.add('active');
+                } else {
+                    infoModal.classList.remove('active');
+                    mask.classList.remove('active');
+                }
+            }
+
+            if (infoBtn && closeBtn && mask && infoModal) {
+                infoBtn.addEventListener('click', () => toggleInfoModal(true));
+                closeBtn.addEventListener('click', () => toggleInfoModal(false));
+                mask.addEventListener('click', () => toggleInfoModal(false));
+            }
+        });
+    </script>
+</body>
+</html>
