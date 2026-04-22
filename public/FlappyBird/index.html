@@ -4,6 +4,17 @@
     <title>Cocos Creator | FlappyBird | 静水深流</title>
     <link rel="stylesheet" href="/api/all.min.css">
     <link rel="icon" href="/api/Hlogo徽章.svg" type="image/svg+xml">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="full-screen" content="yes"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="x5-orientation" content="portrait">
+    <meta name="browsermode" content="application">
+    <meta name="x5-page-mode" content="app">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="360-fullscreen" content="true"/>
     <meta name="author" content="Ethaniel">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -203,7 +214,51 @@
     </header>
 
     <div class="info-mask" id="infoMask"></div>
-    <iframe class="content-frame" src="index-index.html" title="Cocos Creator | FlappyBird"></iframe>
+    <iframe class="content-frame" srcdoc="<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=&quot;utf-8&quot;>
+  <title>Cocos Creator | FlappyBird</title>
+  <script async src=&quot;/api/blog-count.js&quot;></script>
+  <!--http://www.html5rocks.com/en/mobile/mobifying/-->
+  <meta name=&quot;viewport&quot;
+        content=&quot;width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1,target-densitydpi=device-dpi&quot;/>
+
+  <!--https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html-->
+  <meta name=&quot;apple-mobile-web-app-capable&quot; content=&quot;yes&quot;>
+  <meta name=&quot;apple-mobile-web-app-status-bar-style&quot; content=&quot;black-translucent&quot;>
+  <meta name=&quot;format-detection&quot; content=&quot;telephone=no&quot;>
+
+  <meta name=&quot;full-screen&quot; content=&quot;yes&quot;/>
+  <meta name=&quot;screen-orientation&quot; content=&quot;portrait&quot;/>
+  <meta name=&quot;x5-orientation&quot; content=&quot;portrait&quot;>
+  <meta name=&quot;browsermode&quot; content=&quot;application&quot;>
+  <meta name=&quot;x5-page-mode&quot; content=&quot;app&quot;>
+  <meta name=&quot;msapplication-tap-highlight&quot; content=&quot;no&quot;>
+  <meta name=&quot;x5-fullscreen&quot; content=&quot;true&quot;/>
+  <meta name=&quot;360-fullscreen&quot; content=&quot;true&quot;/>
+
+  <!--<link rel=&quot;apple-touch-icon&quot; href=&quot;.png&quot; />-->
+  <!--<link rel=&quot;apple-touch-icon-precomposed&quot; href=&quot;.png&quot; />-->
+
+  <link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;style.css&quot;/>
+
+</head>
+<body>
+<div id=&quot;GameDiv&quot; class=&quot;wrapper&quot;>
+  <canvas id=&quot;GameCanvas&quot; oncontextmenu=&quot;event.preventDefault()&quot; tabindex=&quot;0&quot;></canvas>
+  <div id=&quot;splash&quot;>
+    <div class=&quot;progress-bar stripes&quot;>
+      <span style=&quot;width: 0%&quot;></span>
+    </div>
+  </div>
+</div>
+<script src=&quot;src/settings.js&quot; charset=&quot;utf-8&quot;></script>
+<script src=&quot;cocos2d-js-min.js&quot; charset=&quot;utf-8&quot;></script>
+<script src=&quot;main.js&quot; charset=&quot;utf-8&quot;></script>
+</body>
+</html>
+" title="Cocos Creator | FlappyBird"></iframe>
 
     <script type="text/javascript" src="/api/sitetime.js"></script>
     <script type="text/javascript" src="/api/blog-count.js"></script> 

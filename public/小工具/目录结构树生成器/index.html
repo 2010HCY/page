@@ -4,6 +4,7 @@
     <title>目录结构树生成器 | 静水深流</title>
     <link rel="stylesheet" href="/api/all.min.css">
     <link rel="icon" href="/api/Hlogo徽章.svg" type="image/svg+xml">
+    
     <meta name="author" content="Ethaniel">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -203,7 +204,112 @@
     </header>
 
     <div class="info-mask" id="infoMask"></div>
-    <iframe class="content-frame" src="index-index.html" title="目录结构树生成器"></iframe>
+    <iframe class="content-frame" srcdoc="<!DOCTYPE html>
+<html lang=&quot;zh-CN&quot;>
+<head>
+    <meta charset=&quot;UTF-8&quot;>
+    <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
+    <title>目录结构树生成器</title>
+    <link rel=&quot;stylesheet&quot; href=&quot;default.min.css&quot;>
+    <link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;>
+    <script async src=&quot;/api/blog-count.js&quot;></script>
+</head>
+<body>
+    <div class=&quot;container&quot;>
+        <header>
+            <h1>目录结构树生成器</h1>
+            <p class=&quot;description&quot;>选择目录，生成Markdown格式的目录结构树</p>
+            <a href=&quot;https://hcyhub.com/%E7%BC%96%E7%A8%8B/%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E6%A0%91%E7%94%9F%E6%88%90%E5%99%A8&quot; target=&quot;_blank&quot; style=&quot;color: rgb(238, 238, 238);&quot;>下载桌面版本</a>
+        </header>
+        
+        <main>
+            <div class=&quot;section&quot;>
+                <h2 class=&quot;section-title&quot;>1. 选择目录</h2>
+                <div class=&quot;file-input-area&quot; id=&quot;dropArea&quot;>
+                    <p>将文件夹拖放到此处，或点击选择文件夹</p>
+                    <button class=&quot;btn&quot; id=&quot;selectFolderBtn&quot;>选择文件夹</button>
+                    <input type=&quot;file&quot; id=&quot;directoryInput&quot; webkitdirectory directory style=&quot;display: none;&quot;>
+                </div>
+                <div id=&quot;directoryDisplay&quot;>未选择目录</div>
+            </div>
+            
+            <div class=&quot;section&quot;>
+                <h2 class=&quot;section-title&quot;>2. 配置选项</h2>
+                <div class=&quot;options&quot;>
+                    <div class=&quot;option-group&quot;>
+                        <div class=&quot;form-group&quot;>
+                            <label for=&quot;rootName&quot;>根目录显示名称:</label>
+                            <input type=&quot;text&quot; id=&quot;rootName&quot; placeholder=&quot;默认使用选择的文件夹名称&quot;>
+                        </div>
+                        
+                        <div class=&quot;form-group&quot;>
+                            <label for=&quot;ignorePatterns&quot;>忽略的文件或目录（每行一个）:</label>
+                            <textarea id=&quot;ignorePatterns&quot;>\.git
+node_modules
+\.DS_Store
+__pycache__
+\.vscode</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class=&quot;option-group&quot;>
+                        <div class=&quot;form-group&quot;>
+                            <label for=&quot;commentsArea&quot;>文件/目录注释（格式：路径 # 注释）:</label>
+                            <textarea id=&quot;commentsArea&quot; placeholder=&quot;例如:
+src # 源代码目录
+src/components # 组件目录&quot;></textarea>
+                        </div>
+                        
+                        <div class=&quot;form-group&quot;>
+                            <div class=&quot;checkbox-group&quot;>
+                                <label class=&quot;checkbox-label&quot;>
+                                    <input type=&quot;checkbox&quot; id=&quot;includeEmpty&quot; checked>
+                                    <span>包含空目录</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class=&quot;form-group&quot;>
+                            <div class=&quot;checkbox-group&quot;>
+                                <label class=&quot;checkbox-label&quot;>
+                                    <input type=&quot;checkbox&quot; id=&quot;directoriesOnly&quot;>
+                                    <span>只读取目录（不包含文件）</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class=&quot;form-group&quot;>
+                            <div class=&quot;inline-form-control&quot;>
+                                <label for=&quot;maxDepth&quot;>目录层级深度限制:</label>
+                                <div class=&quot;number-input-container&quot;>
+                                    <input type=&quot;number&quot; id=&quot;maxDepth&quot; min=&quot;1&quot; max=&quot;10&quot; value=&quot;10&quot;>
+                                    <span class=&quot;input-hint&quot;>（1-10级）</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class=&quot;btn&quot; id=&quot;generateBtn&quot; disabled>生成目录结构</button>
+            </div>
+            
+            <div class=&quot;section&quot;>
+                <h2 class=&quot;section-title&quot;>3. 生成的目录结构</h2>
+                <div id=&quot;successMessage&quot; class=&quot;success-message&quot;>结构生成成功！</div>
+                <div id=&quot;errorMessage&quot; class=&quot;error-message&quot;>生成结构时出错，请重试。</div>
+                <pre id=&quot;preview&quot;>目录结构将显示在这里...</pre>
+                <button class=&quot;btn&quot; id=&quot;copyBtn&quot; disabled>复制到剪贴板</button>
+                <button class=&quot;btn btn-secondary&quot; id=&quot;downloadBtn&quot; disabled>下载为MD文件</button>
+            </div>
+        </main>
+        
+        <footer>
+            <p>© 2025 目录结构树生成器 | 所有操作在本地完成，不会上传您的文件</p>
+        </footer>
+    </div>
+
+    <script src=&quot;script.js&quot;></script>
+</body>
+</html>
+" title="目录结构树生成器"></iframe>
 
     <script type="text/javascript" src="/api/sitetime.js"></script>
     <script type="text/javascript" src="/api/blog-count.js"></script> 

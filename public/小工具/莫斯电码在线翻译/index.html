@@ -4,6 +4,7 @@
     <title>摩斯密码翻译工具 | 静水深流</title>
     <link rel="stylesheet" href="/api/all.min.css">
     <link rel="icon" href="/api/Hlogo徽章.svg" type="image/svg+xml">
+    
     <meta name="author" content="Ethaniel">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -203,7 +204,109 @@
     </header>
 
     <div class="info-mask" id="infoMask"></div>
-    <iframe class="content-frame" src="index-index.html" title="摩斯密码翻译工具"></iframe>
+    <iframe class="content-frame" srcdoc="<!DOCTYPE html>
+<html lang=&quot;zh-CN&quot;>
+<head>
+    <meta charset=&quot;UTF-8&quot;>
+    <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
+    <title>摩斯密码翻译工具</title>
+    <script async src=&quot;/api/blog-count.js&quot;></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class=&quot;container&quot;>
+        <h1>摩斯密码翻译工具</h1>
+        <label for=&quot;inputText&quot;>输入文本或摩斯密码：</label>
+        <textarea id=&quot;inputText&quot; placeholder=&quot;输入英文或摩斯密码...&quot;></textarea>
+        <button onclick=&quot;translateToMorse()&quot;>翻译为摩斯密码</button>
+        <button onclick=&quot;translateToText()&quot;>翻译为普通文本</button>
+        <label for=&quot;outputText&quot;>输出结果：</label>
+        <textarea id=&quot;outputText&quot; readonly placeholder=&quot;翻译结果...&quot;></textarea>
+    </div>
+
+    <script>
+        const morseCodeMap = {
+            'A': '·-', 'B': '-···', 'C': '-·-·', 'D': '-··', 'E': '·', 'F': '··-·',
+            'G': '--·', 'H': '····', 'I': '··', 'J': '·---', 'K': '-·-', 'L': '·-··',
+            'M': '--', 'N': '-·', 'O': '---', 'P': '·--·', 'Q': '--·-', 'R': '·-·',
+            'S': '···', 'T': '-', 'U': '··-', 'V': '···-', 'W': '·--', 'X': '-··-',
+            'Y': '-·--', 'Z': '--··',
+            '1': '·----', '2': '··---', '3': '···--', '4': '····-', '5': '·····',
+            '6': '-····', '7': '--···', '8': '---··', '9': '----·', '0': '-----',
+            '·': '·-·-·-', ',': '--··--', '?': '··--··', &quot;'&quot;: '·----·', '!': '-·-·--',
+            '/': '-··-·', '(': '-·--·', ')': '-·--·-', '&amp;': '·-···', ':': '---···',
+            ';': '-·-·-·', '=': '-···-', '+': '·-·-·', '-': '-····-', '_': '··--·-',
+            '&quot;': '·-··-·', '$': '···-··-', '@': '·--·-·', ' ': '/'
+        };
+
+        const textToMorse = (text) => {
+            return text.toUpperCase().split('').map(char => morseCodeMap[char] || '').join(' ');
+        };
+
+        const morseToText = (morse) => {
+            const reverseMorseCodeMap = Object.entries(morseCodeMap).reduce((acc, [key, value]) => {
+                acc[value] = key;
+                return acc;
+            }, {});
+
+            return morse.split(' ').map(code => reverseMorseCodeMap[code] || '').join('');
+        };
+
+        function translateToMorse() {
+            const input = document.getElementById('inputText').value;
+            const result = textToMorse(input);
+            document.getElementById('outputText').value = result;
+        }
+
+        function translateToText() {
+            const input = document.getElementById('inputText').value;
+            const result = morseToText(input);
+            document.getElementById('outputText').value = result;
+        }
+    </script>
+</body>
+</html>" title="摩斯密码翻译工具"></iframe>
 
     <script type="text/javascript" src="/api/sitetime.js"></script>
     <script type="text/javascript" src="/api/blog-count.js"></script> 

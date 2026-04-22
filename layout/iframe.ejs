@@ -4,6 +4,7 @@
     <title><%= title %> | 静水深流</title>
     <link rel="stylesheet" href="/api/all.min.css">
     <%- icon %>
+    <%- metaTags %>
     <meta name="author" content="Ethaniel">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -203,7 +204,7 @@
     </header>
 
     <div class="info-mask" id="infoMask"></div>
-    <iframe class="content-frame" src="<%= iframeSrc %>" title="<%= title %>"></iframe>
+    <iframe class="content-frame" srcdoc="<%- srcdocContent %>" title="<%= title %>"></iframe>
 
     <script type="text/javascript" src="/api/sitetime.js"></script>
     <script type="text/javascript" src="/api/blog-count.js"></script> 

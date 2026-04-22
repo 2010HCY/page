@@ -4,6 +4,9 @@
     <title>含妈量检测 | 静水深流</title>
     <link rel="stylesheet" href="/api/all.min.css">
     <link rel="icon" href="https://100713.xyz/medias/Hlogo徽章.svg">
+    <meta name="keywords" content="静水深流, 静态页面索引, 含妈量检测, 在线含妈量检测工具, 在线工具">
+    <meta name="description" content="含妈量检测器，检测语句中的含妈量">
+    <meta name="author" content="Ethaniel">
     <meta name="author" content="Ethaniel">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -203,7 +206,122 @@
     </header>
 
     <div class="info-mask" id="infoMask"></div>
-    <iframe class="content-frame" src="index-index.html" title="含妈量检测"></iframe>
+    <iframe class="content-frame" srcdoc="<!DOCTYPE html>
+<html lang=&quot;zh-CN&quot;>
+<head>
+    <meta charset=&quot;UTF-8&quot;>
+    <link rel=&quot;icon&quot; href=&quot;https://100713.xyz/medias/Hlogo徽章.svg&quot;>
+    <meta name=&quot;keywords&quot; content=&quot;静水深流, 静态页面索引, 含妈量检测, 在线含妈量检测工具, 在线工具&quot;>
+    <meta name=&quot;description&quot; content=&quot;含妈量检测器，检测语句中的含妈量&quot;>
+    <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
+    <meta name=&quot;author&quot; content=&quot;Ethaniel&quot;>
+    <title>含妈量检测</title>
+    <script async src=&quot;/api/blog-count.js&quot;></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #555;
+        }
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class=&quot;container&quot;>
+        <h1>含妈量检测</h1>
+        <textarea id=&quot;textInput&quot; placeholder=&quot;请输入内容...&quot;></textarea>
+        <button onclick=&quot;detectMa()&quot;>检测</button>
+        <div class=&quot;result&quot; id=&quot;result&quot;></div>
+    </div>
+
+    <script>
+        function detectMa() {
+            const inputText = document.getElementById(&quot;textInput&quot;).value;
+            const targetChars = [
+                &quot;妈&quot;, &quot;媽&quot;, &quot;ma&quot;, &quot;NM&quot;, &quot;nm&quot;, &quot;mom&quot;, &quot;mama&quot;, &quot;momma&quot;, &quot;Mamma&quot;, 
+                &quot;m&quot;, &quot;M&quot;, &quot;🐎&quot;, &quot;码&quot;, &quot;泥马&quot;, &quot;尼姆&quot;, &quot;母&quot;, &quot;母亲&quot;, &quot;姆&quot;, &quot;尼玛&quot;, 
+                &quot;尼马&quot;, &quot;TM&quot;, &quot;TMD&quot;, &quot;NM&quot;, &quot;Mom&quot;, &quot;Mother&quot;, &quot;Mum&quot;, &quot;Maman&quot;, &quot;Mère&quot;, 
+                &quot;Mutter&quot;, &quot;Mamá&quot;, &quot;Madre&quot;, &quot;Mamãe&quot;, &quot;Mãe&quot;, &quot;お母さん&quot;, &quot;おかあさん&quot;, 
+                &quot;はは&quot;, &quot;ママ&quot;, &quot;엄마&quot;, &quot;eomma&quot;, &quot;어머니&quot;, &quot;eomeoni&quot;, &quot;أم&quot;, &quot;um&quot;, &quot;ماما&quot;, 
+                &quot;Мать&quot;, &quot;mat&quot;, &quot;แม่&quot;, &quot;mái&quot;, &quot;มาม่า&quot;, &quot;mā-mā&quot;, &quot;Mẹ&quot;, &quot;mā&quot;, &quot;māmā&quot;, &quot;māmī&quot;, &quot;lǎomā&quot;,
+                &quot;玛德&quot;, &quot;nmsl&quot;, &quot;NMSL&quot;, &quot;草泥马&quot;, &quot;司马&quot;, &quot;私募&quot;
+            ];
+            let totalChars = inputText.length;
+
+            if (totalChars === 0) {
+                document.getElementById(&quot;result&quot;).innerHTML = &quot;请输入内容后再检测。&quot;;
+                return;
+            }
+
+            let matchCount = 0;
+            let highlightedText = inputText;
+
+            targetChars.forEach(char => {
+                const regex = new RegExp(char, &quot;g&quot;);
+                const matches = inputText.match(regex);
+                if (matches) {
+                    matchCount += matches.length;
+                    highlightedText = highlightedText.replace(regex, `<span class='highlight'>${char}</span>`);
+                }
+            });
+
+            const percentage = ((matchCount / totalChars) * 100).toFixed(2);
+
+            document.getElementById(&quot;result&quot;).innerHTML = `
+                <p>检测到的含妈总数：<strong>${matchCount}</strong></p>
+                <p>占比：<strong>${percentage}%</strong></p>
+                <p>检测到的妈字：</p>
+                <p>${highlightedText}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
+" title="含妈量检测"></iframe>
 
     <script type="text/javascript" src="/api/sitetime.js"></script>
     <script type="text/javascript" src="/api/blog-count.js"></script> 

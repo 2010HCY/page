@@ -57,17 +57,22 @@ async function build() {
                     const iconMatch = rawContent.match(/<link[^>]+rel=["'](?:shortcut )?icon["'][^>]*>/i);
                     const pageIcon = iconMatch ? iconMatch[0] : '<link rel="icon" href="/api/Hlogo徽章.svg" type="image/svg+xml">';
 
-                    const rawFileName = `${parsedInfo.name}-${parsedInfo.name}${parsedInfo.ext}`;
-                    const rawDestPath = path.join(path.dirname(destPath), rawFileName);
+                    const metaMatches = rawContent.match(/<meta[^>]*>/gi) || [];
+                    const filteredMetaTags = metaMatches
+                        .filter(tag => !/charset|viewport/i.test(tag))
+                        .join('\n    ');
 
-                    await fs.copy(fullPath, rawDestPath);
+                    const srcdocContent = rawContent
+                        .replace(/&/g, '&amp;')
+                        .replace(/"/g, '&quot;');
 
                     const iframeHTML = await ejs.renderFile(
                         path.join(CONFIG.layoutDir, 'iframe.ejs'),
                         {
                             title: pageTitle,
                             icon: pageIcon,
-                            iframeSrc: rawFileName
+                            metaTags: filteredMetaTags,
+                            srcdocContent: srcdocContent
                         }
                     );
                     await fs.writeFile(destPath, iframeHTML, 'utf8');

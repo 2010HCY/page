@@ -4,6 +4,9 @@
     <title>SVG 在线预览工具 | 静水深流</title>
     <link rel="stylesheet" href="/api/all.min.css">
     <link rel="icon" href="https://100713.xyz/medias/Hlogo徽章.svg">
+    <meta name="keywords" content="静水深流, svg在线预览, 在线预览svg, svg如何打开, 在线工具">
+    <meta name="description" content="svg在线预览">
+    <meta name="author" content="Ethaniel">
     <meta name="author" content="Ethaniel">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -203,7 +206,126 @@
     </header>
 
     <div class="info-mask" id="infoMask"></div>
-    <iframe class="content-frame" src="index-index.html" title="SVG 在线预览工具"></iframe>
+    <iframe class="content-frame" srcdoc="<!DOCTYPE html>
+<html lang=&quot;en&quot;>
+<head>
+    <link rel=&quot;icon&quot; href=&quot;https://100713.xyz/medias/Hlogo徽章.svg&quot;>
+    <meta name=&quot;keywords&quot; content=&quot;静水深流, svg在线预览, 在线预览svg, svg如何打开, 在线工具&quot;>
+    <meta name=&quot;description&quot; content=&quot;svg在线预览&quot;>
+    <meta name=&quot;author&quot; content=&quot;Ethaniel&quot;>
+    <meta charset=&quot;UTF-8&quot;>
+    <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
+    <title>SVG 在线预览工具</title>
+    <script async src=&quot;/api/blog-count.js&quot;></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            font-family: monospace;
+            font-size: 14px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .preview-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            min-height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<div class=&quot;container&quot;>
+    <h1>SVG 在线预览工具</h1>
+    <textarea id=&quot;svgSource&quot; placeholder=&quot;在此粘贴SVG源码...&quot;></textarea>
+    <button onclick=&quot;previewSVG()&quot;>预览SVG</button>
+    <button onclick=&quot;toggleBackgroundColor()&quot;>切换背景颜色</button>
+
+    <div class=&quot;preview-container&quot; id=&quot;previewContainer&quot;>
+        <!-- SVG预览显示区域 -->
+        <p>请在上方输入SVG源码并点击预览按钮。</p>
+    </div>
+</div>
+
+<script>
+    let isLightBackground = true;  // 用于跟踪当前背景颜色状态
+
+    function previewSVG() {
+        const svgSource = document.getElementById('svgSource').value;
+        const previewContainer = document.getElementById('previewContainer');
+
+        // 清空当前预览
+        previewContainer.innerHTML = '';
+
+        // 检查是否为有效的SVG
+        if (isValidSVG(svgSource)) {
+            const svgElement = new DOMParser().parseFromString(svgSource, 'image/svg+xml').documentElement;
+            previewContainer.appendChild(svgElement);
+        } else {
+            previewContainer.innerHTML = '<p style=&quot;color: red;&quot;>无效的SVG源码！</p>';
+        }
+    }
+
+    // 检查SVG格式的简单验证
+    function isValidSVG(svg) {
+        return svg.startsWith('<svg') &amp;&amp; svg.endsWith('</svg>');
+    }
+
+    // 切换背景颜色
+    function toggleBackgroundColor() {
+        const previewContainer = document.getElementById('previewContainer');
+        if (isLightBackground) {
+            previewContainer.style.backgroundColor = '#333'; // 深色背景
+            previewContainer.style.color = '#fff'; // 白色字体
+        } else {
+            previewContainer.style.backgroundColor = '#f0f0f0'; // 浅色背景
+            previewContainer.style.color = '#000'; // 黑色字体
+        }
+        isLightBackground = !isLightBackground; // 切换背景状态
+    }
+</script>
+
+</body>
+</html>
+" title="SVG 在线预览工具"></iframe>
 
     <script type="text/javascript" src="/api/sitetime.js"></script>
     <script type="text/javascript" src="/api/blog-count.js"></script> 
