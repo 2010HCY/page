@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>老习加速器 | 静水深流</title>
+    <link rel="stylesheet" href="/api/all.min.css">
+    <link rel="icon" href="/api/Hlogo徽章.svg" type="image/svg+xml">
+    
+    <meta name="author" content="Ethaniel">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://analytics.hcyhub.com/tracker.js" data-site-id="Page" data-endpoint="https://analytics.hcyhub.com" defer></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            width: 100%;
+            color: #747806;
+            height: 64px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 999;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            width: 96%;
+            margin: 0 auto;
+            position: relative;
+        }
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .brand-logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+        }
+        .logo-img {
+            height: 45px;
+            width: 40px;
+            margin-right: 8px;
+        }
+        .logo-span {
+            color: #747806;
+            font-size: 24px;
+            font-weight: 400;
+        }
+        .center-nav {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        .center-nav a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 24px;
+            color: #747806;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .center-nav a i {
+            margin-right: 8px;
+            font-size: 20px;
+        }
+        .header-info {
+            text-align: right;
+            font-size: 11px;
+            color: #999999;
+            line-height: 1.4;
+            flex-shrink: 0;
+        }
+        .header-info a {
+            color: #999999;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .header-info a:hover {
+            color: #747806;
+            text-decoration: underline;
+        }
+        .header-info p {
+            margin: 0;
+        }
+        .header-info i {
+            font-size: 10px;
+        }
+        .stats-value {
+            font-weight: bold;
+        }
+        .content-frame {
+            flex-grow: 1;
+            width: 100%;
+            border: none;
+            background-color: #f5f5f5;
+        }
+        .mobile-info-btn,
+        .mobile-close-btn,
+        .info-mask {
+            display: none;
+        }
+        @media (max-width: 900px) {
+            .logo-span {
+                font-size: 18px;
+            }
+            .mobile-info-btn {
+                display: block;
+                background: none;
+                border: none;
+                color: #999999;
+                font-size: 24px;
+                cursor: pointer;
+                padding: 0 10px;
+                z-index: 10;
+                flex-shrink: 0;
+            }
+            .header-info {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #ffffff;
+                z-index: 2120;
+                padding: 35px 20px 20px 20px;
+                border-radius: 8px;
+                box-shadow: 0 12px 36px rgba(0,0,0,0.2);
+                text-align: center;
+                width: 80%;
+                max-width: 320px;
+                font-size: 13px;
+            }
+            .header-info.active {
+                display: block;
+            }
+            .header-info div, 
+            .header-info p {
+                margin-top: 10px;
+                line-height: 1.6;
+            }
+            .mobile-close-btn {
+                display: block;
+                position: absolute;
+                top: 10px;
+                right: 12px;
+                background: none;
+                border: none;
+                font-size: 22px;
+                color: #aaaaaa;
+                cursor: pointer;
+            }
+            .info-mask {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 100;
+            }
+            .info-mask.active {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="brand-logo">
+                <a href="/">
+                    <img src="/api/Hlogo徽章.svg" alt="Flash收藏站Logo" class="logo-img" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iI2Q1ZGNhMSIvPjwvc3ZnPg=='"> 
+                    <span class="logo-span">Page</span>
+                </a>
+            </div>
+            <div class="center-nav">
+                <a href="/"><i class="fas fa-home"></i><span>返回首页</span></a>
+            </div>
+            <div class="header-info">
+                <button class="mobile-close-btn" id="mobileCloseBtn"><i class="fas fa-times"></i></button>
+                <a href="/泉州概况.htm">泉州</a> - 静水深流 <span id="year"></span> © hcyhub.com
+                <p>Created by <a href="https://hcyhub.com">静水深流</a> &amp; <a href="https://hcyhub.com/about">Ethaniel</a> | System <a href="https://status.hcyhub.com/" target="_blank">Status</a></p>
+                <div>
+                    <span id="sitetime">载入运行时间...</span>
+                    <span id="busuanzi_container_site_pv">&nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span class="stats-value" id="PageMeter_site_pv">加载中...</span>&nbsp;次</span>
+                    <span id="busuanzi_container_site_uv">&nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span class="stats-value" id="PageMeter_site_uv">加载中...</span>&nbsp;人</span>
+                </div>
+            </div>
+            <button class="mobile-info-btn" id="mobileInfoBtn" aria-label="查看站点信息"><i class="fas fa-info-circle"></i></button>
+        </div>
+    </header>
+
+    <div class="info-mask" id="infoMask"></div>
+    <iframe class="content-frame" srcdoc="<!DOCTYPE html>
+<html lang=&quot;zh-CN&quot;>
+<head>
+    <meta charset=&quot;UTF-8&quot;>
+    <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
+    <title>老习加速器</title>
+    <!-- 引入 FontAwesome 图标库 -->
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css&quot;>
+    <style>
+        /* 基础重置与字体设置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* 模拟手机屏幕容器 */
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            height: 800px;
+            background: linear-gradient(180deg, #2b0404 0%, #150202 40%, #080000 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+        }
+
+        /* 顶部状态栏 */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            color: #6a4f4f; /* 更贴近截图的暗淡红色 */
+            font-size: 14px;
+        }
+        
+        .firewall-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .firewall-status i {
+            font-size: 13px;
+        }
+
+        /* 头部信息 */
+        .header {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .title-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .title-container h1 {
+            color: #f0c869;
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            /* 添加一点金色渐变文字效果 */
+            background: linear-gradient(to bottom, #fcebb6, #dca13a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .vip-badge {
+            background-color: #f0c869;
+            color: #000;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 3px 6px;
+            border-radius: 4px;
+        }
+
+        .subtitle {
+            color: #705050;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        /* 中央大按钮区域 */
+        .main-button-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 50px; /* 按钮容器和文字之间的间距 */
+        }
+
+        /* 新增：独立包裹器，锁定圆心，解决居中问题 */
+        .button-wrapper {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 背景同心圆装饰 */
+        .decoration-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.03); /* 贴合原图极暗的线圈 */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .ring-1 { width: 300px; height: 300px; }
+        .ring-2 { width: 230px; height: 230px; }
+
+        /* 主按钮 */
+        .main-button {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #cc0000 10%, #8b0000 60%, #4a0000 100%);
+            box-shadow: 
+                0 0 60px rgba(200, 0, 0, 0.35), /* 红色外发光 */
+                inset 0 0 20px rgba(0, 0, 0, 0.6); /* 内部暗影 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .main-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 40px rgba(200, 0, 0, 0.5), inset 0 0 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .main-button i {
+            color: #f0c869;
+            font-size: 45px;
+            margin-bottom: 12px;
+            transform: rotate(-25deg);
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4));
+        }
+
+        .main-button span {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* 状态提示语 */
+        .status-text {
+            color: #c49a46;
+            text-align: center;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        /* 底部信息面板区域 */
+        .info-section {
+            padding: 0 20px 80px 20px;
+        }
+
+        .stats-grid {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .stat-card .label {
+            color: #6a4f4f;
+            font-size: 12px;
+        }
+
+        .stat-card .value {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .stat-card .value.gold {
+            color: #f0c869;
+        }
+
+        .server-card {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid #99742a;
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .server-icon {
+            color: #f0c869;
+            font-size: 20px;
+        }
+
+        .server-details {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .server-title {
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .server-sub {
+            color: #6a4f4f;
+            font-size: 12px;
+        }
+
+        /* 底部导航栏 */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #030000;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            color: #4a3333;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: #f0c869;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class=&quot;app-container&quot;>
+        
+        <!-- 顶部状态 -->
+        <div class=&quot;status-bar&quot;>
+            <!-- 给时间加上ID，方便JS获取并替换 -->
+            <span id=&quot;system-time&quot;>--:--</span>
+            <div class=&quot;firewall-status&quot;>
+                <i class=&quot;fa-solid fa-shield-halved&quot;></i>
+                <span>防火墙已虚化</span>
+            </div>
+        </div>
+
+        <!-- 标题区域 -->
+        <div class=&quot;header&quot;>
+            <div class=&quot;title-container&quot;>
+                <h1>老习加速器</h1>
+                <span class=&quot;vip-badge&quot;>VIP</span>
+            </div>
+            <div class=&quot;subtitle&quot;>亲自部署 · 指引方向 · 弯道超车</div>
+        </div>
+
+        <!-- 中心加速按钮 -->
+        <div class=&quot;main-button-section&quot;>
+            <!-- 独立的居中包裹器 -->
+            <div class=&quot;button-wrapper&quot;>
+                <!-- 两个绝对居中的圆环 -->
+                <div class=&quot;decoration-ring ring-1&quot;></div>
+                <div class=&quot;decoration-ring ring-2&quot;></div>
+                
+                <!-- 弹性居中的按钮 -->
+                <div class=&quot;main-button&quot;>
+                    <i class=&quot;fa-solid fa-hammer&quot;></i>
+                    <span>请示报告</span>
+                </div>
+            </div>
+
+            <!-- 状态文字独立出来，不干扰圆心 -->
+            <div class=&quot;status-text&quot;>系统待命，请下达加速指令</div>
+        </div>
+
+        <!-- 底部数据与线路面板 -->
+        <div class=&quot;info-section&quot;>
+            <div class=&quot;stats-grid&quot;>
+                <div class=&quot;stat-card&quot;>
+                    <span class=&quot;label&quot;>历史进程参与度</span>
+                    <span class=&quot;value&quot;>--</span>
+                </div>
+                <div class=&quot;stat-card&quot;>
+                    <span class=&quot;label&quot;>网络一致性</span>
+                    <span class=&quot;value gold&quot;>定于一尊</span>
+                </div>
+            </div>
+
+            <div class=&quot;server-card&quot;>
+                <div class=&quot;server-icon&quot;>
+                    <i class=&quot;fa-solid fa-crown&quot;></i>
+                </div>
+                <div class=&quot;server-details&quot;>
+                    <div class=&quot;server-title&quot;>中南海 01 号线 (直连)</div>
+                    <div class=&quot;server-sub&quot;>延迟: 0.1ms · 稳定性: 绝对</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部导航 -->
+        <div class=&quot;bottom-nav&quot;>
+            <div class=&quot;nav-item active&quot;>
+                <i class=&quot;fa-solid fa-rocket&quot;></i>
+                <span>加速</span>
+            </div>
+            <div class=&quot;nav-item&quot;>
+                <i class=&quot;fa-solid fa-layer-group&quot;></i>
+                <span>权益</span>
+            </div>
+            <div class=&quot;nav-item&quot;>
+                <i class=&quot;fa-solid fa-fingerprint&quot;></i>
+                <span>认证</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 加入JavaScript获取系统当前真实时间 -->
+    <script>
+        function updateTime() {
+            const now = new Date();
+            // 获取小时和分钟，不足两位数自动补0
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            
+            // 将获取到的时间赋值给左上角的容器
+            document.getElementById('system-time').innerText = `${hours}:${minutes}`;
+        }
+
+        // 页面加载完成后立即执行一次
+        updateTime();
+        
+        // 之后每隔 1000毫秒(1秒) 更新一次时间
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>" title="老习加速器"></iframe>
+
+    <script type="text/javascript" src="/api/sitetime.js"></script>
+    <script type="text/javascript" src="/api/blog-count.js"></script> 
+    <script>
+                document.addEventListener('DOMContentLoaded', function() {
+            const infoBtn = document.getElementById('mobileInfoBtn');
+            const closeBtn = document.getElementById('mobileCloseBtn');
+            const infoModal = document.querySelector('.header-info');
+            const mask = document.getElementById('infoMask');
+
+            function toggleInfoModal(show) {
+                if (show) {
+                    infoModal.classList.add('active');
+                    mask.classList.add('active');
+                } else {
+                    infoModal.classList.remove('active');
+                    mask.classList.remove('active');
+                }
+            }
+
+            if (infoBtn && closeBtn && mask && infoModal) {
+                infoBtn.addEventListener('click', () => toggleInfoModal(true));
+                closeBtn.addEventListener('click', () => toggleInfoModal(false));
+                mask.addEventListener('click', () => toggleInfoModal(false));
+            }
+        });
+    </script>
+</body>
+</html>

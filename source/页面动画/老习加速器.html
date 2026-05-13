@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>老习加速器</title>
+    <!-- 引入 FontAwesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础重置与字体设置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* 模拟手机屏幕容器 */
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            height: 800px;
+            background: linear-gradient(180deg, #2b0404 0%, #150202 40%, #080000 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+        }
+
+        /* 顶部状态栏 */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            color: #6a4f4f; /* 更贴近截图的暗淡红色 */
+            font-size: 14px;
+        }
+        
+        .firewall-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .firewall-status i {
+            font-size: 13px;
+        }
+
+        /* 头部信息 */
+        .header {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .title-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .title-container h1 {
+            color: #f0c869;
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            /* 添加一点金色渐变文字效果 */
+            background: linear-gradient(to bottom, #fcebb6, #dca13a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .vip-badge {
+            background-color: #f0c869;
+            color: #000;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 3px 6px;
+            border-radius: 4px;
+        }
+
+        .subtitle {
+            color: #705050;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        /* 中央大按钮区域 */
+        .main-button-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 50px; /* 按钮容器和文字之间的间距 */
+        }
+
+        /* 新增：独立包裹器，锁定圆心，解决居中问题 */
+        .button-wrapper {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 背景同心圆装饰 */
+        .decoration-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.03); /* 贴合原图极暗的线圈 */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .ring-1 { width: 300px; height: 300px; }
+        .ring-2 { width: 230px; height: 230px; }
+
+        /* 主按钮 */
+        .main-button {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #cc0000 10%, #8b0000 60%, #4a0000 100%);
+            box-shadow: 
+                0 0 60px rgba(200, 0, 0, 0.35), /* 红色外发光 */
+                inset 0 0 20px rgba(0, 0, 0, 0.6); /* 内部暗影 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .main-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 40px rgba(200, 0, 0, 0.5), inset 0 0 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .main-button i {
+            color: #f0c869;
+            font-size: 45px;
+            margin-bottom: 12px;
+            transform: rotate(-25deg);
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4));
+        }
+
+        .main-button span {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* 状态提示语 */
+        .status-text {
+            color: #c49a46;
+            text-align: center;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        /* 底部信息面板区域 */
+        .info-section {
+            padding: 0 20px 80px 20px;
+        }
+
+        .stats-grid {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .stat-card .label {
+            color: #6a4f4f;
+            font-size: 12px;
+        }
+
+        .stat-card .value {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .stat-card .value.gold {
+            color: #f0c869;
+        }
+
+        .server-card {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid #99742a;
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .server-icon {
+            color: #f0c869;
+            font-size: 20px;
+        }
+
+        .server-details {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .server-title {
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .server-sub {
+            color: #6a4f4f;
+            font-size: 12px;
+        }
+
+        /* 底部导航栏 */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #030000;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            color: #4a3333;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: #f0c869;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- 顶部状态 -->
+        <div class="status-bar">
+            <!-- 给时间加上ID，方便JS获取并替换 -->
+            <span id="system-time">--:--</span>
+            <div class="firewall-status">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>防火墙已虚化</span>
+            </div>
+        </div>
+
+        <!-- 标题区域 -->
+        <div class="header">
+            <div class="title-container">
+                <h1>老习加速器</h1>
+                <span class="vip-badge">VIP</span>
+            </div>
+            <div class="subtitle">亲自部署 · 指引方向 · 弯道超车</div>
+        </div>
+
+        <!-- 中心加速按钮 -->
+        <div class="main-button-section">
+            <!-- 独立的居中包裹器 -->
+            <div class="button-wrapper">
+                <!-- 两个绝对居中的圆环 -->
+                <div class="decoration-ring ring-1"></div>
+                <div class="decoration-ring ring-2"></div>
+                
+                <!-- 弹性居中的按钮 -->
+                <div class="main-button">
+                    <i class="fa-solid fa-hammer"></i>
+                    <span>请示报告</span>
+                </div>
+            </div>
+
+            <!-- 状态文字独立出来，不干扰圆心 -->
+            <div class="status-text">系统待命，请下达加速指令</div>
+        </div>
+
+        <!-- 底部数据与线路面板 -->
+        <div class="info-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="label">历史进程参与度</span>
+                    <span class="value">--</span>
+                </div>
+                <div class="stat-card">
+                    <span class="label">网络一致性</span>
+                    <span class="value gold">定于一尊</span>
+                </div>
+            </div>
+
+            <div class="server-card">
+                <div class="server-icon">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+                <div class="server-details">
+                    <div class="server-title">中南海 01 号线 (直连)</div>
+                    <div class="server-sub">延迟: 0.1ms · 稳定性: 绝对</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部导航 -->
+        <div class="bottom-nav">
+            <div class="nav-item active">
+                <i class="fa-solid fa-rocket"></i>
+                <span>加速</span>
+            </div>
+            <div class="nav-item">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>权益</span>
+            </div>
+            <div class="nav-item">
+                <i class="fa-solid fa-fingerprint"></i>
+                <span>认证</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 加入JavaScript获取系统当前真实时间 -->
+    <script>
+        function updateTime() {
+            const now = new Date();
+            // 获取小时和分钟，不足两位数自动补0
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            
+            // 将获取到的时间赋值给左上角的容器
+            document.getElementById('system-time').innerText = `${hours}:${minutes}`;
+        }
+
+        // 页面加载完成后立即执行一次
+        updateTime();
+        
+        // 之后每隔 1000毫秒(1秒) 更新一次时间
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

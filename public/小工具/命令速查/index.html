@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>命令速查 | 静水深流</title>
+    <link rel="stylesheet" href="/api/all.min.css">
+    <link rel="icon" href="/api/Hlogo徽章.svg" type="image/svg+xml">
+    
+    <meta name="author" content="Ethaniel">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://analytics.hcyhub.com/tracker.js" data-site-id="Page" data-endpoint="https://analytics.hcyhub.com" defer></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            width: 100%;
+            color: #747806;
+            height: 64px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 999;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            width: 96%;
+            margin: 0 auto;
+            position: relative;
+        }
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .brand-logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+        }
+        .logo-img {
+            height: 45px;
+            width: 40px;
+            margin-right: 8px;
+        }
+        .logo-span {
+            color: #747806;
+            font-size: 24px;
+            font-weight: 400;
+        }
+        .center-nav {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        .center-nav a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 24px;
+            color: #747806;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .center-nav a i {
+            margin-right: 8px;
+            font-size: 20px;
+        }
+        .header-info {
+            text-align: right;
+            font-size: 11px;
+            color: #999999;
+            line-height: 1.4;
+            flex-shrink: 0;
+        }
+        .header-info a {
+            color: #999999;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .header-info a:hover {
+            color: #747806;
+            text-decoration: underline;
+        }
+        .header-info p {
+            margin: 0;
+        }
+        .header-info i {
+            font-size: 10px;
+        }
+        .stats-value {
+            font-weight: bold;
+        }
+        .content-frame {
+            flex-grow: 1;
+            width: 100%;
+            border: none;
+            background-color: #f5f5f5;
+        }
+        .mobile-info-btn,
+        .mobile-close-btn,
+        .info-mask {
+            display: none;
+        }
+        @media (max-width: 900px) {
+            .logo-span {
+                font-size: 18px;
+            }
+            .mobile-info-btn {
+                display: block;
+                background: none;
+                border: none;
+                color: #999999;
+                font-size: 24px;
+                cursor: pointer;
+                padding: 0 10px;
+                z-index: 10;
+                flex-shrink: 0;
+            }
+            .header-info {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #ffffff;
+                z-index: 2120;
+                padding: 35px 20px 20px 20px;
+                border-radius: 8px;
+                box-shadow: 0 12px 36px rgba(0,0,0,0.2);
+                text-align: center;
+                width: 80%;
+                max-width: 320px;
+                font-size: 13px;
+            }
+            .header-info.active {
+                display: block;
+            }
+            .header-info div, 
+            .header-info p {
+                margin-top: 10px;
+                line-height: 1.6;
+            }
+            .mobile-close-btn {
+                display: block;
+                position: absolute;
+                top: 10px;
+                right: 12px;
+                background: none;
+                border: none;
+                font-size: 22px;
+                color: #aaaaaa;
+                cursor: pointer;
+            }
+            .info-mask {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 100;
+            }
+            .info-mask.active {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="brand-logo">
+                <a href="/">
+                    <img src="/api/Hlogo徽章.svg" alt="Flash收藏站Logo" class="logo-img" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iI2Q1ZGNhMSIvPjwvc3ZnPg=='"> 
+                    <span class="logo-span">Page</span>
+                </a>
+            </div>
+            <div class="center-nav">
+                <a href="/"><i class="fas fa-home"></i><span>返回首页</span></a>
+            </div>
+            <div class="header-info">
+                <button class="mobile-close-btn" id="mobileCloseBtn"><i class="fas fa-times"></i></button>
+                <a href="/泉州概况.htm">泉州</a> - 静水深流 <span id="year"></span> © hcyhub.com
+                <p>Created by <a href="https://hcyhub.com">静水深流</a> &amp; <a href="https://hcyhub.com/about">Ethaniel</a> | System <a href="https://status.hcyhub.com/" target="_blank">Status</a></p>
+                <div>
+                    <span id="sitetime">载入运行时间...</span>
+                    <span id="busuanzi_container_site_pv">&nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span class="stats-value" id="PageMeter_site_pv">加载中...</span>&nbsp;次</span>
+                    <span id="busuanzi_container_site_uv">&nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span class="stats-value" id="PageMeter_site_uv">加载中...</span>&nbsp;人</span>
+                </div>
+            </div>
+            <button class="mobile-info-btn" id="mobileInfoBtn" aria-label="查看站点信息"><i class="fas fa-info-circle"></i></button>
+        </div>
+    </header>
+
+    <div class="info-mask" id="infoMask"></div>
+    <iframe class="content-frame" srcdoc="<!DOCTYPE html>
+<html lang=&quot;zh-CN&quot;>
+<head>
+  <meta charset=&quot;UTF-8&quot; />
+  <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; />
+  <title>命令速查</title>
+  <style>
+    :root {
+      --bg: #f7f8f6;
+      --card: #ffffff;
+      --text: #1f2933;
+      --muted: #667085;
+      --border: #d8ddd4;
+      --code-bg: #f3f5f2;
+      --accent: #2f8a45;
+      --accent-soft: #e7faec;
+      --danger: #9a3412;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+    }
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 18px;
+    }
+    header {
+      margin-bottom: 18px;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 24px;
+      font-weight: 650;
+    }
+    .desc {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .toolbar {
+      margin-top: 14px;
+    }
+    .search {
+      width: 100%;
+      height: 38px;
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+      background: #fff;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .search:focus {
+      border-color: var(--accent);
+    }
+    .section {
+      margin-top: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .section-header {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      background: #fbfcfa;
+    }
+    .section-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 650;
+    }
+    .section-desc {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .command-list {
+      padding: 0px 10px 10px;
+    }
+    .command-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 8px;
+      background: #fff;
+    }
+    .command-top {
+      display: flex;
+      align-items: stretch;
+      background: var(--code-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      margin: 0;
+      flex: 1;
+      min-width: 0;
+      padding: 5px 12px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace;
+      white-space: pre;
+    }
+    .icon {
+      width: 16px;
+      height: 16px;
+      display: block;
+      fill: currentColor;
+    }
+    .copy-btn {
+      width: 42px;
+      border: 0;
+      border-left: 1px solid var(--border);
+      background: #f9faf8;
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s, background 0.15s;
+      flex: none;
+    }
+    .copy-btn:hover {
+      background: #eef2ec;
+      color: var(--text);
+    }
+    .copy-btn.copied {
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .copy-btn .icon {
+      width: 16px;
+      height: 16px;
+      display: block;
+      fill: currentColor;
+    }
+    .copy-btn.copied .check-icon {
+      display: block;
+    }
+    .command-desc {
+      padding: 8px 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .note {
+      color: var(--danger);
+    }
+    .empty {
+      display: none;
+      margin-top: 16px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--muted);
+      text-align: center;
+    }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      background: #1f2933;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+  </style>
+</head>
+<body>
+  <svg xmlns=&quot;http://www.w3.org/2000/svg&quot; style=&quot;display:none;&quot;>
+    <symbol id=&quot;icon-copy&quot; viewBox=&quot;0 0 512 512&quot;>
+      <path d=&quot;M384 336l-192 0c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l133.5 0c4.2 0 8.3 1.7 11.3 4.7l58.5 58.5c3 3 4.7 7.1 4.7 11.3L400 320c0 8.8-7.2 16-16 16zM192 384l192 0c35.3 0 64-28.7 64-64l0-197.5c0-17-6.7-33.3-18.7-45.3L370.7 18.7C358.7 6.7 342.5 0 325.5 0L192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-16-48 0 0 16c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l16 0 0-48-16 0z&quot;/>
+    </symbol>
+    <symbol id=&quot;icon-check&quot; viewBox=&quot;0 0 512 512&quot;>
+      <path d=&quot;M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z&quot;/>
+    </symbol>
+  </svg>
+
+  <div class=&quot;page&quot;>
+    <header>
+      <h1>命令速查</h1>
+      <p class=&quot;desc&quot;>按分类整理常用命令，支持搜索和一键复制。</p>
+      <div class=&quot;toolbar&quot;>
+        <input class=&quot;search&quot; id=&quot;search&quot; type=&quot;search&quot; placeholder=&quot;搜索命令、说明或分类&quot; />
+      </div>
+    </header>
+
+    <section class=&quot;section&quot; data-section>
+      <div class=&quot;section-header&quot;>
+        <h2 class=&quot;section-title&quot;>npm</h2>
+        <p class=&quot;section-desc&quot;>npm 包发布、本地静态服务等。</p>
+      </div>
+      <div class=&quot;command-list&quot;>
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>npm publish</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;npm publish&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>发布 npm 包到 npm registry。</div>
+        </div>
+
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>npx http-server -p 8080</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;npx http-server -p 8080&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>在当前目录启动静态文件服务器，端口为 8080。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class=&quot;section&quot; data-section>
+      <div class=&quot;section-header&quot;>
+        <h2 class=&quot;section-title&quot;>远程脚本</h2>
+        <p class=&quot;section-desc&quot;>通过 curl 下载并执行远程脚本。</p>
+      </div>
+      <div class=&quot;command-list&quot;>
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>curl -fsSL https://example.com/sh/sh.sh | sudo bash</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;curl -fsSL https://example.com/sh/sh.sh | sudo bash&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;><span class=&quot;note&quot;>下载远程脚本并以 sudo 权限执行。</span> 执行前建议审查代码。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class=&quot;section&quot; data-section>
+      <div class=&quot;section-header&quot;>
+        <h2 class=&quot;section-title&quot;>Backblaze B2</h2>
+        <p class=&quot;section-desc&quot;>对象存储同步。</p>
+      </div>
+      <div class=&quot;command-list&quot;>
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>b2 sync &quot;C:\example\&quot; &quot;b2://example&quot;</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy='b2 sync &quot;C:\example\&quot; &quot;b2://example&quot;' aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>把本地 example 文件夹同步到 Backblaze B2 存储桶。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class=&quot;section&quot; data-section>
+      <div class=&quot;section-header&quot;>
+        <h2 class=&quot;section-title&quot;>PAR2 校验 / 恢复</h2>
+        <p class=&quot;section-desc&quot;>生成PAR2文件，用于文件损坏后的修复。</p>
+      </div>
+      <div class=&quot;command-list&quot;>
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>&quot;C:\Program Files (x86)\MultiPar\par2j64.exe&quot; c -rr5 -sn2048 -rf1 &quot;${PWD##*/}.par2&quot; *</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy='&quot;C:\Program Files (x86)\MultiPar\par2j64.exe&quot; c -rr5 -sn2048 -rf1 &quot;${PWD##*/}.par2&quot; *' aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>使用 MultiPar 为当前目录文件生成 PAR2 校验和恢复文件。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class=&quot;section&quot; data-section>
+      <div class=&quot;section-header&quot;>
+        <h2 class=&quot;section-title&quot;>文件校验</h2>
+        <p class=&quot;section-desc&quot;>计算文件哈希值。</p>
+      </div>
+      <div class=&quot;command-list&quot;>
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>md5sum &amp;lt;文件名&amp;gt;</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;md5sum <文件名>&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>计算文件的 MD5 值，用于校验文件完整性。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class=&quot;section&quot; data-section>
+      <div class=&quot;section-header&quot;>
+        <h2 class=&quot;section-title&quot;>Python 打包</h2>
+        <p class=&quot;section-desc&quot;>PyInstaller 打包相关。</p>
+      </div>
+      <div class=&quot;command-list&quot;>
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>pyinstaller HexoDash.spec</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;pyinstaller HexoDash.spec&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>根据 HexoDash.spec 配置文件打包 Python 项目。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class=&quot;section&quot; data-section>
+      <div class=&quot;section-header&quot;>
+        <h2 class=&quot;section-title&quot;>Rust / Cargo / Tauri</h2>
+        <p class=&quot;section-desc&quot;>Rust 清理、构建，以及 Tauri 开发和打包。</p>
+      </div>
+      <div class=&quot;command-list&quot;>
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>cargo clean</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;cargo clean&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>清理 Rust 项目的构建缓存和产物。</div>
+        </div>
+
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>npm run tauri dev</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;npm run tauri dev&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>以开发模式启动 Tauri 应用。</div>
+        </div>
+
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>npm run tauri build</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;npm run tauri build&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>构建 Tauri 应用正式版本。</div>
+        </div>
+
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>npm run tauri build -- --debug</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;npm run tauri build -- --debug&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>构建 Tauri 应用 debug 版本。</div>
+        </div>
+
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>RUSTFLAGS=&quot;-C target-feature=+crt-static&quot; cargo build --release</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy='RUSTFLAGS=&quot;-C target-feature=+crt-static&quot; cargo build --release' aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>使用静态 CRT 构建 Rust release 版本。</div>
+        </div>
+
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>RUSTFLAGS=&quot;-C target-feature=+crt-static,+avx2&quot; cargo build --release</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy='RUSTFLAGS=&quot;-C target-feature=+crt-static,+avx2&quot; cargo build --release' aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>构建 release 版本，启用静态 CRT 和 AVX2 指令集。</div>
+        </div>
+
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>RUSTFLAGS=&quot;-C target-cpu=native -C target-feature=+avx2&quot; npm run tauri build -- -- --features &quot;avx&quot;</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy='RUSTFLAGS=&quot;-C target-cpu=native -C target-feature=+avx2&quot; npm run tauri build -- -- --features &quot;avx&quot;' aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>针对当前 CPU 优化，启用 AVX2，并启用 Rust feature：avx。</div>
+        </div>
+
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>npm run tauri icon -i ./logo.png</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;npm run tauri icon -i ./logo.png&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>使用 logo.png 生成 Tauri 应用图标。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class=&quot;section&quot; data-section>
+      <div class=&quot;section-header&quot;>
+        <h2 class=&quot;section-title&quot;>C++ 编译</h2>
+        <p class=&quot;section-desc&quot;>使用 g++ 编译源码。</p>
+      </div>
+      <div class=&quot;command-list&quot;>
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>g++ sitemap.cpp -o sitemap.exe</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;g++ sitemap.cpp -o sitemap.exe&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>编译 sitemap.cpp，并输出 sitemap.exe。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class=&quot;section&quot; data-section>
+      <div class=&quot;section-header&quot;>
+        <h2 class=&quot;section-title&quot;>Cloudflare Wrangler</h2>
+        <p class=&quot;section-desc&quot;>Workers 和 Pages 部署、日志查看。</p>
+      </div>
+      <div class=&quot;command-list&quot;>
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>wrangler tail</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;wrangler tail&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>实时查看 Cloudflare Workers 日志。</div>
+        </div>
+
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>wrangler deploy</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;wrangler deploy&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>部署 Cloudflare Worker。</div>
+        </div>
+
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>wrangler pages deploy</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;wrangler pages deploy&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>部署 Cloudflare Pages 项目。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class=&quot;section&quot; data-section>
+      <div class=&quot;section-header&quot;>
+        <h2 class=&quot;section-title&quot;>Windows 文件 / 目录</h2>
+        <p class=&quot;section-desc&quot;>目录树、目录列表导出。</p>
+      </div>
+      <div class=&quot;command-list&quot;>
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>tree /F /A</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;tree /F /A&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>以 ASCII 树状结构显示当前目录和文件。</div>
+        </div>
+
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>dir E:\ /ad /b &amp;gt; 1.txt</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;dir E:\ /ad /b > 1.txt&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>列出 E 盘根目录下的文件夹名称，并输出到 1.txt。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class=&quot;section&quot; data-section>
+      <div class=&quot;section-header&quot;>
+        <h2 class=&quot;section-title&quot;>Linux / Unix 系统</h2>
+        <p class=&quot;section-desc&quot;>进程查看、权限设置、后台运行。</p>
+      </div>
+      <div class=&quot;command-list&quot;>
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>ps -aux</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;ps -aux&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>查看系统进程列表。</div>
+        </div>
+
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>chmod +x name.sh</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;chmod +x name.sh&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>给 name.sh 添加可执行权限。</div>
+        </div>
+
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>nohup ./example &amp;amp;</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;nohup ./example &amp;&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>使用 nohup 在后台运行程序，关闭终端后仍继续运行。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class=&quot;section&quot; data-section>
+      <div class=&quot;section-header&quot;>
+        <h2 class=&quot;section-title&quot;>正则表达式</h2>
+        <p class=&quot;section-desc&quot;>文本处理和编辑器搜索替换。</p>
+      </div>
+      <div class=&quot;command-list&quot;>
+        <div class=&quot;command-item&quot; data-item>
+          <div class=&quot;command-top&quot;>
+            <pre><code>^\s*$\n</code></pre>
+            <button class=&quot;copy-btn&quot; data-copy=&quot;^\s*$\n&quot; aria-label=&quot;复制命令&quot;>
+              <svg class=&quot;icon&quot; viewBox=&quot;0 0 512 512&quot; aria-hidden=&quot;true&quot;>
+                <use href=&quot;#icon-copy&quot;></use>
+              </svg>
+            </button>
+          </div>
+          <div class=&quot;command-desc&quot;>匹配空行，常用于批量删除空白行。</div>
+        </div>
+      </div>
+    </section>
+
+    <div class=&quot;empty&quot; id=&quot;empty&quot;>没有匹配结果</div>
+  </div>
+
+  <div class=&quot;toast&quot; id=&quot;toast&quot;>已复制</div>
+
+  <script>
+    const toast = document.getElementById(&quot;toast&quot;);
+    const search = document.getElementById(&quot;search&quot;);
+    const empty = document.getElementById(&quot;empty&quot;);
+    let toastTimer = null;
+
+    function showToast() {
+      clearTimeout(toastTimer);
+      toast.classList.add(&quot;show&quot;);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove(&quot;show&quot;);
+      }, 1200);
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const textarea = document.createElement(&quot;textarea&quot;);
+        textarea.value = text;
+        textarea.style.position = &quot;fixed&quot;;
+        textarea.style.opacity = &quot;0&quot;;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand(&quot;copy&quot;);
+        textarea.remove();
+      }
+    }
+
+    document.querySelectorAll(&quot;.copy-btn&quot;).forEach(button => {
+      const icon = button.querySelector(&quot;use&quot;);
+
+      button.addEventListener(&quot;click&quot;, async () => {
+        await copyText(button.dataset.copy);
+
+        button.classList.add(&quot;copied&quot;);
+        button.dataset.state = &quot;check&quot;;
+        icon.setAttribute(&quot;href&quot;, &quot;#icon-check&quot;);
+        showToast();
+
+        clearTimeout(button._timer);
+        button._timer = setTimeout(() => {
+          button.classList.remove(&quot;copied&quot;);
+          button.dataset.state = &quot;copy&quot;;
+          icon.setAttribute(&quot;href&quot;, &quot;#icon-copy&quot;);
+        }, 1800);
+      });
+    });
+
+    search.addEventListener(&quot;input&quot;, () => {
+      const keyword = search.value.trim().toLowerCase();
+      let visibleSectionCount = 0;
+
+      document.querySelectorAll(&quot;[data-section]&quot;).forEach(section => {
+        let visibleItemCount = 0;
+        const sectionText = section.querySelector(&quot;.section-header&quot;).innerText.toLowerCase();
+
+        section.querySelectorAll(&quot;[data-item]&quot;).forEach(item => {
+          const itemText = item.innerText.toLowerCase();
+          const matched = !keyword || itemText.includes(keyword) || sectionText.includes(keyword);
+
+          item.style.display = matched ? &quot;&quot; : &quot;none&quot;;
+          if (matched) visibleItemCount++;
+        });
+
+        section.style.display = visibleItemCount > 0 ? &quot;&quot; : &quot;none&quot;;
+        if (visibleItemCount > 0) visibleSectionCount++;
+      });
+
+      empty.style.display = visibleSectionCount === 0 ? &quot;block&quot; : &quot;none&quot;;
+    });
+  </script>
+</body>
+</html>
+" title="命令速查"></iframe>
+
+    <script type="text/javascript" src="/api/sitetime.js"></script>
+    <script type="text/javascript" src="/api/blog-count.js"></script> 
+    <script>
+                document.addEventListener('DOMContentLoaded', function() {
+            const infoBtn = document.getElementById('mobileInfoBtn');
+            const closeBtn = document.getElementById('mobileCloseBtn');
+            const infoModal = document.querySelector('.header-info');
+            const mask = document.getElementById('infoMask');
+
+            function toggleInfoModal(show) {
+                if (show) {
+                    infoModal.classList.add('active');
+                    mask.classList.add('active');
+                } else {
+                    infoModal.classList.remove('active');
+                    mask.classList.remove('active');
+                }
+            }
+
+            if (infoBtn && closeBtn && mask && infoModal) {
+                infoBtn.addEventListener('click', () => toggleInfoModal(true));
+                closeBtn.addEventListener('click', () => toggleInfoModal(false));
+                mask.addEventListener('click', () => toggleInfoModal(false));
+            }
+        });
+    </script>
+</body>
+</html>

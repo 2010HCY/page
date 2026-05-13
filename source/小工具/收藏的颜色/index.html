@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>颜色收藏</title>
+  <style>
+    :root {
+      --bg: #f7f8f6;
+      --card: #ffffff;
+      --text: #1f2933;
+      --muted: #667085;
+      --border: #d8ddd4;
+      --accent: #599059;
+      --accent-soft: #e7faec;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 18px;
+    }
+
+    header {
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 24px;
+      font-weight: 650;
+    }
+
+    .desc {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .section {
+      margin-top: 18px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .section-title {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 650;
+      background: #fbfcfa;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .color-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+
+    .color-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .swatch {
+      height: 72px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .color-info {
+      padding: 9px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .color-value {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      word-break: break-all;
+    }
+
+    .tag {
+      flex: none;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .wide {
+      grid-column: 1 / -1;
+    }
+
+    .preview-large {
+      height: 110px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      background: #1f2933;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>颜色收藏</h1>
+      <p class="desc">点击任意色块即可复制颜色值，适合快速查看和选择项目配色。</p>
+    </header>
+
+    <section class="section">
+      <div class="section-title">十六进制颜色</div>
+      <div class="grid">
+        <div class="color-card" data-copy="#1a513f">
+          <div class="swatch" style="background:#1a513f"></div>
+          <div class="color-info"><span class="color-value">#1a513f</span><span class="tag">HEX</span></div>
+        </div>
+
+        <div class="color-card" data-copy="#a4a61d">
+          <div class="swatch" style="background:#a4a61d"></div>
+          <div class="color-info"><span class="color-value">#a4a61d</span><span class="tag">HEX</span></div>
+        </div>
+
+        <div class="color-card" data-copy="#e7faec">
+          <div class="swatch" style="background:#e7faec"></div>
+          <div class="color-info"><span class="color-value">#e7faec</span><span class="tag">HEX</span></div>
+        </div>
+
+        <div class="color-card" data-copy="#5cdd8b">
+          <div class="swatch" style="background:#5cdd8b"></div>
+          <div class="color-info"><span class="color-value">#5cdd8b</span><span class="tag">HEX</span></div>
+        </div>
+
+        <div class="color-card" data-copy="#41640b">
+          <div class="swatch" style="background:#41640b"></div>
+          <div class="color-info"><span class="color-value">#41640b</span><span class="tag">HEX</span></div>
+        </div>
+
+        <div class="color-card" data-copy="#79b51c">
+          <div class="swatch" style="background:#79b51c"></div>
+          <div class="color-info"><span class="color-value">#79b51c</span><span class="tag">HEX</span></div>
+        </div>
+
+        <div class="color-card" data-copy="#619116">
+          <div class="swatch" style="background:#619116"></div>
+          <div class="color-info"><span class="color-value">#619116</span><span class="tag">HEX</span></div>
+        </div>
+
+        <div class="color-card" data-copy="#7eb631">
+          <div class="swatch" style="background:#7eb631"></div>
+          <div class="color-info"><span class="color-value">#7eb631</span><span class="tag">HEX</span></div>
+        </div>
+
+        <div class="color-card" data-copy="#cca63b">
+          <div class="swatch" style="background:#cca63b"></div>
+          <div class="color-info"><span class="color-value">#cca63b</span><span class="tag">HEX</span></div>
+        </div>
+
+        <div class="color-card" data-copy="#599059">
+          <div class="swatch" style="background:#599059"></div>
+          <div class="color-info"><span class="color-value">#599059</span><span class="tag">HEX</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">RGBA 与 OKLCH</div>
+      <div class="grid">
+        <div class="color-card" data-copy="rgba(30, 164, 70, 0.08)">
+          <div class="swatch" style="background:rgba(30, 164, 70, 0.08)"></div>
+          <div class="color-info"><span class="color-value">rgba(30, 164, 70, 0.08)</span><span class="tag">RGBA</span></div>
+        </div>
+
+        <div class="color-card" data-copy="oklch(0.7 .014 112)">
+          <div class="swatch" style="background:oklch(0.7 .014 112)"></div>
+          <div class="color-info"><span class="color-value">oklch(0.7 .014 112)</span><span class="tag">OKLCH</span></div>
+        </div>
+
+        <div class="color-card" data-copy="oklch(0.95 0.025 112)">
+          <div class="swatch" style="background:oklch(0.95 0.025 112)"></div>
+          <div class="color-info"><span class="color-value">oklch(0.95 0.025 112)</span><span class="tag">OKLCH</span></div>
+        </div>
+
+        <div class="color-card" data-copy="oklch(0.55 0.12 112)">
+          <div class="swatch" style="background:oklch(0.55 0.12 112)"></div>
+          <div class="color-info"><span class="color-value">oklch(0.55 0.12 112)</span><span class="tag">OKLCH</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">渐变</div>
+      <div class="grid">
+        <div class="color-card wide" data-copy="linear-gradient(90deg, rgba(241, 198, 68, 0.85) 0%, rgba(148, 194, 59, 1) 35%, rgba(148, 194, 59, 1) 100%)">
+          <div class="swatch preview-large" style="background:linear-gradient(90deg, rgba(241, 198, 68, 0.85) 0%, rgba(148, 194, 59, 1) 35%, rgba(148, 194, 59, 1) 100%)"></div>
+          <div class="color-info">
+            <span class="color-value">linear-gradient(90deg, rgba(241, 198, 68, 0.85) 0%, rgba(148, 194, 59, 1) 35%, rgba(148, 194, 59, 1) 100%)</span>
+            <span class="tag">CSS</span>
+          </div>
+        </div>
+
+        <div class="color-card wide" data-copy="radial-gradient(84% 168% at 17.1% -30.6%, rgb(137, 221, 255) 0%, rgba(220, 247, 181, 0.76) 30.1802%, rgb(249, 183, 164) 71.6216%, rgba(255, 255, 255, 0.61) 100%)">
+          <div class="swatch preview-large" style="background:radial-gradient(84% 168% at 17.1% -30.6%, rgb(137, 221, 255) 0%, rgba(220, 247, 181, 0.76) 30.1802%, rgb(249, 183, 164) 71.6216%, rgba(255, 255, 255, 0.61) 100%)"></div>
+          <div class="color-info">
+            <span class="color-value">radial-gradient(84% 168% at 17.1% -30.6%, rgb(137, 221, 255) 0%, rgba(220, 247, 181, 0.76) 30.1802%, rgb(249, 183, 164) 71.6216%, rgba(255, 255, 255, 0.61) 100%)</span>
+            <span class="tag">CSS</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast">已复制</div>
+
+  <script>
+    const toast = document.getElementById("toast");
+    let toastTimer = null;
+
+    function showToast() {
+      clearTimeout(toastTimer);
+      toast.classList.add("show");
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1200);
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
+      }
+      showToast();
+    }
+
+    document.querySelectorAll("[data-copy]").forEach(item => {
+      item.addEventListener("click", () => {
+        copyText(item.dataset.copy);
+      });
+    });
+  </script>
+</body>
+</html>
