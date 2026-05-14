@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>SIMD 支持性检测</title>
+    <style>
+        body { font-family: system-ui, sans-serif; background-color: #f7f7f5; color: #111; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background: #fff; border: 2px solid #111; max-width: 500px; width: 100%; padding: 40px; box-sizing: border-box; }
+        .title { font-size: 24px; font-weight: 700; margin-top: 0; margin-bottom: 24px; border-bottom: 2px solid #111; padding-bottom: 12px; }
+        .status-box { font-size: 18px; font-weight: 600; padding: 16px; margin-bottom: 24px; border: 2px solid #111; display: flex; align-items: center; gap: 12px; }
+        .status-box.yes { background-color: #e4f7e8; }
+        .status-box.no { background-color: #f7e4e4; }
+        .status-icon { width: 24px; height: 24px; fill: currentColor; }
+        .description { font-size: 15px; line-height: 1.6; color: #444; margin-bottom: 40px; }
+        .footer { font-size: 12px; color: #666; border-top: 1px solid #ddd; padding-top: 12px; }
+        .footer a { color: #111; text-decoration: none; border-bottom: 1px solid #111; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="title">WebAssembly SIMD 检测</h1>
+        
+        <div class="status-box" id="statusBox">
+            <svg class="status-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            <span id="statusText">检测中...</span>
+        </div>
+
+        <div class="description">
+            <p><strong>SIMD 是什么？</strong></p>
+            <p>SIMD（单指令流多数据流）是一种处理器指令集拓展技术。简单来说，它允许 CPU 在执行一条指令时，同时处理多个数据（例如同时处理多个像素点）。</p>
+            <p>在 WebAssembly 中，开启 SIMD 可以让图像解码、视频处理等计算密集型任务的性能获得显著提升，通常可加速 2 到 3 倍。</p>
+        </div>
+
+        <div class="footer">
+            检测技术由 <a href="https://github.com/GoogleChromeLabs/wasm-feature-detect" target="_blank" rel="noopener noreferrer">wasm-feature-detect</a> 提供支持。
+        </div>
+    </div>
+
+    <script type="module">
+        import { simd } from "https://unpkg.com/wasm-feature-detect?module";
+        
+        const statusBox = document.getElementById('statusBox');
+        const statusText = document.getElementById('statusText');
+
+        simd().then(isSupported => {
+            console.log(`SIMD: ${isSupported}`);
+            if (isSupported) {
+                statusBox.className = 'status-box yes';
+                statusText.innerText = '你的浏览器支持 SIMD';
+            } else {
+                statusBox.className = 'status-box no';
+                statusBox.innerHTML = `
+                    <svg class="status-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                    <span>你的浏览器不支持 SIMD</span>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

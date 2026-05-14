@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Lep在线查看示例</title>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #fff; color: #111; margin: 0; padding: 40px; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #111; padding-bottom: 16px; margin-bottom: 32px; }
+        h1 { margin: 0; font-size: 24px; }
+        .engine-switch { display: flex; border: 2px solid #111; }
+        .engine-btn { background: transparent; color: #111; border: none; padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .engine-btn.active { background: #111; color: #fff; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+        .card { border: 2px solid #111; display: flex; flex-direction: column; }
+        .card-img-box { background: #f4f4f0; aspect-ratio: 4/3; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .status-text { font-family: monospace; font-size: 14px; color: #555; }
+        .card-footer { padding: 12px; border-top: 2px solid #111; display: flex; justify-content: space-between; font-size: 13px; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Lep在线查看示例</h1>
+        <div class="engine-switch" id="engineSwitch">
+            <button class="engine-btn" data-type="compat">兼容模式</button>
+            <button class="engine-btn" data-type="simd">SIMD</button>
+        </div>
+    </div>
+
+    <div class="gallery" id="gallery">
+        <div class="card" data-src="1.lep">
+            <div class="card-img-box">
+                <span class="status-text">等待加载...</span>
+                <img alt="decoded">
+            </div>
+            <div class="card-footer">
+                <span>1.lep</span>
+                <span class="time-label">-</span>
+            </div>
+        </div>
+        <div class="card" data-src="2.lep">
+            <div class="card-img-box">
+                <span class="status-text">等待加载...</span>
+                <img alt="decoded">
+            </div>
+            <div class="card-footer">
+                <span>2.lep</span>
+                <span class="time-label">-</span>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { simd } from "https://unpkg.com/wasm-feature-detect?module";
+
+        const engineBtns = document.querySelectorAll('.engine-btn');
+        let worker = null;
+        let pendingTasks = new Map();
+        let taskId = 0;
+
+        // 检测是否支持SIMD
+        simd().then(isSupported => {
+            console.log(`SIMD: ${isSupported}`);
+            const initialMode = isSupported ? 'simd' : 'compat';
+            setEngineMode(initialMode);
+        });
+
+        engineBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetMode = btn.getAttribute('data-type');
+                setEngineMode(targetMode);
+            });
+        });
+
+        function setEngineMode(mode) {
+            engineBtns.forEach(btn => {
+                if (btn.getAttribute('data-type') === mode) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            if (worker) {
+                worker.terminate();
+                worker = null;
+                pendingTasks.clear();
+            }
+
+            document.querySelectorAll('.card').forEach(card => {
+                card.querySelector('img').style.display = 'none';
+                card.querySelector('.status-text').style.display = 'block';
+                card.querySelector('.status-text').textContent = '初始化引擎...';
+                card.querySelector('.time-label').textContent = '-';
+            });
+
+            const folder = mode === 'simd' ? 'pkg-simd' : 'pkg';
+            const wasmModuleUrl = new URL(`./${folder}/lepton_wasm.js`, document.baseURI).href;
+
+            const workerScript = `
+                import init, { lep_to_jpg } from '${wasmModuleUrl}';
+                
+                init().then(() => {
+                    postMessage({ type: 'ready' });
+                }).catch(err => {
+                    postMessage({ type: 'error', message: err.toString() });
+                });
+
+                self.onmessage = (e) => {
+                    const { id, data, filename } = e.data;
+                    const start = performance.now();
+                    try {
+                        const result = lep_to_jpg(data);
+                        const time = performance.now() - start;
+                        postMessage({ id, status: 'success', result, time, filename });
+                    } catch (err) {
+                        postMessage({ id, status: 'error', message: err.toString(), filename });
+                    }
+                };
+            `;
+
+            const blob = new Blob([workerScript], { type: 'application/javascript' });
+            worker = new Worker(URL.createObjectURL(blob), { type: 'module' });
+
+            worker.onmessage = (e) => {
+                const data = e.data;
+                if (data.type === 'ready') {
+                    startLoadingImages();
+                } else if (data.status === 'success') {
+                    const task = pendingTasks.get(data.id);
+                    if (task) {
+                        console.log(`解码 ${data.filename} ${data.time.toFixed(2)}ms`);
+
+                        const blob = new Blob([data.result], { type: 'image/jpeg' });
+                        const imgUrl = URL.createObjectURL(blob);
+                        
+                        task.card.querySelector('.status-text').style.display = 'none';
+                        const img = task.card.querySelector('img');
+                        img.src = imgUrl;
+                        img.style.display = 'block';
+                        task.card.querySelector('.time-label').textContent = `${data.time.toFixed(0)} ms`;
+                        
+                        pendingTasks.delete(data.id);
+                    }
+                }
+            };
+        }
+
+        async function startLoadingImages() {
+            const cards = document.querySelectorAll('.card');
+            for (const card of cards) {
+                const src = card.getAttribute('data-src');
+                const textEl = card.querySelector('.status-text');
+                textEl.textContent = '读取文件...';
+
+                try {
+                    const response = await fetch(src);
+                    if (!response.ok) throw new Error("HTTP " + response.status);
+                    const arrayBuffer = await response.arrayBuffer();
+                    
+                    textEl.textContent = '解码中...';
+                    const currentId = taskId++;
+                    pendingTasks.set(currentId, { card });
+
+                    worker.postMessage({
+                        id: currentId,
+                        data: new Uint8Array(arrayBuffer),
+                        filename: src
+                    });
+                } catch (err) {
+                    textEl.textContent = '读取失败';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

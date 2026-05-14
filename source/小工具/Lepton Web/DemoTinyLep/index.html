@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Lepton JPEG 无损压缩、解压</title>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #fcfcfc; color: #111; margin: 0 auto; padding: 40px; max-width: 1000px; }
+        .header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #111; padding-bottom: 16px; margin-bottom: 24px; }
+        h1 { margin: 0; font-size: 24px; }
+        .engine-switch { display: flex; border: 2px solid #111; }
+        .engine-btn { background: #fff; color: #111; border: none; padding: 6px 14px; font-size: 13px; font-weight: 600; cursor: pointer; }
+        .engine-btn.active { background: #111; color: #fff; }
+        .drop-zone { border: 2px dashed #111; background: #fff; padding: 50px 20px; text-align: center; font-weight: 500; font-size: 16px; margin-bottom: 32px; transition: background 0.2s, color 0.2s; }
+        .drop-zone.active { background: #111; color: #fff; }
+        .drop-zone:hover { background: #f0f0f0; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; background: #fff; border: 2px solid #111; }
+        th, td { padding: 12px; border-bottom: 1px solid #ddd; }
+        th { font-weight: 600; background: #f4f4f0; border-bottom: 2px solid #111; }
+        .mono { font-family: monospace; }
+        a.download-btn { display: inline-block; background: transparent; color: #111; text-decoration: none; padding: 4px 10px; font-size: 12px; border: 1px solid #111; font-weight: 600; transition: all 0.2s; }
+        a.download-btn:hover { background: #111; color: #fff; }
+        .disabled-msg { color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Lepton JPEG 无损压缩、解压</h1>
+        <div class="engine-switch" id="engineSwitch">
+            <button class="engine-btn" data-type="compat">兼容引擎</button>
+            <button class="engine-btn" data-type="simd">SIMD</button>
+        </div>
+    </div>
+
+    <div class="drop-zone" id="dropZone">
+        点击或拖拽 JPG / JPEG / LEP 文件处理
+        <input type="file" id="fileInput" style="display: none;" multiple>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>文件名</th>
+                <th>操作</th>
+                <th>原始大小</th>
+                <th>新大小</th>
+                <th>比例</th>
+                <th>耗时</th>
+                <th>结果</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+
+    <script type="module">
+        import { simd } from "https://unpkg.com/wasm-feature-detect?module";
+
+        const dropZone = document.getElementById('dropZone');
+        const tableBody = document.getElementById('tableBody');
+        const engineBtns = document.querySelectorAll('.engine-btn');
+        
+        let worker = null;
+        let isReady = false;
+        let taskId = 0;
+        let pendingTasks = new Map();
+
+        // 检测是否支持SIMD
+        simd().then(isSupported => {
+            console.log(`SIMD: ${isSupported}`);
+            setEngineMode(isSupported ? 'simd' : 'compat');
+        });
+
+        engineBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                setEngineMode(btn.getAttribute('data-type'));
+            });
+        });
+
+        function setEngineMode(mode) {
+            isReady = false;
+            engineBtns.forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-type') === mode);
+            });
+
+            if (worker) {
+                worker.terminate();
+                worker = null;
+                pendingTasks.forEach(task => {
+                    task.row.innerHTML = `<td colspan="7" class="disabled-msg">由于切换引擎，任务已中止</td>`;
+                });
+                pendingTasks.clear();
+            }
+
+            const folder = mode === 'simd' ? 'pkg-simd' : 'pkg';
+            const wasmModuleUrl = new URL(`./${folder}/lepton_wasm.js`, document.baseURI).href;
+
+            const workerScript = `
+                import init, { lep_to_jpg, jpg_to_lep } from '${wasmModuleUrl}';
+                init().then(() => postMessage({ type: 'ready' }))
+                      .catch(err => postMessage({ type: 'error', message: err.toString() }));
+
+                self.onmessage = (e) => {
+                    const { id, action, data, filename } = e.data;
+                    const start = performance.now();
+                    try {
+                        let result = (action === 'decode') ? lep_to_jpg(data) : jpg_to_lep(data);
+                        const time = performance.now() - start;
+                        postMessage({ id, status: 'success', result, time, filename, action });
+                    } catch (err) {
+                        postMessage({ id, status: 'error', message: err.toString(), filename });
+                    }
+                };
+            `;
+
+            worker = new Worker(URL.createObjectURL(new Blob([workerScript], { type: 'application/javascript' })), { type: 'module' });
+
+            worker.onmessage = (e) => {
+                const data = e.data;
+                if (data.type === 'ready') {
+                    isReady = true;
+                } else if (data.status === 'success') {
+                    const task = pendingTasks.get(data.id);
+                    if (task) {
+                        console.log(`${data.action === 'decode' ? '解码' : '编码'} ${data.filename} ${data.time.toFixed(2)}ms`);
+
+                        const origSize = task.origSize;
+                        const newSize = data.result.length;
+                        const ratio = ((newSize / origSize) * 100).toFixed(1);
+                        
+                        const ext = data.action === 'decode' ? '.jpg' : '.lep';
+                        const newFilename = data.filename.replace(/\.[^/.]+$/, "") + ext;
+                        
+                        const url = URL.createObjectURL(new Blob([data.result], { type: 'application/octet-stream' }));
+
+                        const actText = data.action === 'decode' ? '解码' : '压缩';
+                        
+                        task.row.innerHTML = `
+                            <td>${data.filename}</td>
+                            <td>${actText}</td>
+                            <td class="mono">${(origSize / 1024).toFixed(1)} KB</td>
+                            <td class="mono">${(newSize / 1024).toFixed(1)} KB</td>
+                            <td class="mono">${ratio}%</td>
+                            <td class="mono">${data.time.toFixed(0)} ms</td>
+                            <td><a class="download-btn" href="${url}" download="${newFilename}">保存</a></td>
+                        `;
+                        pendingTasks.delete(data.id);
+                    }
+                }
+            };
+        }
+
+        const fileInput = document.getElementById('fileInput');
+
+        dropZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (!isReady) return alert('当前引擎尚未加载完成，请稍候');
+            handleFiles(e.target.files);
+            e.target.value = ''; 
+        });
+
+        dropZone.addEventListener('dragover', (e) => { 
+            e.preventDefault(); 
+            dropZone.classList.add('active'); 
+        });
+        dropZone.addEventListener('dragleave', () => { 
+            dropZone.classList.remove('active'); 
+        });
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('active');
+            if (!isReady) return alert('当前引擎尚未加载完成，请稍候');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        function handleFiles(files) {
+            for (const file of files) {
+                processFile(file);
+            }
+        }
+
+        async function processFile(file) {
+            const filename = file.name;
+            const ext = filename.split('.').pop().toLowerCase();
+            let action = '';
+
+            if (ext === 'lep') action = 'decode';
+            else if (ext === 'jpg' || ext === 'jpeg') action = 'encode';
+            else return;
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${filename}</td>
+                <td>${action === 'decode' ? '解码' : '压缩'}</td>
+                <td class="mono">${(file.size / 1024).toFixed(1)} KB</td>
+                <td colspan="4" class="disabled-msg">处理中...</td>
+            `;
+            tableBody.insertBefore(tr, tableBody.firstChild);
+
+            const buffer = await file.arrayBuffer();
+            const currentId = taskId++;
+            pendingTasks.set(currentId, { row: tr, origSize: file.size });
+
+            worker.postMessage({ id: currentId, action, data: new Uint8Array(buffer), filename });
+        }
+    </script>
+</body>
+</html>
