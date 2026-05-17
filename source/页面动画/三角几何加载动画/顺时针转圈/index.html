@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>三角几何加载动画三合一</title>
+    <style>
+        :root {
+            --nv-green: #76b900;
+        }
+        body {
+            background-color: #ffffff;
+            font-family: -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 40px;
+            font-size: 24px;
+        }
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1000px;
+        }
+        /* 引入上方定义的共用 CSS 样式 */
+        .spinner-container {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .nv-spinner {
+            width: 142px;
+            height: 128px;
+        }
+        .nv-spinner-arrow {
+            fill: var(--nv-green);
+            opacity: 0.15;
+            animation: nv-pulse 1.5s infinite ease-in-out;
+        }
+        @keyframes nv-pulse {
+            0%, 100% { opacity: 0.15; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>三角几何加载动画顺时针转圈</h1>
+
+    <div class="spinner-container">
+        <div class="nv-spinner">
+            <svg viewBox="0 0 142 128">
+                <!-- 第一排 -->
+                <g transform="translate(36, 0)">
+                    <polygon points="17 0, 34 31, 0 31" transform="translate(0, 1)" class="nv-spinner-arrow" style="animation-delay: -1s;"></polygon>
+                    <polygon points="0 0, 34 0, 17 31" transform="translate(18, 0)" class="nv-spinner-arrow" style="animation-delay: -0.9444s;"></polygon>
+                    <polygon points="17 0, 34 31, 0 31" transform="translate(36, 1)" class="nv-spinner-arrow" style="animation-delay: -0.8888s;"></polygon>
+                </g>
+                <!-- 第二排 -->
+                <g transform="translate(18, 32)">
+                    <polygon points="17 0, 34 31, 0 31" transform="translate(0, 1)" class="nv-spinner-arrow" style="animation-delay: -1s;"></polygon>
+                    <polygon points="0 0, 34 0, 17 31" transform="translate(18, 0)" class="nv-spinner-arrow" style="animation-delay: -0.9444s;"></polygon>
+                    <polygon points="17 0, 34 31, 0 31" transform="translate(36, 1)" class="nv-spinner-arrow" style="animation-delay: -0.8888s;"></polygon>
+                    <polygon points="0 0, 34 0, 17 31" transform="translate(54, 0)" class="nv-spinner-arrow" style="animation-delay: -0.8333s;"></polygon>
+                    <polygon points="17 0, 34 31, 0 31" transform="translate(72, 1)" class="nv-spinner-arrow" style="animation-delay: -0.7777s;"></polygon>
+                </g>
+                <!-- 第三排 -->
+                <g transform="translate(0, 64)">
+                    <polygon points="17 0, 34 31, 0 31" transform="translate(0, 1)" class="nv-spinner-arrow" style="animation-delay: 0s;"></polygon>
+                    <polygon points="0 0, 34 0, 17 31" transform="translate(18, 0)" class="nv-spinner-arrow" style="animation-delay: -0.1111s;"></polygon>
+                    <polygon points="17 0, 34 31, 0 31" transform="translate(36, 1)" class="nv-spinner-arrow" style="animation-delay: -1s;"></polygon>
+                    <polygon points="0 0, 34 0, 17 31" transform="translate(54, 0)" class="nv-spinner-arrow" style="animation-delay: -0.8333s;"></polygon>
+                    <polygon points="17 0, 34 31, 0 31" transform="translate(72, 1)" class="nv-spinner-arrow" style="animation-delay: -0.6666s;"></polygon>
+                    <polygon points="0 0, 34 0, 17 31" transform="translate(90, 0)" class="nv-spinner-arrow" style="animation-delay: -0.7222s;"></polygon>
+                    <polygon points="17 0, 34 31, 0 31" transform="translate(108, 1)" class="nv-spinner-arrow" style="animation-delay: -0.6666s;"></polygon>
+                </g>
+                <!-- 第四排 -->
+                <g transform="translate(0, 96)">
+                    <polygon points="0 0, 34 0, 17 31" transform="translate(0, 0)" class="nv-spinner-arrow" style="animation-delay: -0.1666s;"></polygon>
+                    <polygon points="17 0, 34 31, 0 31" transform="translate(18, 1)" class="nv-spinner-arrow" style="animation-delay: -0.2222s;"></polygon>
+                    <polygon points="0 0, 34 0, 17 31" transform="translate(36, 0)" class="nv-spinner-arrow" style="animation-delay: -0.1666s;"></polygon>
+                    <polygon points="17 0, 34 31, 0 31" transform="translate(54, 1)" class="nv-spinner-arrow" style="animation-delay: -0.3333s;"></polygon>
+                    <polygon points="0 0, 34 0, 17 31" transform="translate(72, 0)" class="nv-spinner-arrow" style="animation-delay: -0.5s;"></polygon>
+                    <polygon points="17 0, 34 31, 0 31" transform="translate(90, 1)" class="nv-spinner-arrow" style="animation-delay: -0.6111s;"></polygon>
+                    <polygon points="0 0, 34 0, 17 31" transform="translate(108, 0)" class="nv-spinner-arrow" style="animation-delay: -0.5555s;"></polygon>
+                </g>
+            </svg>
+        </div>
+    </div>
+
+</body>
+</html>

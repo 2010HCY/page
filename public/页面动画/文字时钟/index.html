@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <title>含妈量检测 | 静水深流</title>
+    <title>文字时钟 - Word Clock | 静水深流</title>
     <link rel="stylesheet" href="/api/all.min.css">
-    <link rel="icon" href="https://100713.xyz/medias/Hlogo徽章.svg">
-    <meta name="keywords" content="静水深流, 静态页面索引, 含妈量检测, 在线含妈量检测工具, 在线工具">
-    <meta name="description" content="含妈量检测器，检测语句中的含妈量">
-    <meta name="author" content="Ethaniel">
+    <link rel="icon" href="/api/Hlogo徽章.svg" type="image/svg+xml">
+    
     <meta name="author" content="Ethaniel">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -210,118 +208,166 @@
 <html lang=&quot;zh-CN&quot;>
 <head>
     <meta charset=&quot;UTF-8&quot;>
-    <link rel=&quot;icon&quot; href=&quot;https://100713.xyz/medias/Hlogo徽章.svg&quot;>
-    <meta name=&quot;keywords&quot; content=&quot;静水深流, 静态页面索引, 含妈量检测, 在线含妈量检测工具, 在线工具&quot;>
-    <meta name=&quot;description&quot; content=&quot;含妈量检测器，检测语句中的含妈量&quot;>
     <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
-    <meta name=&quot;author&quot; content=&quot;Ethaniel&quot;>
-    <title>含妈量检测</title>
-    <script async src=&quot;/api/blog-count.js&quot;></script>
+    <title>文字时钟 - Word Clock</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            background-color: #e8e8e8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             margin: 0;
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            overflow: hidden;
+        }
+        #clock-container {
+            display: grid;
+            grid-template-columns: repeat(13, 1fr);
+            gap: clamp(3px, 1.2vw, 10px);
             padding: 20px;
-            background-color: #f4f4f9;
+            width: 90vmin;
+            max-width: 650px;
+            aspect-ratio: 1 / 1;
+            user-select: none;
         }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* 基础汉字样式 */
+        .char {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(14px, 3.5vw, 28px);
+            color: #bcbcbc; 
+            transition: color 0.4s ease, text-shadow 0.4s ease, transform 0.4s ease;
+            font-weight: normal;
         }
-        h1 {
-            text-align: center;
-            color: #333;
+        /* 高亮汉字样式 */
+        .char.active {
+            color: #111111; 
+            font-weight: 900;
+            transform: scale(1.15); 
         }
-        textarea {
-            width: 100%;
-            height: 150px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        .result {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #555;
-        }
-        .highlight {
-            background-color: yellow;
-            font-weight: bold;
+        /* 占位的透明格 */
+        .empty-cell {
+            visibility: hidden;
         }
     </style>
 </head>
 <body>
-    <div class=&quot;container&quot;>
-        <h1>含妈量检测</h1>
-        <textarea id=&quot;textInput&quot; placeholder=&quot;请输入内容...&quot;></textarea>
-        <button onclick=&quot;detectMa()&quot;>检测</button>
-        <div class=&quot;result&quot; id=&quot;result&quot;></div>
-    </div>
+
+    <div id=&quot;clock-container&quot;></div>
 
     <script>
-        function detectMa() {
-            const inputText = document.getElementById(&quot;textInput&quot;).value;
-            const targetChars = [
-                &quot;妈&quot;, &quot;媽&quot;, &quot;ma&quot;, &quot;NM&quot;, &quot;nm&quot;, &quot;mom&quot;, &quot;mama&quot;, &quot;momma&quot;, &quot;Mamma&quot;, 
-                &quot;m&quot;, &quot;M&quot;, &quot;🐎&quot;, &quot;码&quot;, &quot;泥马&quot;, &quot;尼姆&quot;, &quot;母&quot;, &quot;母亲&quot;, &quot;姆&quot;, &quot;尼玛&quot;, 
-                &quot;尼马&quot;, &quot;TM&quot;, &quot;TMD&quot;, &quot;NM&quot;, &quot;Mom&quot;, &quot;Mother&quot;, &quot;Mum&quot;, &quot;Maman&quot;, &quot;Mère&quot;, 
-                &quot;Mutter&quot;, &quot;Mamá&quot;, &quot;Madre&quot;, &quot;Mamãe&quot;, &quot;Mãe&quot;, &quot;お母さん&quot;, &quot;おかあさん&quot;, 
-                &quot;はは&quot;, &quot;ママ&quot;, &quot;엄마&quot;, &quot;eomma&quot;, &quot;어머니&quot;, &quot;eomeoni&quot;, &quot;أم&quot;, &quot;um&quot;, &quot;ماما&quot;, 
-                &quot;Мать&quot;, &quot;mat&quot;, &quot;แม่&quot;, &quot;mái&quot;, &quot;มาม่า&quot;, &quot;mā-mā&quot;, &quot;Mẹ&quot;, &quot;mā&quot;, &quot;māmā&quot;, &quot;māmī&quot;, &quot;lǎomā&quot;,
-                &quot;玛德&quot;, &quot;nmsl&quot;, &quot;NMSL&quot;, &quot;草泥马&quot;, &quot;司马&quot;, &quot;私募&quot;
-            ];
-            let totalChars = inputText.length;
+        const charsString = &quot;现在的时间是零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九年十一二三四五六七八九月二三十一二三四五六七八九日星期日一二三四五六零一二十一二三四五六七八九时零一二三四五十半一二三四五六七八九分零一二三四五十一二三四五六七八九秒&quot;;
+        
+        const container = document.getElementById('clock-container');
+        const charElements = [];
+        let charIndex = 0;
 
-            if (totalChars === 0) {
-                document.getElementById(&quot;result&quot;).innerHTML = &quot;请输入内容后再检测。&quot;;
-                return;
+        for (let r = 0; r < 13; r++) {
+            for (let c = 0; c < 13; c++) {
+                const distance = Math.abs(r - 6) + Math.abs(c - 6);
+                
+                if (distance > 8) {
+                    const empty = document.createElement('span');
+                    empty.classList.add('empty-cell');
+                    container.appendChild(empty);
+                } else {
+                    const span = document.createElement('span');
+                    span.classList.add('char');
+                    span.textContent = charsString[charIndex];
+                    container.appendChild(span);
+                    charElements.push(span);
+                    charIndex++;
+                }
+            }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1; 
+            const date = now.getDate();       
+            const day = now.getDay();         
+            const hours = now.getHours();     
+            const minutes = now.getMinutes(); 
+            const seconds = now.getSeconds(); 
+
+            const activeIndices = [];
+
+            // 标题
+            activeIndices.push(0, 1, 2, 3, 4, 5);
+
+            // 年份 (0000 - 9999)
+            activeIndices.push(6 + Math.floor(year / 1000));
+            activeIndices.push(16 + Math.floor((year % 1000) / 100));
+            activeIndices.push(26 + Math.floor((year % 100) / 10));
+            activeIndices.push(36 + (year % 10));
+            activeIndices.push(46); 
+
+            // 月份
+            if (month === 10) activeIndices.push(47);
+            else if (month > 10) activeIndices.push(47, 47 + (month - 10)); 
+            else activeIndices.push(47 + month); 
+            activeIndices.push(57); 
+
+            // 日期
+            if (date === 10) activeIndices.push(60);
+            else if (date === 20) activeIndices.push(58, 60);
+            else if (date === 30) activeIndices.push(59, 60);
+            else if (date > 10 &amp;&amp; date < 20) activeIndices.push(60, 60 + (date - 10));
+            else if (date > 20 &amp;&amp; date < 30) activeIndices.push(58, 60, 60 + (date - 20));
+            else if (date > 30) activeIndices.push(59, 60, 60 + (date - 30));
+            else activeIndices.push(60 + date);
+            activeIndices.push(70); 
+
+            // 星期
+            activeIndices.push(71, 72); 
+            activeIndices.push(day === 0 ? 73 : 73 + day);
+
+            // 时
+            if (hours === 0) activeIndices.push(80); 
+            else if (hours < 10) activeIndices.push(83 + hours);
+            else if (hours === 10) activeIndices.push(83);
+            else if (hours < 20) activeIndices.push(83, 83 + (hours - 10));
+            else if (hours === 20) activeIndices.push(82, 83);
+            else activeIndices.push(82, 83, 83 + (hours - 20));
+            activeIndices.push(93); 
+
+            // 分
+            if (minutes === 0) activeIndices.push(94, 111); 
+            else if (minutes === 30) activeIndices.push(101); 
+            else {
+                if (minutes < 10) activeIndices.push(94, 101 + minutes); 
+                else if (minutes === 10) activeIndices.push(100);
+                else if (minutes < 20) activeIndices.push(100, 101 + (minutes - 10));
+                else if (minutes % 10 === 0) activeIndices.push(94 + Math.floor(minutes / 10), 100);
+                else activeIndices.push(94 + Math.floor(minutes / 10), 100, 101 + (minutes % 10));
+                activeIndices.push(111); 
             }
 
-            let matchCount = 0;
-            let highlightedText = inputText;
+            // 秒
+            if (seconds === 0) activeIndices.push(112, 128); 
+            else {
+                if (seconds < 10) activeIndices.push(112, 118 + seconds);
+                else if (seconds === 10) activeIndices.push(118);
+                else if (seconds < 20) activeIndices.push(118, 118 + (seconds - 10));
+                else if (seconds % 10 === 0) activeIndices.push(112 + Math.floor(seconds / 10), 118);
+                else activeIndices.push(112 + Math.floor(seconds / 10), 118, 118 + (seconds % 10));
+                activeIndices.push(128); 
+            }
 
-            targetChars.forEach(char => {
-                const regex = new RegExp(char, &quot;g&quot;);
-                const matches = inputText.match(regex);
-                if (matches) {
-                    matchCount += matches.length;
-                    highlightedText = highlightedText.replace(regex, `<span class='highlight'>${char}</span>`);
-                }
+            charElements.forEach((el, index) => {
+                if (activeIndices.includes(index)) el.classList.add('active');
+                else el.classList.remove('active');
             });
-
-            const percentage = ((matchCount / totalChars) * 100).toFixed(2);
-
-            document.getElementById(&quot;result&quot;).innerHTML = `
-                <p>检测到的含妈总数：<strong>${matchCount}</strong></p>
-                <p>占比：<strong>${percentage}%</strong></p>
-                <p>检测到的妈字：</p>
-                <p>${highlightedText}</p>
-            `;
         }
+
+        updateClock();
+        setInterval(updateClock, 1000);
     </script>
 </body>
-</html>
-" title="含妈量检测" allow="geolocation; microphone; camera; display-capture; fullscreen; clipboard-read; clipboard-write" allowfullscreen="true"></iframe>
+</html>" title="文字时钟 - Word Clock" allow="geolocation; microphone; camera; display-capture; fullscreen; clipboard-read; clipboard-write" allowfullscreen="true"></iframe>
 
     <script>
     (function() {

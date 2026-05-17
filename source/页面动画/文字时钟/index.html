@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文字时钟 - Word Clock</title>
+    <style>
+        body {
+            background-color: #e8e8e8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            overflow: hidden;
+        }
+        #clock-container {
+            display: grid;
+            grid-template-columns: repeat(13, 1fr);
+            gap: clamp(3px, 1.2vw, 10px);
+            padding: 20px;
+            width: 90vmin;
+            max-width: 650px;
+            aspect-ratio: 1 / 1;
+            user-select: none;
+        }
+        /* 基础汉字样式 */
+        .char {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(14px, 3.5vw, 28px);
+            color: #bcbcbc; 
+            transition: color 0.4s ease, text-shadow 0.4s ease, transform 0.4s ease;
+            font-weight: normal;
+        }
+        /* 高亮汉字样式 */
+        .char.active {
+            color: #111111; 
+            font-weight: 900;
+            transform: scale(1.15); 
+        }
+        /* 占位的透明格 */
+        .empty-cell {
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="clock-container"></div>
+
+    <script>
+        const charsString = "现在的时间是零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九年十一二三四五六七八九月二三十一二三四五六七八九日星期日一二三四五六零一二十一二三四五六七八九时零一二三四五十半一二三四五六七八九分零一二三四五十一二三四五六七八九秒";
+        
+        const container = document.getElementById('clock-container');
+        const charElements = [];
+        let charIndex = 0;
+
+        for (let r = 0; r < 13; r++) {
+            for (let c = 0; c < 13; c++) {
+                const distance = Math.abs(r - 6) + Math.abs(c - 6);
+                
+                if (distance > 8) {
+                    const empty = document.createElement('span');
+                    empty.classList.add('empty-cell');
+                    container.appendChild(empty);
+                } else {
+                    const span = document.createElement('span');
+                    span.classList.add('char');
+                    span.textContent = charsString[charIndex];
+                    container.appendChild(span);
+                    charElements.push(span);
+                    charIndex++;
+                }
+            }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1; 
+            const date = now.getDate();       
+            const day = now.getDay();         
+            const hours = now.getHours();     
+            const minutes = now.getMinutes(); 
+            const seconds = now.getSeconds(); 
+
+            const activeIndices = [];
+
+            // 标题
+            activeIndices.push(0, 1, 2, 3, 4, 5);
+
+            // 年份 (0000 - 9999)
+            activeIndices.push(6 + Math.floor(year / 1000));
+            activeIndices.push(16 + Math.floor((year % 1000) / 100));
+            activeIndices.push(26 + Math.floor((year % 100) / 10));
+            activeIndices.push(36 + (year % 10));
+            activeIndices.push(46); 
+
+            // 月份
+            if (month === 10) activeIndices.push(47);
+            else if (month > 10) activeIndices.push(47, 47 + (month - 10)); 
+            else activeIndices.push(47 + month); 
+            activeIndices.push(57); 
+
+            // 日期
+            if (date === 10) activeIndices.push(60);
+            else if (date === 20) activeIndices.push(58, 60);
+            else if (date === 30) activeIndices.push(59, 60);
+            else if (date > 10 && date < 20) activeIndices.push(60, 60 + (date - 10));
+            else if (date > 20 && date < 30) activeIndices.push(58, 60, 60 + (date - 20));
+            else if (date > 30) activeIndices.push(59, 60, 60 + (date - 30));
+            else activeIndices.push(60 + date);
+            activeIndices.push(70); 
+
+            // 星期
+            activeIndices.push(71, 72); 
+            activeIndices.push(day === 0 ? 73 : 73 + day);
+
+            // 时
+            if (hours === 0) activeIndices.push(80); 
+            else if (hours < 10) activeIndices.push(83 + hours);
+            else if (hours === 10) activeIndices.push(83);
+            else if (hours < 20) activeIndices.push(83, 83 + (hours - 10));
+            else if (hours === 20) activeIndices.push(82, 83);
+            else activeIndices.push(82, 83, 83 + (hours - 20));
+            activeIndices.push(93); 
+
+            // 分
+            if (minutes === 0) activeIndices.push(94, 111); 
+            else if (minutes === 30) activeIndices.push(101); 
+            else {
+                if (minutes < 10) activeIndices.push(94, 101 + minutes); 
+                else if (minutes === 10) activeIndices.push(100);
+                else if (minutes < 20) activeIndices.push(100, 101 + (minutes - 10));
+                else if (minutes % 10 === 0) activeIndices.push(94 + Math.floor(minutes / 10), 100);
+                else activeIndices.push(94 + Math.floor(minutes / 10), 100, 101 + (minutes % 10));
+                activeIndices.push(111); 
+            }
+
+            // 秒
+            if (seconds === 0) activeIndices.push(112, 128); 
+            else {
+                if (seconds < 10) activeIndices.push(112, 118 + seconds);
+                else if (seconds === 10) activeIndices.push(118);
+                else if (seconds < 20) activeIndices.push(118, 118 + (seconds - 10));
+                else if (seconds % 10 === 0) activeIndices.push(112 + Math.floor(seconds / 10), 118);
+                else activeIndices.push(112 + Math.floor(seconds / 10), 118, 118 + (seconds % 10));
+                activeIndices.push(128); 
+            }
+
+            charElements.forEach((el, index) => {
+                if (activeIndices.includes(index)) el.classList.add('active');
+                else el.classList.remove('active');
+            });
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>

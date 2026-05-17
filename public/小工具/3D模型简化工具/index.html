@@ -469,8 +469,48 @@ button {
 </body>
 
 </html>
-" title="静水深流 | 3D模型简化缩小"></iframe>
+" title="静水深流 | 3D模型简化缩小" allow="geolocation; microphone; camera; display-capture; fullscreen; clipboard-read; clipboard-write" allowfullscreen="true"></iframe>
 
+    <script>
+    (function() {
+    const iframes = document.querySelectorAll('iframe.content-frame');
+
+    iframes.forEach(iframe => {
+        const originalSrcdoc = iframe.getAttribute('srcdoc');
+        if (!originalSrcdoc || originalSrcdoc.includes('window.fetch =')) return;
+
+        const realHost = window.location.hostname;
+        const realPath = window.location.pathname;
+        const realTarget = realHost + realPath;
+
+        const injectCode = `
+            <script>
+            (function() {
+                const originalFetch = window.fetch;
+                window.fetch = async (url, options) => {
+                if (url.includes('/api/visitor-count')) {
+                    if (options && options.body) {
+                    try {
+                        let data = JSON.parse(options.body);
+                        if (data.Target === 'srcdoc') {
+                        data.Target = "${realTarget}";
+                        options.body = JSON.stringify(data);
+                        }
+                    } catch(e) {}
+                    }
+                    if (options && options.headers && options.headers['X-Target'] === 'srcdoc') {
+                    options.headers['X-Target'] = "${realTarget}";
+                    }
+                }
+                return originalFetch(url, options);
+                };
+            })();
+            <\/script>`;
+
+            iframe.srcdoc = originalSrcdoc.replace('<head>', '<head>' + injectCode);
+        });
+    })();
+    </script>
     <script type="text/javascript" src="/api/sitetime.js"></script>
     <script type="text/javascript" src="/api/blog-count.js"></script> 
     <script>
