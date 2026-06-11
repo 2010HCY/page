@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>FlashSol编辑器网页版</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body {
+            background-color: #f0f0f0;
+            color: #282828;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            font-size: 13px;
+        }
+        .top-panel {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-bottom: 1px solid #d0d0d0;
+            flex-shrink: 0;
+        }
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .header-logo {
+            font-weight: bold;
+            font-size: 14px;
+            color: #282828;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 6px;
+        }
+        button {
+            background-color: #ffffff;
+            border: 1px solid #b4b4b4;
+            border-radius: 4px;
+            padding: 4px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background-color 0.15s, border-color 0.15s;
+            color: #000000;
+            outline: none;
+        }
+        button:hover:not(:disabled) {
+            background-color: #f0f0f0;
+            border-color: #8a8a8a;
+        }
+        button:active:not(:disabled) {
+            background-color: #e0e0e0;
+        }
+        button:disabled {
+            background-color: #f9f9f9;
+            color: #b4b4b4;
+            border-color: #e0e0e0;
+            cursor: not-allowed;
+        }
+        .primary-btn {
+            background-color: #ffffff;
+            border-color: #8a8a8a;
+            font-weight: bold;
+        }
+        .primary-btn:hover:not(:disabled) {
+            background-color: #eaeaea;
+        }
+        .bottom-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .stats-label {
+            color: #3c3c3c;
+            font-weight: 500;
+        }
+        .search-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+        }
+        .search-label {
+            color: #282828;
+        }
+        .checkbox-container {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .checkbox-container input {
+            margin-right: 4px;
+            accent-color: #0078d7;
+        }
+        .search-input-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            background-color: #ffffff;
+            border: 1px solid #b4b4b4;
+            height: 24px;
+            width: 200px;
+            border-radius: 0px;
+        }
+        .search-input-wrapper:focus-within {
+            border-color: #0078d7;
+        }
+        .search-icon {
+            width: 14px;
+            height: 14px;
+            color: #8c8c8c;
+            margin-left: 6px;
+            flex-shrink: 0;
+            pointer-events: none;
+        }
+        .search-input-wrapper input {
+            border: none;
+            outline: none;
+            font-size: 12px;
+            width: 146px;
+            padding: 0 4px;
+            color: #282828;
+            background: transparent;
+        }
+        #search_clear_btn {
+            border: none;
+            background: none;
+            padding: 0;
+            margin-right: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .clear-icon {
+            width: 12px;
+            height: 12px;
+            color: #8c8c8c;
+        }
+        .clear-icon:hover {
+            color: #282828;
+        }
+        .central-panel {
+            flex: 1;
+            padding: 5px 10px 10px 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        #dropzone_container {
+            height: 100%;
+            width: 100%;
+        }
+        #dropzone {
+            border: 2px dashed #b4b4b4;
+            background-color: #fcfcfc;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: #8c8c8c;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.15s, border-color 0.15s;
+        }
+        #dropzone.dragover {
+            background-color: #eaeaea;
+            border-color: #0078d7;
+            color: #282828;
+        }
+        #dropzone div {
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .table-container {
+            border: 1px solid #b4b4b4;
+            background-color: #ffffff;
+            height: 100%;
+            overflow-y: auto;
+            position: relative;
+        }
+        .sol-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        .sol-table thead th {
+            background-color: #ffffff;
+            color: #000000;
+            text-align: left;
+            font-weight: bold;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-bottom: 1px solid #b4b4b4;
+            border-right: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        .sol-table thead th:last-child {
+            border-right: none;
+        }
+        .sol-table tbody tr {
+            height: 26px;
+            cursor: default;
+            user-select: none;
+        }
+        .sol-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .sol-table tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+        .sol-table tbody tr:hover {
+            background-color: #eaeaea;
+        }
+        .sol-table tbody tr.selected {
+            background-color: #0078d7 !important;
+            color: #ffffff !important;
+        }
+        .sol-table tbody td {
+            padding: 4px 12px;
+            font-size: 13px;
+            border-right: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .sol-table tbody td:last-child {
+            border-right: none;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        .modal {
+            background-color: #ffffff;
+            border: 1px solid #b4b4b4;
+            width: 380px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 4px;
+        }
+        .modal-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 15px;
+            color: #000000;
+        }
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            row-gap: 15px;
+            column-gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .modal-grid label {
+            font-size: 13px;
+            color: #404040;
+            text-align: right;
+        }
+        .modal-grid input[type="text"],
+        .modal-grid select,
+        .modal-grid textarea {
+            width: 100%;
+            padding: 4px 8px;
+            border: 1px solid #b4b4b4;
+            background-color: #ffffff;
+            font-size: 13px;
+            outline: none;
+            border-radius: 4px;
+        }
+        .modal-grid input[type="text"]:focus,
+        .modal-grid select:focus,
+        .modal-grid textarea:focus {
+            border-color: #0078d7;
+        }
+        .xml-textarea, .bin-textarea {
+            height: 80px;
+            max-height: 100px;
+            resize: vertical;
+            font-family: monospace;
+        }
+        .warning-msg {
+            color: #c88c00;
+            font-size: 12px;
+            grid-column: span 2;
+            text-align: left;
+        }
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 32px;
+            height: 16px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #cccccc;
+            transition: .15s;
+            border-radius: 8px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 12px;
+            width: 12px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .15s;
+            border-radius: 50%;
+            border: 1px solid #969696;
+        }
+        input:checked + .slider {
+            background-color: #0078d7;
+        }
+        input:checked + .slider:before {
+            transform: translateX(16px);
+        }
+        .toggle-label {
+            font-size: 13px;
+            color: #282828;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <input type="file" id="file_input" accept=".sol" style="display:none">
+    
+    <header class="top-panel">
+        <div class="top-row">
+            <div class="header-logo">SOL 编辑器</div>
+            <div class="action-buttons">
+                <button id="btn_open">打开 Sol 文件</button>
+                <button id="btn_save" disabled>保存 Sol 文件</button>
+                <button id="btn_edit" disabled>修改变量</button>
+                <button id="btn_new">新增变量</button>
+            </div>
+        </div>
+        <div class="bottom-row">
+            <div id="stats_label" class="stats-label" style="display:none"></div>
+            <div class="search-controls">
+                <span class="search-label">搜索匹配：</span>
+                <label class="checkbox-container">
+                    <input type="checkbox" id="chk_match_name" checked>
+                    <span>变量名</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" id="chk_match_path" checked>
+                    <span>路径</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" id="chk_match_value" checked>
+                    <span>值</span>
+                </label>
+                <div class="search-input-wrapper">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="search_input" placeholder="搜索...">
+                    <button id="search_clear_btn" style="display:none">
+                        <svg class="clear-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="central-panel">
+        <div id="dropzone_container" style="display:block;">
+            <div id="dropzone">
+                <div>拖拽 Sol 文件到这里进行解析<br>或点击“新增变量”新建一个Sol文件</div>
+            </div>
+        </div>
+        <div id="table_container" class="table-container" style="display:none">
+            <table class="sol-table">
+                <colgroup>
+                    <col style="width: 25%;">
+                    <col style="width: 35%;">
+                    <col style="width: 40%;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>变量名</th>
+                        <th>路径</th>
+                        <th>值</th>
+                    </tr>
+                </thead>
+                <tbody id="table_body">
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="modal_overlay" class="modal-overlay" style="display:none"></div>
+
+    <script type="module">
+        import init, { parse_sol, serialize_sol } from './SolEditor.js';
+
+        const state = {
+            filepath: null,
+            rawBytes: null,
+            elements: [],
+            encoding: "AMF0",
+            selectedPath: null,
+            searchText: "",
+            filterMatchName: true,
+            filterMatchPath: true,
+            filterMatchValue: true,
+            editModal: null,
+            newModal: null
+        };
+
+        async function run() {
+            try {
+                await init('./SolEditor.wasm'); 
+                setupStaticEvents();
+                render();
+            } catch (err) {
+                console.error("WASM 加载失败:", err);
+                alert("WASM 加载失败，这可能是网络的问题，可刷新试试。");
+            }
+        }
+
+        function setupStaticEvents() {
+            const fileInput = document.getElementById("file_input");
+            document.getElementById("btn_open").onclick = () => fileInput.click();
+            fileInput.onchange = async (e) => {
+                if (e.target.files && e.target.files.length > 0) {
+                    await loadFile(e.target.files[0]);
+                }
+            };
+
+            document.getElementById("btn_save").onclick = () => saveFile();
+
+            document.getElementById("btn_new").onclick = () => openNewModal();
+            document.getElementById("btn_edit").onclick = () => openEditForSelected();
+
+            document.getElementById("chk_match_name").onchange = (e) => {
+                state.filterMatchName = e.target.checked;
+                render();
+            };
+            document.getElementById("chk_match_path").onchange = (e) => {
+                state.filterMatchPath = e.target.checked;
+                render();
+            };
+            document.getElementById("chk_match_value").onchange = (e) => {
+                state.filterMatchValue = e.target.checked;
+                render();
+            };
+
+            const searchInput = document.getElementById("search_input");
+            const searchClearBtn = document.getElementById("search_clear_btn");
+            searchInput.oninput = (e) => {
+                state.searchText = e.target.value;
+                searchClearBtn.style.display = state.searchText ? "block" : "none";
+                render();
+            };
+            searchClearBtn.onclick = () => {
+                searchInput.value = "";
+                state.searchText = "";
+                searchClearBtn.style.display = "none";
+                searchInput.blur();
+                render();
+            };
+
+            const dropzone = document.getElementById("dropzone");
+            window.ondragover = (e) => e.preventDefault();
+            window.ondrop = async (e) => {
+                e.preventDefault();
+                if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                    await loadFile(e.dataTransfer.files[0]);
+                }
+            };
+            dropzone.ondragover = (e) => {
+                e.preventDefault();
+                dropzone.classList.add("dragover");
+            };
+            dropzone.ondragleave = () => dropzone.classList.remove("dragover");
+            dropzone.ondrop = async (e) => {
+                e.preventDefault();
+                dropzone.classList.remove("dragover");
+                if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                    await loadFile(e.dataTransfer.files[0]);
+                }
+            };
+            dropzone.onclick = () => fileInput.click();
+        }
+
+        async function loadFile(file) {
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const bytes = new Uint8Array(arrayBuffer);
+                const result = parse_sol(bytes);
+
+                state.filepath = file.name;
+                state.rawBytes = bytes;
+                state.elements = result.elements;
+                state.encoding = result.encoding;
+                state.selectedPath = null;
+                render();
+            } catch (err) {
+                alert("加载失败: " + err);
+            }
+        }
+
+        function saveFile() {
+            if (state.elements.length === 0 && !state.filepath) return;
+            try {
+                const bytes = serialize_sol(state.elements, state.rawBytes);
+                const blob = new Blob([bytes], { type: "application/octet-stream" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = state.filepath || "NewSol.sol";
+                a.click();
+                URL.revokeObjectURL(url);
+
+                state.rawBytes = bytes;
+                render();
+            } catch (err) {
+                alert("保存失败: " + err);
+            }
+        }
+
+        function collectAllRecursively(elements, prefix, result) {
+            for (const el of elements) {
+                const currentPath = prefix === "" ? el.name : `${prefix}.${el.name}`;
+                result.push({ path: currentPath, el: el });
+                if (el.value && typeof el.value === 'object' && 'Object' in el.value) {
+                    collectAllRecursively(el.value.Object, currentPath, result);
+                }
+            }
+        }
+
+        function countVars(elements) {
+            const result = [];
+            collectAllRecursively(elements, "", result);
+            return result.length;
+        }
+
+        function getDisplayItems() {
+            let result = [];
+            collectAllRecursively(state.elements, "", result);
+
+            if (state.searchText) {
+                const search = state.searchText.toLowerCase();
+                result = result.filter(item => {
+                    const nameMatch = state.filterMatchName && item.el.name.toLowerCase().includes(search);
+                    const pathMatch = state.filterMatchPath && item.path.toLowerCase().includes(search);
+                    
+                    const valStr = getValueString(item.el.value).toLowerCase();
+                    const valMatch = state.filterMatchValue && valStr.includes(search);
+
+                    return nameMatch || pathMatch || valMatch;
+                });
+            }
+            return result;
+        }
+
+        function getValueString(value) {
+            if (value === "Null") return "Null";
+            if (value === "Unsupported") return "未知";
+            if (typeof value === 'object' && value !== null) {
+                if ('Number' in value) return value.Number.toString();
+                if ('String' in value) return value.String;
+                if ('Bool' in value) return value.Bool ? "True" : "False";
+                if ('Object' in value) return `[分类对象 / 包含 ${value.Object.length} 个项目]`;
+                if ('Binary' in value) return `[二进制数据 / ${value.Binary.length} 字节]`;
+                if ('Xml' in value) return "[XML 数据]";
+            }
+            return "未知";
+        }
+
+        function escapeHtml(str) {
+            if (typeof str !== 'string') return str;
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        function getFolderByDotPath(elements, dotPath) {
+            if (!dotPath) return elements;
+            const segments = dotPath.split('.');
+            let current = elements;
+            for (const seg of segments) {
+                const found = current.find(e => e.name === seg);
+                if (!found) return null;
+                if (found.value && typeof found.value === 'object' && 'Object' in found.value) {
+                    current = found.value.Object;
+                } else {
+                    return null;
+                }
+            }
+            return current;
+        }
+
+        function insertOrCreatePath(elements, dotPath, newEl) {
+            if (!dotPath) {
+                const idx = elements.findIndex(e => e.name === newEl.name);
+                if (idx !== -1) elements[idx] = newEl;
+                else elements.push(newEl);
+                return;
+            }
+            const segments = dotPath.split('.');
+            let current = elements;
+            for (const seg of segments) {
+                let found = current.find(e => e.name === seg);
+                if (!found) {
+                    found = { name: seg, value: { Object: [] } };
+                    current.push(found);
+                }
+                if (!(found.value && typeof found.value === 'object' && 'Object' in found.value)) {
+                    found.value = { Object: [] };
+                }
+                current = found.value.Object;
+            }
+            const idx = current.findIndex(e => e.name === newEl.name);
+            if (idx !== -1) current[idx] = newEl;
+            else current.push(newEl);
+        }
+
+        function hasElement(elements, dotPath, name) {
+            const fullPath = dotPath ? `${dotPath}.${name}` : name;
+            const list = [];
+            collectAllRecursively(elements, "", list);
+            return list.some(item => item.path === fullPath);
+        }
+
+        function openEditForSelected() {
+            if (!state.selectedPath) return;
+            const dotPath = state.selectedPath;
+            const lastDot = dotPath.lastIndexOf('.');
+            const parentPath = lastDot !== -1 ? dotPath.substring(0, lastDot) : "";
+            const targetName = lastDot !== -1 ? dotPath.substring(lastDot + 1) : dotPath;
+
+            const folder = getFolderByDotPath(state.elements, parentPath);
+            if (folder) {
+                const el = folder.find(e => e.name === targetName);
+                if (el) {
+                    let valType = 1;
+                    let valStr = "";
+                    let valBool = false;
+
+                    if (el.value === "Null" || el.value === "Unsupported") {
+                        // Null
+                    } else if (typeof el.value === 'object' && el.value !== null) {
+                        if ('Number' in el.value) {
+                            valType = 0;
+                            valStr = el.value.Number.toString();
+                        } else if ('String' in el.value) {
+                            valType = 1;
+                            valStr = el.value.String;
+                        } else if ('Bool' in el.value) {
+                            valType = 2;
+                            valBool = el.value.Bool;
+                        } else if ('Xml' in el.value) {
+                            valType = 3;
+                            valStr = el.value.Xml;
+                        } else if ('Object' in el.value) {
+                            valType = 4;
+                        } else if ('Binary' in el.value) {
+                            valType = 5;
+                            valStr = el.value.Binary.map(b => b.toString(16).toUpperCase().padStart(2, '0')).join(' ');
+                        }
+                    }
+
+                    state.editModal = { dotPath, name: el.name, valStr, valBool, valType };
+                    render();
+                }
+            }
+        }
+
+        function openNewModal() {
+            let defaultPath = "";
+            if (state.selectedPath) {
+                const lastDot = state.selectedPath.lastIndexOf('.');
+                if (lastDot !== -1) {
+                    defaultPath = state.selectedPath.substring(0, lastDot);
+                }
+            }
+            state.newModal = { dotPath: defaultPath, name: "", valStr: "", valBool: true, valType: 1 };
+            render();
+        }
+
+        function render() {
+            const hasData = state.filepath !== null || state.elements.length > 0;
+            document.getElementById("btn_save").disabled = !hasData;
+            document.getElementById("btn_edit").disabled = (state.selectedPath === null);
+
+            const statsLabel = document.getElementById("stats_label");
+            if (hasData) {
+                statsLabel.style.display = "block";
+                statsLabel.innerText = `找到变量：${countVars(state.elements)}   编码：${state.encoding}`;
+                document.getElementById("dropzone_container").style.display = "none";
+                document.getElementById("table_container").style.display = "block";
+            } else {
+                statsLabel.style.display = "none";
+                document.getElementById("dropzone_container").style.display = "block";
+                document.getElementById("table_container").style.display = "none";
+            }
+
+            const tbody = document.getElementById("table_body");
+            tbody.innerHTML = "";
+            const items = getDisplayItems();
+            items.forEach(item => {
+                const tr = document.createElement("tr");
+                if (state.selectedPath === item.path) {
+                    tr.classList.add("selected");
+                }
+                tr.innerHTML = `
+                    <td>${escapeHtml(item.el.name)}</td>
+                    <td>${escapeHtml(item.path)}</td>
+                    <td>${escapeHtml(getValueString(item.el.value))}</td>
+                `;
+                tr.onclick = () => {
+                    state.selectedPath = item.path;
+                    render();
+                };
+                tr.ondblclick = () => {
+                    state.selectedPath = item.path;
+                    openEditForSelected();
+                };
+                tbody.appendChild(tr);
+            });
+
+            const modalOverlay = document.getElementById("modal_overlay");
+            if (state.editModal) {
+                modalOverlay.style.display = "flex";
+                modalOverlay.innerHTML = `
+                    <div class="modal">
+                        <div class="modal-title">修改变量</div>
+                        <div class="modal-grid">
+                            <label>变量名：</label>
+                            <input type="text" id="modal_edit_name" value="${escapeHtml(state.editModal.name)}">
+                            
+                            <label>类型：</label>
+                            <select id="modal_edit_type">
+                                <option value="0" ${state.editModal.valType === 0 ? "selected" : ""}>数值</option>
+                                <option value="1" ${state.editModal.valType === 1 ? "selected" : ""}>字符串</option>
+                                <option value="2" ${state.editModal.valType === 2 ? "selected" : ""}>布尔值</option>
+                                <option value="3" ${state.editModal.valType === 3 ? "selected" : ""}>XML 数据</option>
+                                <option value="4" ${state.editModal.valType === 4 ? "selected" : ""}>数组 (Array)</option>
+                                <option value="5" ${state.editModal.valType === 5 ? "selected" : ""}>二进制数据</option>
+                            </select>
+                            
+                            ${state.editModal.valType !== 4 ? `
+                                <label>值：</label>
+                                <div id="modal_edit_val_container">
+                                    ${state.editModal.valType === 2 ? `
+                                        <div class="toggle-container">
+                                            <label class="switch">
+                                                <input type="checkbox" id="modal_edit_bool" ${state.editModal.valBool ? "checked" : ""}>
+                                                <span class="slider"></span>
+                                            </label>
+                                            <span class="toggle-label" id="modal_edit_bool_label">${state.editModal.valBool ? "True" : "False"}</span>
+                                        </div>
+                                    ` : state.editModal.valType === 3 ? `
+                                        <textarea id="modal_edit_str" class="xml-textarea">${escapeHtml(state.editModal.valStr)}</textarea>
+                                    ` : state.editModal.valType === 5 ? `
+                                        <textarea id="modal_edit_str" class="bin-textarea">${escapeHtml(state.editModal.valStr)}</textarea>
+                                    ` : `
+                                        <input type="text" id="modal_edit_str" value="${escapeHtml(state.editModal.valStr)}">
+                                    `}
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class="modal-footer">
+                            <button id="modal_edit_cancel">取消</button>
+                            <button id="modal_edit_save" class="primary-btn">保存修改</button>
+                        </div>
+                    </div>
+                `;
+                setupEditModalEvents();
+            } else if (state.newModal) {
+                const alreadyExists = state.newModal.name && hasElement(state.elements, state.newModal.dotPath, state.newModal.name);
+                modalOverlay.style.display = "flex";
+                modalOverlay.innerHTML = `
+                    <div class="modal">
+                        <div class="modal-title">新增变量</div>
+                        <div class="modal-grid">
+                            <label>存储路径：</label>
+                            <input type="text" id="modal_new_dotpath" value="${escapeHtml(state.newModal.dotPath)}">
+                            
+                            <label>变量名：</label>
+                            <input type="text" id="modal_new_name" value="${escapeHtml(state.newModal.name)}">
+                            
+                            <div id="modal_new_warning" class="warning-msg" style="display: ${alreadyExists ? 'block' : 'none'}">
+                                [!] 注意：该路径下已存在同名变量，继续操作将会覆盖它
+                            </div>
+                            
+                            <label>类型：</label>
+                            <select id="modal_new_type">
+                                <option value="0" ${state.newModal.valType === 0 ? "selected" : ""}>数值</option>
+                                <option value="1" ${state.newModal.valType === 1 ? "selected" : ""}>字符串</option>
+                                <option value="2" ${state.newModal.valType === 2 ? "selected" : ""}>布尔值</option>
+                                <option value="3" ${state.newModal.valType === 3 ? "selected" : ""}>XML 数据</option>
+                                <option value="4" ${state.newModal.valType === 4 ? "selected" : ""}>数组 (Array)</option>
+                                <option value="5" ${state.newModal.valType === 5 ? "selected" : ""}>二进制数据</option>
+                            </select>
+                            
+                            ${state.newModal.valType !== 4 ? `
+                                <label>值：</label>
+                                <div id="modal_new_val_container">
+                                    ${state.newModal.valType === 2 ? `
+                                        <div class="toggle-container">
+                                            <label class="switch">
+                                                <input type="checkbox" id="modal_new_bool" ${state.newModal.valBool ? "checked" : ""}>
+                                                <span class="slider"></span>
+                                            </label>
+                                            <span class="toggle-label" id="modal_new_bool_label">${state.newModal.valBool ? "True" : "False"}</span>
+                                        </div>
+                                    ` : state.newModal.valType === 3 ? `
+                                        <textarea id="modal_new_str" class="xml-textarea">${escapeHtml(state.newModal.valStr)}</textarea>
+                                    ` : state.newModal.valType === 5 ? `
+                                        <textarea id="modal_new_str" class="bin-textarea">${escapeHtml(state.newModal.valStr)}</textarea>
+                                    ` : `
+                                        <input type="text" id="modal_new_str" value="${escapeHtml(state.newModal.valStr)}">
+                                    `}
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class="modal-footer">
+                            <button id="modal_new_cancel">取消</button>
+                            <button id="modal_new_save" class="primary-btn">${alreadyExists ? "覆盖已有变量" : "添加节点"}</button>
+                        </div>
+                    </div>
+                `;
+                setupNewModalEvents();
+            } else {
+                modalOverlay.style.display = "none";
+            }
+        }
+
+        function setupEditModalEvents() {
+            const nameInput = document.getElementById("modal_edit_name");
+            const typeSelect = document.getElementById("modal_edit_type");
+            const strInput = document.getElementById("modal_edit_str");
+            const boolInput = document.getElementById("modal_edit_bool");
+            const btnCancel = document.getElementById("modal_edit_cancel");
+            const btnSave = document.getElementById("modal_edit_save");
+
+            nameInput.oninput = (e) => { state.editModal.name = e.target.value; };
+            typeSelect.onchange = (e) => {
+                state.editModal.valType = parseInt(e.target.value);
+                render();
+            };
+            if (strInput) {
+                strInput.oninput = (e) => { state.editModal.valStr = e.target.value; };
+            }
+            if (boolInput) {
+                boolInput.onchange = (e) => {
+                    state.editModal.valBool = e.target.checked;
+                    document.getElementById("modal_edit_bool_label").innerText = e.target.checked ? "True" : "False";
+                };
+            }
+
+            btnCancel.onclick = () => {
+                state.editModal = null;
+                render();
+            };
+
+            btnSave.onclick = () => {
+                const s = state.editModal;
+                const lastDot = s.dotPath.lastIndexOf('.');
+                const parentPath = lastDot !== -1 ? s.dotPath.substring(0, lastDot) : "";
+                const folder = getFolderByDotPath(state.elements, parentPath);
+                
+                if (folder) {
+                    const oldName = lastDot !== -1 ? s.dotPath.substring(lastDot + 1) : s.dotPath;
+                    const el = folder.find(e => e.name === oldName);
+                    if (el) {
+                        el.name = s.name;
+                        let newVal;
+                        if (s.valType === 0) {
+                            newVal = { Number: parseFloat(s.valStr) || 0 };
+                        } else if (s.valType === 1) {
+                            newVal = { String: s.valStr };
+                        } else if (s.valType === 2) {
+                            newVal = { Bool: s.valBool };
+                        } else if (s.valType === 3) {
+                            newVal = { Xml: s.valStr };
+                        } else if (s.valType === 4) {
+                            newVal = { Object: (el.value && el.value.Object) ? el.value.Object : [] };
+                        } else {
+                            const cleanStr = s.valStr.replace(/\s+/g, '');
+                            const bytes = [];
+                            for (let i = 0; i < cleanStr.length; i += 2) {
+                                const part = cleanStr.substring(i, i + 2);
+                                if (part.length === 2) {
+                                    const byte = parseInt(part, 16);
+                                    if (!isNaN(byte)) bytes.push(byte);
+                                    else break;
+                                }
+                            }
+                            newVal = { Binary: bytes };
+                        }
+                        el.value = newVal;
+                        const newPath = parentPath === "" ? s.name : `${parentPath}.${s.name}`;
+                        state.selectedPath = newPath;
+                    }
+                }
+                state.editModal = null;
+                render();
+            };
+        }
+
+        function setupNewModalEvents() {
+            const pathInput = document.getElementById("modal_new_dotpath");
+            const nameInput = document.getElementById("modal_new_name");
+            const typeSelect = document.getElementById("modal_new_type");
+            const strInput = document.getElementById("modal_new_str");
+            const boolInput = document.getElementById("modal_new_bool");
+            const btnCancel = document.getElementById("modal_new_cancel");
+            const btnSave = document.getElementById("modal_new_save");
+            const warningDiv = document.getElementById("modal_new_warning");
+
+            function checkExistence() {
+                state.newModal.dotPath = pathInput.value;
+                state.newModal.name = nameInput.value;
+                const exists = state.newModal.name && hasElement(state.elements, state.newModal.dotPath, state.newModal.name);
+                if (exists) {
+                    warningDiv.style.display = "block";
+                    btnSave.innerText = "覆盖已有变量";
+                } else {
+                    warningDiv.style.display = "none";
+                    btnSave.innerText = "添加节点";
+                }
+            }
+
+            pathInput.oninput = checkExistence;
+            nameInput.oninput = checkExistence;
+            typeSelect.onchange = (e) => {
+                state.newModal.valType = parseInt(e.target.value);
+                render();
+            };
+            if (strInput) {
+                strInput.oninput = (e) => { state.newModal.valStr = e.target.value; };
+            }
+            if (boolInput) {
+                boolInput.onchange = (e) => {
+                    state.newModal.valBool = e.target.checked;
+                    document.getElementById("modal_new_bool_label").innerText = e.target.checked ? "True" : "False";
+                };
+            }
+
+            btnCancel.onclick = () => {
+                state.newModal = null;
+                render();
+            };
+
+            btnSave.onclick = () => {
+                const s = state.newModal;
+                if (!s.name) return;
+
+                let newVal;
+                if (s.valType === 0) {
+                    newVal = { Number: parseFloat(s.valStr) || 0 };
+                } else if (s.valType === 1) {
+                    newVal = { String: s.valStr };
+                } else if (s.valType === 2) {
+                    newVal = { Bool: s.valBool };
+                } else if (s.valType === 3) {
+                    newVal = { Xml: s.valStr };
+                } else if (s.valType === 4) {
+                    newVal = { Object: [] };
+                } else {
+                    const cleanStr = s.valStr.replace(/\s+/g, '');
+                    const bytes = [];
+                    for (let i = 0; i < cleanStr.length; i += 2) {
+                        const part = cleanStr.substring(i, i + 2);
+                        if (part.length === 2) {
+                            const byte = parseInt(part, 16);
+                            if (!isNaN(byte)) bytes.push(byte);
+                            else break;
+                        }
+                    }
+                    newVal = { Binary: bytes };
+                }
+
+                insertOrCreatePath(state.elements, s.dotPath, { name: s.name, value: newVal });
+                state.newModal = null;
+                render();
+            };
+        }
+
+        run();
+    </script>
+</body>
+</html>

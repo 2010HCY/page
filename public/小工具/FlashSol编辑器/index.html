@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>FlashSol编辑器网页版 | 静水深流</title>
+    <link rel="stylesheet" href="/api/all.min.css">
+    <link rel="icon" href="/api/Hlogo徽章.svg" type="image/svg+xml">
+    
+    <meta name="author" content="Ethaniel">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://analytics.hcyhub.com/tracker.js" data-site-id="Page" data-endpoint="https://analytics.hcyhub.com" defer></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            width: 100%;
+            color: #747806;
+            height: 64px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 999;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            width: 96%;
+            margin: 0 auto;
+            position: relative;
+        }
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .brand-logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+        }
+        .logo-img {
+            height: 45px;
+            width: 40px;
+            margin-right: 8px;
+        }
+        .logo-span {
+            color: #747806;
+            font-size: 24px;
+            font-weight: 400;
+        }
+        .center-nav {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        .center-nav a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 24px;
+            color: #747806;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .center-nav a i {
+            margin-right: 8px;
+            font-size: 20px;
+        }
+        .header-info {
+            text-align: right;
+            font-size: 11px;
+            color: #999999;
+            line-height: 1.4;
+            flex-shrink: 0;
+        }
+        .header-info a {
+            color: #999999;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .header-info a:hover {
+            color: #747806;
+            text-decoration: underline;
+        }
+        .header-info p {
+            margin: 0;
+        }
+        .header-info i {
+            font-size: 10px;
+        }
+        .stats-value {
+            font-weight: bold;
+        }
+        .content-frame {
+            flex-grow: 1;
+            width: 100%;
+            border: none;
+            background-color: #f5f5f5;
+        }
+        .mobile-info-btn,
+        .mobile-close-btn,
+        .info-mask {
+            display: none;
+        }
+        @media (max-width: 900px) {
+            .logo-span {
+                font-size: 18px;
+            }
+            .mobile-info-btn {
+                display: block;
+                background: none;
+                border: none;
+                color: #999999;
+                font-size: 24px;
+                cursor: pointer;
+                padding: 0 10px;
+                z-index: 10;
+                flex-shrink: 0;
+            }
+            .header-info {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #ffffff;
+                z-index: 2120;
+                padding: 35px 20px 20px 20px;
+                border-radius: 8px;
+                box-shadow: 0 12px 36px rgba(0,0,0,0.2);
+                text-align: center;
+                width: 80%;
+                max-width: 320px;
+                font-size: 13px;
+            }
+            .header-info.active {
+                display: block;
+            }
+            .header-info div, 
+            .header-info p {
+                margin-top: 10px;
+                line-height: 1.6;
+            }
+            .mobile-close-btn {
+                display: block;
+                position: absolute;
+                top: 10px;
+                right: 12px;
+                background: none;
+                border: none;
+                font-size: 22px;
+                color: #aaaaaa;
+                cursor: pointer;
+            }
+            .info-mask {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 100;
+            }
+            .info-mask.active {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="brand-logo">
+                <a href="/">
+                    <img src="/api/Hlogo徽章.svg" alt="Flash收藏站Logo" class="logo-img" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iI2Q1ZGNhMSIvPjwvc3ZnPg=='"> 
+                    <span class="logo-span">Page</span>
+                </a>
+            </div>
+            <div class="center-nav">
+                <a href="/"><i class="fas fa-home"></i><span>返回首页</span></a>
+            </div>
+            <div class="header-info">
+                <button class="mobile-close-btn" id="mobileCloseBtn"><i class="fas fa-times"></i></button>
+                <a href="/泉州概况.htm">泉州</a> - 静水深流 <span id="year"></span> © hcyhub.com
+                <p>Created by <a href="https://hcyhub.com">静水深流</a> &amp; <a href="https://hcyhub.com/about">Ethaniel</a> | System <a href="https://status.hcyhub.com/" target="_blank">Status</a></p>
+                <div>
+                    <span id="sitetime">载入运行时间...</span>
+                    <span id="busuanzi_container_site_pv">&nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span class="stats-value" id="PageMeter_site_pv">加载中...</span>&nbsp;次</span>
+                    <span id="busuanzi_container_site_uv">&nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span class="stats-value" id="PageMeter_site_uv">加载中...</span>&nbsp;人</span>
+                </div>
+            </div>
+            <button class="mobile-info-btn" id="mobileInfoBtn" aria-label="查看站点信息"><i class="fas fa-info-circle"></i></button>
+        </div>
+    </header>
+
+    <div class="info-mask" id="infoMask"></div>
+    <iframe class="content-frame" srcdoc="<!DOCTYPE html>
+<html lang=&quot;zh-CN&quot;>
+<head>
+    <meta charset=&quot;UTF-8&quot;>
+    <title>FlashSol编辑器网页版</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif;
+        }
+        body {
+            background-color: #f0f0f0;
+            color: #282828;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            font-size: 13px;
+        }
+        .top-panel {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-bottom: 1px solid #d0d0d0;
+            flex-shrink: 0;
+        }
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .header-logo {
+            font-weight: bold;
+            font-size: 14px;
+            color: #282828;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 6px;
+        }
+        button {
+            background-color: #ffffff;
+            border: 1px solid #b4b4b4;
+            border-radius: 4px;
+            padding: 4px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background-color 0.15s, border-color 0.15s;
+            color: #000000;
+            outline: none;
+        }
+        button:hover:not(:disabled) {
+            background-color: #f0f0f0;
+            border-color: #8a8a8a;
+        }
+        button:active:not(:disabled) {
+            background-color: #e0e0e0;
+        }
+        button:disabled {
+            background-color: #f9f9f9;
+            color: #b4b4b4;
+            border-color: #e0e0e0;
+            cursor: not-allowed;
+        }
+        .primary-btn {
+            background-color: #ffffff;
+            border-color: #8a8a8a;
+            font-weight: bold;
+        }
+        .primary-btn:hover:not(:disabled) {
+            background-color: #eaeaea;
+        }
+        .bottom-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .stats-label {
+            color: #3c3c3c;
+            font-weight: 500;
+        }
+        .search-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+        }
+        .search-label {
+            color: #282828;
+        }
+        .checkbox-container {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .checkbox-container input {
+            margin-right: 4px;
+            accent-color: #0078d7;
+        }
+        .search-input-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            background-color: #ffffff;
+            border: 1px solid #b4b4b4;
+            height: 24px;
+            width: 200px;
+            border-radius: 0px;
+        }
+        .search-input-wrapper:focus-within {
+            border-color: #0078d7;
+        }
+        .search-icon {
+            width: 14px;
+            height: 14px;
+            color: #8c8c8c;
+            margin-left: 6px;
+            flex-shrink: 0;
+            pointer-events: none;
+        }
+        .search-input-wrapper input {
+            border: none;
+            outline: none;
+            font-size: 12px;
+            width: 146px;
+            padding: 0 4px;
+            color: #282828;
+            background: transparent;
+        }
+        #search_clear_btn {
+            border: none;
+            background: none;
+            padding: 0;
+            margin-right: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .clear-icon {
+            width: 12px;
+            height: 12px;
+            color: #8c8c8c;
+        }
+        .clear-icon:hover {
+            color: #282828;
+        }
+        .central-panel {
+            flex: 1;
+            padding: 5px 10px 10px 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        #dropzone_container {
+            height: 100%;
+            width: 100%;
+        }
+        #dropzone {
+            border: 2px dashed #b4b4b4;
+            background-color: #fcfcfc;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: #8c8c8c;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.15s, border-color 0.15s;
+        }
+        #dropzone.dragover {
+            background-color: #eaeaea;
+            border-color: #0078d7;
+            color: #282828;
+        }
+        #dropzone div {
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .table-container {
+            border: 1px solid #b4b4b4;
+            background-color: #ffffff;
+            height: 100%;
+            overflow-y: auto;
+            position: relative;
+        }
+        .sol-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        .sol-table thead th {
+            background-color: #ffffff;
+            color: #000000;
+            text-align: left;
+            font-weight: bold;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-bottom: 1px solid #b4b4b4;
+            border-right: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        .sol-table thead th:last-child {
+            border-right: none;
+        }
+        .sol-table tbody tr {
+            height: 26px;
+            cursor: default;
+            user-select: none;
+        }
+        .sol-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .sol-table tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+        .sol-table tbody tr:hover {
+            background-color: #eaeaea;
+        }
+        .sol-table tbody tr.selected {
+            background-color: #0078d7 !important;
+            color: #ffffff !important;
+        }
+        .sol-table tbody td {
+            padding: 4px 12px;
+            font-size: 13px;
+            border-right: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .sol-table tbody td:last-child {
+            border-right: none;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        .modal {
+            background-color: #ffffff;
+            border: 1px solid #b4b4b4;
+            width: 380px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 4px;
+        }
+        .modal-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 15px;
+            color: #000000;
+        }
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            row-gap: 15px;
+            column-gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .modal-grid label {
+            font-size: 13px;
+            color: #404040;
+            text-align: right;
+        }
+        .modal-grid input[type=&quot;text&quot;],
+        .modal-grid select,
+        .modal-grid textarea {
+            width: 100%;
+            padding: 4px 8px;
+            border: 1px solid #b4b4b4;
+            background-color: #ffffff;
+            font-size: 13px;
+            outline: none;
+            border-radius: 4px;
+        }
+        .modal-grid input[type=&quot;text&quot;]:focus,
+        .modal-grid select:focus,
+        .modal-grid textarea:focus {
+            border-color: #0078d7;
+        }
+        .xml-textarea, .bin-textarea {
+            height: 80px;
+            max-height: 100px;
+            resize: vertical;
+            font-family: monospace;
+        }
+        .warning-msg {
+            color: #c88c00;
+            font-size: 12px;
+            grid-column: span 2;
+            text-align: left;
+        }
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 32px;
+            height: 16px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #cccccc;
+            transition: .15s;
+            border-radius: 8px;
+        }
+        .slider:before {
+            position: absolute;
+            content: &quot;&quot;;
+            height: 12px;
+            width: 12px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .15s;
+            border-radius: 50%;
+            border: 1px solid #969696;
+        }
+        input:checked + .slider {
+            background-color: #0078d7;
+        }
+        input:checked + .slider:before {
+            transform: translateX(16px);
+        }
+        .toggle-label {
+            font-size: 13px;
+            color: #282828;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <input type=&quot;file&quot; id=&quot;file_input&quot; accept=&quot;.sol&quot; style=&quot;display:none&quot;>
+    
+    <header class=&quot;top-panel&quot;>
+        <div class=&quot;top-row&quot;>
+            <div class=&quot;header-logo&quot;>SOL 编辑器</div>
+            <div class=&quot;action-buttons&quot;>
+                <button id=&quot;btn_open&quot;>打开 Sol 文件</button>
+                <button id=&quot;btn_save&quot; disabled>保存 Sol 文件</button>
+                <button id=&quot;btn_edit&quot; disabled>修改变量</button>
+                <button id=&quot;btn_new&quot;>新增变量</button>
+            </div>
+        </div>
+        <div class=&quot;bottom-row&quot;>
+            <div id=&quot;stats_label&quot; class=&quot;stats-label&quot; style=&quot;display:none&quot;></div>
+            <div class=&quot;search-controls&quot;>
+                <span class=&quot;search-label&quot;>搜索匹配：</span>
+                <label class=&quot;checkbox-container&quot;>
+                    <input type=&quot;checkbox&quot; id=&quot;chk_match_name&quot; checked>
+                    <span>变量名</span>
+                </label>
+                <label class=&quot;checkbox-container&quot;>
+                    <input type=&quot;checkbox&quot; id=&quot;chk_match_path&quot; checked>
+                    <span>路径</span>
+                </label>
+                <label class=&quot;checkbox-container&quot;>
+                    <input type=&quot;checkbox&quot; id=&quot;chk_match_value&quot; checked>
+                    <span>值</span>
+                </label>
+                <div class=&quot;search-input-wrapper&quot;>
+                    <svg class=&quot;search-icon&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;8&quot;/><line x1=&quot;21&quot; y1=&quot;21&quot; x2=&quot;16.65&quot; y2=&quot;16.65&quot;/></svg>
+                    <input type=&quot;text&quot; id=&quot;search_input&quot; placeholder=&quot;搜索...&quot;>
+                    <button id=&quot;search_clear_btn&quot; style=&quot;display:none&quot;>
+                        <svg class=&quot;clear-icon&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><line x1=&quot;18&quot; y1=&quot;6&quot; x2=&quot;6&quot; y2=&quot;18&quot;/><line x1=&quot;6&quot; y1=&quot;6&quot; x2=&quot;18&quot; y2=&quot;18&quot;/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class=&quot;central-panel&quot;>
+        <div id=&quot;dropzone_container&quot; style=&quot;display:block;&quot;>
+            <div id=&quot;dropzone&quot;>
+                <div>拖拽 Sol 文件到这里进行解析<br>或点击“新增变量”新建一个Sol文件</div>
+            </div>
+        </div>
+        <div id=&quot;table_container&quot; class=&quot;table-container&quot; style=&quot;display:none&quot;>
+            <table class=&quot;sol-table&quot;>
+                <colgroup>
+                    <col style=&quot;width: 25%;&quot;>
+                    <col style=&quot;width: 35%;&quot;>
+                    <col style=&quot;width: 40%;&quot;>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>变量名</th>
+                        <th>路径</th>
+                        <th>值</th>
+                    </tr>
+                </thead>
+                <tbody id=&quot;table_body&quot;>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id=&quot;modal_overlay&quot; class=&quot;modal-overlay&quot; style=&quot;display:none&quot;></div>
+
+    <script type=&quot;module&quot;>
+        import init, { parse_sol, serialize_sol } from './SolEditor.js';
+
+        const state = {
+            filepath: null,
+            rawBytes: null,
+            elements: [],
+            encoding: &quot;AMF0&quot;,
+            selectedPath: null,
+            searchText: &quot;&quot;,
+            filterMatchName: true,
+            filterMatchPath: true,
+            filterMatchValue: true,
+            editModal: null,
+            newModal: null
+        };
+
+        async function run() {
+            try {
+                await init('./SolEditor.wasm'); 
+                setupStaticEvents();
+                render();
+            } catch (err) {
+                console.error(&quot;WASM 加载失败:&quot;, err);
+                alert(&quot;WASM 加载失败，这可能是网络的问题，可刷新试试。&quot;);
+            }
+        }
+
+        function setupStaticEvents() {
+            const fileInput = document.getElementById(&quot;file_input&quot;);
+            document.getElementById(&quot;btn_open&quot;).onclick = () => fileInput.click();
+            fileInput.onchange = async (e) => {
+                if (e.target.files &amp;&amp; e.target.files.length > 0) {
+                    await loadFile(e.target.files[0]);
+                }
+            };
+
+            document.getElementById(&quot;btn_save&quot;).onclick = () => saveFile();
+
+            document.getElementById(&quot;btn_new&quot;).onclick = () => openNewModal();
+            document.getElementById(&quot;btn_edit&quot;).onclick = () => openEditForSelected();
+
+            document.getElementById(&quot;chk_match_name&quot;).onchange = (e) => {
+                state.filterMatchName = e.target.checked;
+                render();
+            };
+            document.getElementById(&quot;chk_match_path&quot;).onchange = (e) => {
+                state.filterMatchPath = e.target.checked;
+                render();
+            };
+            document.getElementById(&quot;chk_match_value&quot;).onchange = (e) => {
+                state.filterMatchValue = e.target.checked;
+                render();
+            };
+
+            const searchInput = document.getElementById(&quot;search_input&quot;);
+            const searchClearBtn = document.getElementById(&quot;search_clear_btn&quot;);
+            searchInput.oninput = (e) => {
+                state.searchText = e.target.value;
+                searchClearBtn.style.display = state.searchText ? &quot;block&quot; : &quot;none&quot;;
+                render();
+            };
+            searchClearBtn.onclick = () => {
+                searchInput.value = &quot;&quot;;
+                state.searchText = &quot;&quot;;
+                searchClearBtn.style.display = &quot;none&quot;;
+                searchInput.blur();
+                render();
+            };
+
+            const dropzone = document.getElementById(&quot;dropzone&quot;);
+            window.ondragover = (e) => e.preventDefault();
+            window.ondrop = async (e) => {
+                e.preventDefault();
+                if (e.dataTransfer.files &amp;&amp; e.dataTransfer.files.length > 0) {
+                    await loadFile(e.dataTransfer.files[0]);
+                }
+            };
+            dropzone.ondragover = (e) => {
+                e.preventDefault();
+                dropzone.classList.add(&quot;dragover&quot;);
+            };
+            dropzone.ondragleave = () => dropzone.classList.remove(&quot;dragover&quot;);
+            dropzone.ondrop = async (e) => {
+                e.preventDefault();
+                dropzone.classList.remove(&quot;dragover&quot;);
+                if (e.dataTransfer.files &amp;&amp; e.dataTransfer.files.length > 0) {
+                    await loadFile(e.dataTransfer.files[0]);
+                }
+            };
+            dropzone.onclick = () => fileInput.click();
+        }
+
+        async function loadFile(file) {
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const bytes = new Uint8Array(arrayBuffer);
+                const result = parse_sol(bytes);
+
+                state.filepath = file.name;
+                state.rawBytes = bytes;
+                state.elements = result.elements;
+                state.encoding = result.encoding;
+                state.selectedPath = null;
+                render();
+            } catch (err) {
+                alert(&quot;加载失败: &quot; + err);
+            }
+        }
+
+        function saveFile() {
+            if (state.elements.length === 0 &amp;&amp; !state.filepath) return;
+            try {
+                const bytes = serialize_sol(state.elements, state.rawBytes);
+                const blob = new Blob([bytes], { type: &quot;application/octet-stream&quot; });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement(&quot;a&quot;);
+                a.href = url;
+                a.download = state.filepath || &quot;NewSol.sol&quot;;
+                a.click();
+                URL.revokeObjectURL(url);
+
+                state.rawBytes = bytes;
+                render();
+            } catch (err) {
+                alert(&quot;保存失败: &quot; + err);
+            }
+        }
+
+        function collectAllRecursively(elements, prefix, result) {
+            for (const el of elements) {
+                const currentPath = prefix === &quot;&quot; ? el.name : `${prefix}.${el.name}`;
+                result.push({ path: currentPath, el: el });
+                if (el.value &amp;&amp; typeof el.value === 'object' &amp;&amp; 'Object' in el.value) {
+                    collectAllRecursively(el.value.Object, currentPath, result);
+                }
+            }
+        }
+
+        function countVars(elements) {
+            const result = [];
+            collectAllRecursively(elements, &quot;&quot;, result);
+            return result.length;
+        }
+
+        function getDisplayItems() {
+            let result = [];
+            collectAllRecursively(state.elements, &quot;&quot;, result);
+
+            if (state.searchText) {
+                const search = state.searchText.toLowerCase();
+                result = result.filter(item => {
+                    const nameMatch = state.filterMatchName &amp;&amp; item.el.name.toLowerCase().includes(search);
+                    const pathMatch = state.filterMatchPath &amp;&amp; item.path.toLowerCase().includes(search);
+                    
+                    const valStr = getValueString(item.el.value).toLowerCase();
+                    const valMatch = state.filterMatchValue &amp;&amp; valStr.includes(search);
+
+                    return nameMatch || pathMatch || valMatch;
+                });
+            }
+            return result;
+        }
+
+        function getValueString(value) {
+            if (value === &quot;Null&quot;) return &quot;Null&quot;;
+            if (value === &quot;Unsupported&quot;) return &quot;未知&quot;;
+            if (typeof value === 'object' &amp;&amp; value !== null) {
+                if ('Number' in value) return value.Number.toString();
+                if ('String' in value) return value.String;
+                if ('Bool' in value) return value.Bool ? &quot;True&quot; : &quot;False&quot;;
+                if ('Object' in value) return `[分类对象 / 包含 ${value.Object.length} 个项目]`;
+                if ('Binary' in value) return `[二进制数据 / ${value.Binary.length} 字节]`;
+                if ('Xml' in value) return &quot;[XML 数据]&quot;;
+            }
+            return &quot;未知&quot;;
+        }
+
+        function escapeHtml(str) {
+            if (typeof str !== 'string') return str;
+            return str.replace(/&amp;/g, &quot;&amp;amp;&quot;).replace(/</g, &quot;&amp;lt;&quot;).replace(/>/g, &quot;&amp;gt;&quot;).replace(/&quot;/g, &quot;&amp;quot;&quot;).replace(/'/g, &quot;&amp;#039;&quot;);
+        }
+
+        function getFolderByDotPath(elements, dotPath) {
+            if (!dotPath) return elements;
+            const segments = dotPath.split('.');
+            let current = elements;
+            for (const seg of segments) {
+                const found = current.find(e => e.name === seg);
+                if (!found) return null;
+                if (found.value &amp;&amp; typeof found.value === 'object' &amp;&amp; 'Object' in found.value) {
+                    current = found.value.Object;
+                } else {
+                    return null;
+                }
+            }
+            return current;
+        }
+
+        function insertOrCreatePath(elements, dotPath, newEl) {
+            if (!dotPath) {
+                const idx = elements.findIndex(e => e.name === newEl.name);
+                if (idx !== -1) elements[idx] = newEl;
+                else elements.push(newEl);
+                return;
+            }
+            const segments = dotPath.split('.');
+            let current = elements;
+            for (const seg of segments) {
+                let found = current.find(e => e.name === seg);
+                if (!found) {
+                    found = { name: seg, value: { Object: [] } };
+                    current.push(found);
+                }
+                if (!(found.value &amp;&amp; typeof found.value === 'object' &amp;&amp; 'Object' in found.value)) {
+                    found.value = { Object: [] };
+                }
+                current = found.value.Object;
+            }
+            const idx = current.findIndex(e => e.name === newEl.name);
+            if (idx !== -1) current[idx] = newEl;
+            else current.push(newEl);
+        }
+
+        function hasElement(elements, dotPath, name) {
+            const fullPath = dotPath ? `${dotPath}.${name}` : name;
+            const list = [];
+            collectAllRecursively(elements, &quot;&quot;, list);
+            return list.some(item => item.path === fullPath);
+        }
+
+        function openEditForSelected() {
+            if (!state.selectedPath) return;
+            const dotPath = state.selectedPath;
+            const lastDot = dotPath.lastIndexOf('.');
+            const parentPath = lastDot !== -1 ? dotPath.substring(0, lastDot) : &quot;&quot;;
+            const targetName = lastDot !== -1 ? dotPath.substring(lastDot + 1) : dotPath;
+
+            const folder = getFolderByDotPath(state.elements, parentPath);
+            if (folder) {
+                const el = folder.find(e => e.name === targetName);
+                if (el) {
+                    let valType = 1;
+                    let valStr = &quot;&quot;;
+                    let valBool = false;
+
+                    if (el.value === &quot;Null&quot; || el.value === &quot;Unsupported&quot;) {
+                        // Null
+                    } else if (typeof el.value === 'object' &amp;&amp; el.value !== null) {
+                        if ('Number' in el.value) {
+                            valType = 0;
+                            valStr = el.value.Number.toString();
+                        } else if ('String' in el.value) {
+                            valType = 1;
+                            valStr = el.value.String;
+                        } else if ('Bool' in el.value) {
+                            valType = 2;
+                            valBool = el.value.Bool;
+                        } else if ('Xml' in el.value) {
+                            valType = 3;
+                            valStr = el.value.Xml;
+                        } else if ('Object' in el.value) {
+                            valType = 4;
+                        } else if ('Binary' in el.value) {
+                            valType = 5;
+                            valStr = el.value.Binary.map(b => b.toString(16).toUpperCase().padStart(2, '0')).join(' ');
+                        }
+                    }
+
+                    state.editModal = { dotPath, name: el.name, valStr, valBool, valType };
+                    render();
+                }
+            }
+        }
+
+        function openNewModal() {
+            let defaultPath = &quot;&quot;;
+            if (state.selectedPath) {
+                const lastDot = state.selectedPath.lastIndexOf('.');
+                if (lastDot !== -1) {
+                    defaultPath = state.selectedPath.substring(0, lastDot);
+                }
+            }
+            state.newModal = { dotPath: defaultPath, name: &quot;&quot;, valStr: &quot;&quot;, valBool: true, valType: 1 };
+            render();
+        }
+
+        function render() {
+            const hasData = state.filepath !== null || state.elements.length > 0;
+            document.getElementById(&quot;btn_save&quot;).disabled = !hasData;
+            document.getElementById(&quot;btn_edit&quot;).disabled = (state.selectedPath === null);
+
+            const statsLabel = document.getElementById(&quot;stats_label&quot;);
+            if (hasData) {
+                statsLabel.style.display = &quot;block&quot;;
+                statsLabel.innerText = `找到变量：${countVars(state.elements)}   编码：${state.encoding}`;
+                document.getElementById(&quot;dropzone_container&quot;).style.display = &quot;none&quot;;
+                document.getElementById(&quot;table_container&quot;).style.display = &quot;block&quot;;
+            } else {
+                statsLabel.style.display = &quot;none&quot;;
+                document.getElementById(&quot;dropzone_container&quot;).style.display = &quot;block&quot;;
+                document.getElementById(&quot;table_container&quot;).style.display = &quot;none&quot;;
+            }
+
+            const tbody = document.getElementById(&quot;table_body&quot;);
+            tbody.innerHTML = &quot;&quot;;
+            const items = getDisplayItems();
+            items.forEach(item => {
+                const tr = document.createElement(&quot;tr&quot;);
+                if (state.selectedPath === item.path) {
+                    tr.classList.add(&quot;selected&quot;);
+                }
+                tr.innerHTML = `
+                    <td>${escapeHtml(item.el.name)}</td>
+                    <td>${escapeHtml(item.path)}</td>
+                    <td>${escapeHtml(getValueString(item.el.value))}</td>
+                `;
+                tr.onclick = () => {
+                    state.selectedPath = item.path;
+                    render();
+                };
+                tr.ondblclick = () => {
+                    state.selectedPath = item.path;
+                    openEditForSelected();
+                };
+                tbody.appendChild(tr);
+            });
+
+            const modalOverlay = document.getElementById(&quot;modal_overlay&quot;);
+            if (state.editModal) {
+                modalOverlay.style.display = &quot;flex&quot;;
+                modalOverlay.innerHTML = `
+                    <div class=&quot;modal&quot;>
+                        <div class=&quot;modal-title&quot;>修改变量</div>
+                        <div class=&quot;modal-grid&quot;>
+                            <label>变量名：</label>
+                            <input type=&quot;text&quot; id=&quot;modal_edit_name&quot; value=&quot;${escapeHtml(state.editModal.name)}&quot;>
+                            
+                            <label>类型：</label>
+                            <select id=&quot;modal_edit_type&quot;>
+                                <option value=&quot;0&quot; ${state.editModal.valType === 0 ? &quot;selected&quot; : &quot;&quot;}>数值</option>
+                                <option value=&quot;1&quot; ${state.editModal.valType === 1 ? &quot;selected&quot; : &quot;&quot;}>字符串</option>
+                                <option value=&quot;2&quot; ${state.editModal.valType === 2 ? &quot;selected&quot; : &quot;&quot;}>布尔值</option>
+                                <option value=&quot;3&quot; ${state.editModal.valType === 3 ? &quot;selected&quot; : &quot;&quot;}>XML 数据</option>
+                                <option value=&quot;4&quot; ${state.editModal.valType === 4 ? &quot;selected&quot; : &quot;&quot;}>数组 (Array)</option>
+                                <option value=&quot;5&quot; ${state.editModal.valType === 5 ? &quot;selected&quot; : &quot;&quot;}>二进制数据</option>
+                            </select>
+                            
+                            ${state.editModal.valType !== 4 ? `
+                                <label>值：</label>
+                                <div id=&quot;modal_edit_val_container&quot;>
+                                    ${state.editModal.valType === 2 ? `
+                                        <div class=&quot;toggle-container&quot;>
+                                            <label class=&quot;switch&quot;>
+                                                <input type=&quot;checkbox&quot; id=&quot;modal_edit_bool&quot; ${state.editModal.valBool ? &quot;checked&quot; : &quot;&quot;}>
+                                                <span class=&quot;slider&quot;></span>
+                                            </label>
+                                            <span class=&quot;toggle-label&quot; id=&quot;modal_edit_bool_label&quot;>${state.editModal.valBool ? &quot;True&quot; : &quot;False&quot;}</span>
+                                        </div>
+                                    ` : state.editModal.valType === 3 ? `
+                                        <textarea id=&quot;modal_edit_str&quot; class=&quot;xml-textarea&quot;>${escapeHtml(state.editModal.valStr)}</textarea>
+                                    ` : state.editModal.valType === 5 ? `
+                                        <textarea id=&quot;modal_edit_str&quot; class=&quot;bin-textarea&quot;>${escapeHtml(state.editModal.valStr)}</textarea>
+                                    ` : `
+                                        <input type=&quot;text&quot; id=&quot;modal_edit_str&quot; value=&quot;${escapeHtml(state.editModal.valStr)}&quot;>
+                                    `}
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class=&quot;modal-footer&quot;>
+                            <button id=&quot;modal_edit_cancel&quot;>取消</button>
+                            <button id=&quot;modal_edit_save&quot; class=&quot;primary-btn&quot;>保存修改</button>
+                        </div>
+                    </div>
+                `;
+                setupEditModalEvents();
+            } else if (state.newModal) {
+                const alreadyExists = state.newModal.name &amp;&amp; hasElement(state.elements, state.newModal.dotPath, state.newModal.name);
+                modalOverlay.style.display = &quot;flex&quot;;
+                modalOverlay.innerHTML = `
+                    <div class=&quot;modal&quot;>
+                        <div class=&quot;modal-title&quot;>新增变量</div>
+                        <div class=&quot;modal-grid&quot;>
+                            <label>存储路径：</label>
+                            <input type=&quot;text&quot; id=&quot;modal_new_dotpath&quot; value=&quot;${escapeHtml(state.newModal.dotPath)}&quot;>
+                            
+                            <label>变量名：</label>
+                            <input type=&quot;text&quot; id=&quot;modal_new_name&quot; value=&quot;${escapeHtml(state.newModal.name)}&quot;>
+                            
+                            <div id=&quot;modal_new_warning&quot; class=&quot;warning-msg&quot; style=&quot;display: ${alreadyExists ? 'block' : 'none'}&quot;>
+                                [!] 注意：该路径下已存在同名变量，继续操作将会覆盖它
+                            </div>
+                            
+                            <label>类型：</label>
+                            <select id=&quot;modal_new_type&quot;>
+                                <option value=&quot;0&quot; ${state.newModal.valType === 0 ? &quot;selected&quot; : &quot;&quot;}>数值</option>
+                                <option value=&quot;1&quot; ${state.newModal.valType === 1 ? &quot;selected&quot; : &quot;&quot;}>字符串</option>
+                                <option value=&quot;2&quot; ${state.newModal.valType === 2 ? &quot;selected&quot; : &quot;&quot;}>布尔值</option>
+                                <option value=&quot;3&quot; ${state.newModal.valType === 3 ? &quot;selected&quot; : &quot;&quot;}>XML 数据</option>
+                                <option value=&quot;4&quot; ${state.newModal.valType === 4 ? &quot;selected&quot; : &quot;&quot;}>数组 (Array)</option>
+                                <option value=&quot;5&quot; ${state.newModal.valType === 5 ? &quot;selected&quot; : &quot;&quot;}>二进制数据</option>
+                            </select>
+                            
+                            ${state.newModal.valType !== 4 ? `
+                                <label>值：</label>
+                                <div id=&quot;modal_new_val_container&quot;>
+                                    ${state.newModal.valType === 2 ? `
+                                        <div class=&quot;toggle-container&quot;>
+                                            <label class=&quot;switch&quot;>
+                                                <input type=&quot;checkbox&quot; id=&quot;modal_new_bool&quot; ${state.newModal.valBool ? &quot;checked&quot; : &quot;&quot;}>
+                                                <span class=&quot;slider&quot;></span>
+                                            </label>
+                                            <span class=&quot;toggle-label&quot; id=&quot;modal_new_bool_label&quot;>${state.newModal.valBool ? &quot;True&quot; : &quot;False&quot;}</span>
+                                        </div>
+                                    ` : state.newModal.valType === 3 ? `
+                                        <textarea id=&quot;modal_new_str&quot; class=&quot;xml-textarea&quot;>${escapeHtml(state.newModal.valStr)}</textarea>
+                                    ` : state.newModal.valType === 5 ? `
+                                        <textarea id=&quot;modal_new_str&quot; class=&quot;bin-textarea&quot;>${escapeHtml(state.newModal.valStr)}</textarea>
+                                    ` : `
+                                        <input type=&quot;text&quot; id=&quot;modal_new_str&quot; value=&quot;${escapeHtml(state.newModal.valStr)}&quot;>
+                                    `}
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class=&quot;modal-footer&quot;>
+                            <button id=&quot;modal_new_cancel&quot;>取消</button>
+                            <button id=&quot;modal_new_save&quot; class=&quot;primary-btn&quot;>${alreadyExists ? &quot;覆盖已有变量&quot; : &quot;添加节点&quot;}</button>
+                        </div>
+                    </div>
+                `;
+                setupNewModalEvents();
+            } else {
+                modalOverlay.style.display = &quot;none&quot;;
+            }
+        }
+
+        function setupEditModalEvents() {
+            const nameInput = document.getElementById(&quot;modal_edit_name&quot;);
+            const typeSelect = document.getElementById(&quot;modal_edit_type&quot;);
+            const strInput = document.getElementById(&quot;modal_edit_str&quot;);
+            const boolInput = document.getElementById(&quot;modal_edit_bool&quot;);
+            const btnCancel = document.getElementById(&quot;modal_edit_cancel&quot;);
+            const btnSave = document.getElementById(&quot;modal_edit_save&quot;);
+
+            nameInput.oninput = (e) => { state.editModal.name = e.target.value; };
+            typeSelect.onchange = (e) => {
+                state.editModal.valType = parseInt(e.target.value);
+                render();
+            };
+            if (strInput) {
+                strInput.oninput = (e) => { state.editModal.valStr = e.target.value; };
+            }
+            if (boolInput) {
+                boolInput.onchange = (e) => {
+                    state.editModal.valBool = e.target.checked;
+                    document.getElementById(&quot;modal_edit_bool_label&quot;).innerText = e.target.checked ? &quot;True&quot; : &quot;False&quot;;
+                };
+            }
+
+            btnCancel.onclick = () => {
+                state.editModal = null;
+                render();
+            };
+
+            btnSave.onclick = () => {
+                const s = state.editModal;
+                const lastDot = s.dotPath.lastIndexOf('.');
+                const parentPath = lastDot !== -1 ? s.dotPath.substring(0, lastDot) : &quot;&quot;;
+                const folder = getFolderByDotPath(state.elements, parentPath);
+                
+                if (folder) {
+                    const oldName = lastDot !== -1 ? s.dotPath.substring(lastDot + 1) : s.dotPath;
+                    const el = folder.find(e => e.name === oldName);
+                    if (el) {
+                        el.name = s.name;
+                        let newVal;
+                        if (s.valType === 0) {
+                            newVal = { Number: parseFloat(s.valStr) || 0 };
+                        } else if (s.valType === 1) {
+                            newVal = { String: s.valStr };
+                        } else if (s.valType === 2) {
+                            newVal = { Bool: s.valBool };
+                        } else if (s.valType === 3) {
+                            newVal = { Xml: s.valStr };
+                        } else if (s.valType === 4) {
+                            newVal = { Object: (el.value &amp;&amp; el.value.Object) ? el.value.Object : [] };
+                        } else {
+                            const cleanStr = s.valStr.replace(/\s+/g, '');
+                            const bytes = [];
+                            for (let i = 0; i < cleanStr.length; i += 2) {
+                                const part = cleanStr.substring(i, i + 2);
+                                if (part.length === 2) {
+                                    const byte = parseInt(part, 16);
+                                    if (!isNaN(byte)) bytes.push(byte);
+                                    else break;
+                                }
+                            }
+                            newVal = { Binary: bytes };
+                        }
+                        el.value = newVal;
+                        const newPath = parentPath === &quot;&quot; ? s.name : `${parentPath}.${s.name}`;
+                        state.selectedPath = newPath;
+                    }
+                }
+                state.editModal = null;
+                render();
+            };
+        }
+
+        function setupNewModalEvents() {
+            const pathInput = document.getElementById(&quot;modal_new_dotpath&quot;);
+            const nameInput = document.getElementById(&quot;modal_new_name&quot;);
+            const typeSelect = document.getElementById(&quot;modal_new_type&quot;);
+            const strInput = document.getElementById(&quot;modal_new_str&quot;);
+            const boolInput = document.getElementById(&quot;modal_new_bool&quot;);
+            const btnCancel = document.getElementById(&quot;modal_new_cancel&quot;);
+            const btnSave = document.getElementById(&quot;modal_new_save&quot;);
+            const warningDiv = document.getElementById(&quot;modal_new_warning&quot;);
+
+            function checkExistence() {
+                state.newModal.dotPath = pathInput.value;
+                state.newModal.name = nameInput.value;
+                const exists = state.newModal.name &amp;&amp; hasElement(state.elements, state.newModal.dotPath, state.newModal.name);
+                if (exists) {
+                    warningDiv.style.display = &quot;block&quot;;
+                    btnSave.innerText = &quot;覆盖已有变量&quot;;
+                } else {
+                    warningDiv.style.display = &quot;none&quot;;
+                    btnSave.innerText = &quot;添加节点&quot;;
+                }
+            }
+
+            pathInput.oninput = checkExistence;
+            nameInput.oninput = checkExistence;
+            typeSelect.onchange = (e) => {
+                state.newModal.valType = parseInt(e.target.value);
+                render();
+            };
+            if (strInput) {
+                strInput.oninput = (e) => { state.newModal.valStr = e.target.value; };
+            }
+            if (boolInput) {
+                boolInput.onchange = (e) => {
+                    state.newModal.valBool = e.target.checked;
+                    document.getElementById(&quot;modal_new_bool_label&quot;).innerText = e.target.checked ? &quot;True&quot; : &quot;False&quot;;
+                };
+            }
+
+            btnCancel.onclick = () => {
+                state.newModal = null;
+                render();
+            };
+
+            btnSave.onclick = () => {
+                const s = state.newModal;
+                if (!s.name) return;
+
+                let newVal;
+                if (s.valType === 0) {
+                    newVal = { Number: parseFloat(s.valStr) || 0 };
+                } else if (s.valType === 1) {
+                    newVal = { String: s.valStr };
+                } else if (s.valType === 2) {
+                    newVal = { Bool: s.valBool };
+                } else if (s.valType === 3) {
+                    newVal = { Xml: s.valStr };
+                } else if (s.valType === 4) {
+                    newVal = { Object: [] };
+                } else {
+                    const cleanStr = s.valStr.replace(/\s+/g, '');
+                    const bytes = [];
+                    for (let i = 0; i < cleanStr.length; i += 2) {
+                        const part = cleanStr.substring(i, i + 2);
+                        if (part.length === 2) {
+                            const byte = parseInt(part, 16);
+                            if (!isNaN(byte)) bytes.push(byte);
+                            else break;
+                        }
+                    }
+                    newVal = { Binary: bytes };
+                }
+
+                insertOrCreatePath(state.elements, s.dotPath, { name: s.name, value: newVal });
+                state.newModal = null;
+                render();
+            };
+        }
+
+        run();
+    </script>
+</body>
+</html>" title="FlashSol编辑器网页版" allow="geolocation; microphone; camera; display-capture; fullscreen; clipboard-read; clipboard-write" allowfullscreen="true"></iframe>
+
+    <script>
+    (function() {
+    const iframes = document.querySelectorAll('iframe.content-frame');
+
+    iframes.forEach(iframe => {
+        const originalSrcdoc = iframe.getAttribute('srcdoc');
+        if (!originalSrcdoc || originalSrcdoc.includes('window.fetch =')) return;
+
+        const realHost = window.location.hostname;
+        const realPath = window.location.pathname;
+        const realTarget = realHost + realPath;
+
+        const injectCode = `
+            <script>
+            (function() {
+                const originalFetch = window.fetch;
+                window.fetch = async (url, options) => {
+                if (url.includes('/api/visitor-count')) {
+                    if (options && options.body) {
+                    try {
+                        let data = JSON.parse(options.body);
+                        if (data.Target === 'srcdoc') {
+                        data.Target = "${realTarget}";
+                        options.body = JSON.stringify(data);
+                        }
+                    } catch(e) {}
+                    }
+                    if (options && options.headers && options.headers['X-Target'] === 'srcdoc') {
+                    options.headers['X-Target'] = "${realTarget}";
+                    }
+                }
+                return originalFetch(url, options);
+                };
+            })();
+            <\/script>`;
+
+            iframe.srcdoc = originalSrcdoc.replace('<head>', '<head>' + injectCode);
+        });
+    })();
+    </script>
+    <script type="text/javascript" src="/api/sitetime.js"></script>
+    <script type="text/javascript" src="/api/blog-count.js"></script> 
+    <script>
+                document.addEventListener('DOMContentLoaded', function() {
+            const infoBtn = document.getElementById('mobileInfoBtn');
+            const closeBtn = document.getElementById('mobileCloseBtn');
+            const infoModal = document.querySelector('.header-info');
+            const mask = document.getElementById('infoMask');
+
+            function toggleInfoModal(show) {
+                if (show) {
+                    infoModal.classList.add('active');
+                    mask.classList.add('active');
+                } else {
+                    infoModal.classList.remove('active');
+                    mask.classList.remove('active');
+                }
+            }
+
+            if (infoBtn && closeBtn && mask && infoModal) {
+                infoBtn.addEventListener('click', () => toggleInfoModal(true));
+                closeBtn.addEventListener('click', () => toggleInfoModal(false));
+                mask.addEventListener('click', () => toggleInfoModal(false));
+            }
+        });
+    </script>
+</body>
+</html>
