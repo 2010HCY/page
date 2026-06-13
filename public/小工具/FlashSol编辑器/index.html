@@ -731,7 +731,6 @@
         }
         .context-menu-item:hover {
             background-color: #eaeaea;
-            color: #ffffff;
         }
         #path_dropdown_menu {
             max-height: 200px;
@@ -747,6 +746,14 @@
             background-color: #e0e0e0;
             margin: 4px 0;
         }
+        .dropdown-panel {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            background-color: #ffffff;
+            border: 1px solid #b4b4b4;
+            border-radius: 4px;
+            padding: 10px;
+            z-index: 100;
+        }
     </style>
 </head>
 <body>
@@ -760,7 +767,7 @@
                 <button id=&quot;btn_save&quot; disabled>保存 Sol 文件</button>
                 <button id=&quot;btn_edit&quot; disabled>修改变量</button>
                 <button id=&quot;btn_new&quot;>新增变量</button>
-                <select id=&quot;select_view_mode&quot; style=&quot;margin-left: 10px;&quot;>
+                <select id=&quot;select_view_mode&quot;>
                     <option value=&quot;nested&quot;>层级嵌套</option>
                     <option value=&quot;flat&quot;>平铺显示</option>
                 </select>
@@ -769,19 +776,57 @@
         <div class=&quot;bottom-row&quot;>
             <div id=&quot;stats_label&quot; class=&quot;stats-label&quot; style=&quot;display:none&quot;></div>
             <div class=&quot;search-controls&quot;>
-                <span class=&quot;search-label&quot;>搜索匹配：</span>
-                <label class=&quot;checkbox-container&quot;>
-                    <input type=&quot;checkbox&quot; id=&quot;chk_match_name&quot; checked>
-                    <span>变量名</span>
-                </label>
-                <label class=&quot;checkbox-container&quot;>
-                    <input type=&quot;checkbox&quot; id=&quot;chk_match_path&quot; checked>
-                    <span>路径</span>
-                </label>
-                <label class=&quot;checkbox-container&quot;>
-                    <input type=&quot;checkbox&quot; id=&quot;chk_match_value&quot; checked>
-                    <span>值</span>
-                </label>
+                <div style=&quot;position: relative; display: inline-flex; align-items: center;&quot;>
+                    <button id=&quot;btn_search_options&quot; style=&quot;height: 24px; padding: 0px 8px; font-size: 12px; display: flex; align-items: center; gap: 4px; background: white; border: 1px solid #b4b4b4; border-radius: 4px;&quot;>
+                        <span>搜索选项</span>
+                        <svg width=&quot;10&quot; height=&quot;10&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.5&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><polyline points=&quot;6 9 12 15 18 9&quot;></polyline></svg>
+                    </button>
+                    <div id=&quot;search_options_dropdown&quot; class=&quot;dropdown-panel&quot; style=&quot;display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #b4b4b4; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-radius: 4px; padding: 10px; z-index: 100; min-width: 180px; margin-top: 4px; text-align: left;&quot;>
+                        <div style=&quot;font-weight: bold; margin-bottom: 6px; font-size: 11px; color: #555; user-select: none;&quot;>搜索匹配</div>
+                        <div style=&quot;display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; padding-left: 4px;&quot;>
+                            <label class=&quot;checkbox-container&quot; style=&quot;font-size: 12px;&quot;>
+                                <input type=&quot;checkbox&quot; id=&quot;chk_match_name&quot; checked>
+                                <span>变量名</span>
+                            </label>
+                            <label class=&quot;checkbox-container&quot; style=&quot;font-size: 12px;&quot;>
+                                <input type=&quot;checkbox&quot; id=&quot;chk_match_path&quot; checked>
+                                <span>路径</span>
+                            </label>
+                            <label class=&quot;checkbox-container&quot; style=&quot;font-size: 12px;&quot;>
+                                <input type=&quot;checkbox&quot; id=&quot;chk_match_value&quot; checked>
+                                <span>值</span>
+                            </label>
+                        </div>
+                        <div style=&quot;border-top: 1px solid #e0e0e0; margin: 8px 0;&quot;></div>
+                        <div style=&quot;font-weight: bold; margin-bottom: 6px; font-size: 11px; color: #555; user-select: none;&quot;>类型</div>
+                        <div style=&quot;display: flex; flex-direction: column; gap: 6px; padding-left: 4px;&quot;>
+                            <label class=&quot;checkbox-container&quot; style=&quot;font-size: 12px;&quot;>
+                                <input type=&quot;checkbox&quot; id=&quot;chk_search_type_number&quot; checked>
+                                <span>数值</span>
+                            </label>
+                            <label class=&quot;checkbox-container&quot; style=&quot;font-size: 12px;&quot;>
+                                <input type=&quot;checkbox&quot; id=&quot;chk_search_type_string&quot; checked>
+                                <span>字符串</span>
+                            </label>
+                            <label class=&quot;checkbox-container&quot; style=&quot;font-size: 12px;&quot;>
+                                <input type=&quot;checkbox&quot; id=&quot;chk_search_type_bool&quot; checked>
+                                <span>布尔值</span>
+                            </label>
+                            <label class=&quot;checkbox-container&quot; style=&quot;font-size: 12px;&quot;>
+                                <input type=&quot;checkbox&quot; id=&quot;chk_search_type_xml&quot; checked>
+                                <span>XML数据</span>
+                            </label>
+                            <label class=&quot;checkbox-container&quot; style=&quot;font-size: 12px;&quot;>
+                                <input type=&quot;checkbox&quot; id=&quot;chk_search_type_array&quot; checked>
+                                <span>数组(Array)</span>
+                            </label>
+                            <label class=&quot;checkbox-container&quot; style=&quot;font-size: 12px;&quot;>
+                                <input type=&quot;checkbox&quot; id=&quot;chk_search_type_binary&quot; checked>
+                                <span>二进制数据</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 <div class=&quot;search-input-wrapper&quot;>
                     <svg class=&quot;search-icon&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;8&quot;/><line x1=&quot;21&quot; y1=&quot;21&quot; x2=&quot;16.65&quot; y2=&quot;16.65&quot;/></svg>
                     <input type=&quot;text&quot; id=&quot;search_input&quot; placeholder=&quot;搜索...&quot;>
@@ -799,8 +844,44 @@
                 <div>拖拽 Sol 文件到这里进行解析<br>或点击“新增变量”新建一个Sol文件</div>
             </div>
         </div>
-        <div id=&quot;path_bar_container&quot; class=&quot;path-bar-container&quot; style=&quot;display:none;&quot;>
-            <div class=&quot;path-bar&quot; id=&quot;path_bar&quot;></div>
+        <div id=&quot;path_bar_container&quot; class=&quot;path-bar-container&quot; style=&quot;display:none; justify-content: space-between; align-items: center; position: relative;&quot;>
+            <div class=&quot;path-bar&quot; id=&quot;path_bar&quot; style=&quot;flex: 1;&quot;></div>
+            <div style=&quot;position: relative; display: flex; align-items: center; height: 100%; border-left: 1px solid #d0d0d0; padding-left: 8px;&quot;>
+                <button id=&quot;btn_filter_funnel&quot; style=&quot;background: none; border: none; padding: 4px; display: flex; align-items: center; cursor: pointer;&quot; title=&quot;过滤选项&quot;>
+                    <svg class=&quot;funnel-icon&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; style=&quot;color: #555555;&quot;>
+                        <polygon points=&quot;22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3&quot;></polygon>
+                    </svg>
+                </button>
+                <div id=&quot;filter_options_dropdown&quot; class=&quot;dropdown-panel&quot; style=&quot;display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #b4b4b4; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-radius: 4px; padding: 10px; z-index: 100; min-width: 180px; margin-top: 4px; text-align: left;&quot;>
+                    <div style=&quot;font-weight: bold; margin-bottom: 6px; font-size: 11px; color: #555; user-select: none;&quot;>显示过滤</div>
+                    <div style=&quot;display: flex; flex-direction: column; gap: 6px; padding-left: 4px;&quot;>
+                        <label class=&quot;checkbox-container&quot; style=&quot;font-size: 12px;&quot;>
+                            <input type=&quot;checkbox&quot; id=&quot;chk_filter_number&quot; checked>
+                            <span>数值</span>
+                        </label>
+                        <label class=&quot;checkbox-container&quot; style=&quot;font-size: 12px;&quot;>
+                            <input type=&quot;checkbox&quot; id=&quot;chk_filter_string&quot; checked>
+                            <span>字符串</span>
+                        </label>
+                        <label class=&quot;checkbox-container&quot; style=&quot;font-size: 12px;&quot;>
+                            <input type=&quot;checkbox&quot; id=&quot;chk_filter_bool&quot; checked>
+                            <span>布尔值</span>
+                        </label>
+                        <label class=&quot;checkbox-container&quot; style=&quot;font-size: 12px;&quot;>
+                            <input type=&quot;checkbox&quot; id=&quot;chk_filter_xml&quot; checked>
+                            <span>XML数据</span>
+                        </label>
+                        <label class=&quot;checkbox-container&quot; style=&quot;font-size: 12px;&quot;>
+                            <input type=&quot;checkbox&quot; id=&quot;chk_filter_array&quot; checked>
+                            <span>数组(Array)</span>
+                        </label>
+                        <label class=&quot;checkbox-container&quot; style=&quot;font-size: 12px;&quot;>
+                            <input type=&quot;checkbox&quot; id=&quot;chk_filter_binary&quot; checked>
+                            <span>二进制数据</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id=&quot;table_container&quot; class=&quot;table-container&quot; style=&quot;display:none&quot;>
             <table class=&quot;sol-table&quot;>
@@ -843,8 +924,53 @@
             editModal: null,
             newModal: null,
             viewMode: &quot;nested&quot;,
-            currentPathArr: []
+            currentPathArr: [],
+            searchTypes: {
+                number: true,
+                string: true,
+                bool: true,
+                xml: true,
+                array: true,
+                binary: true
+            },
+            filterTypes: {
+                number: true,
+                string: true,
+                bool: true,
+                xml: true,
+                array: true,
+                binary: true
+            }
         };
+
+        function getElementValType(value) {
+            if (value === &quot;Null&quot; || value === &quot;Unsupported&quot; || value == null) {
+                return -1;
+            }
+            if (typeof value === 'object') {
+                if ('Number' in value) return 0;
+                if ('String' in value) return 1;
+                if ('Bool' in value) return 2;
+                if ('Xml' in value) return 3;
+                if ('Object' in value) return 4;
+                if ('Binary' in value) return 5;
+            }
+            return -1;
+        }
+
+        function isTypeFiltered(typeVal, typeConfig) {
+            if (typeVal === -1) return true;
+            const mapping = {
+                0: 'number',
+                1: 'string',
+                2: 'bool',
+                3: 'xml',
+                4: 'array',
+                5: 'binary'
+            };
+            const key = mapping[typeVal];
+            return !!typeConfig[key];
+        }
 
         function getCurrentFolderElements() {
             let current = state.elements;
@@ -926,9 +1052,18 @@
 
             document.getElementById(&quot;select_view_mode&quot;).onchange = (e) => setViewMode(e.target.value);
 
+            const searchDropdown = document.getElementById(&quot;search_options_dropdown&quot;);
+            const filterDropdown = document.getElementById(&quot;filter_options_dropdown&quot;);
+
+            function hideAllDropdowns() {
+                if (searchDropdown) searchDropdown.style.display = &quot;none&quot;;
+                if (filterDropdown) filterDropdown.style.display = &quot;none&quot;;
+            }
+
             window.addEventListener(&quot;click&quot;, () => {
                 hideContextMenu();
                 hidePathDropdown();
+                hideAllDropdowns();
             });
 
             const tableContainer = document.getElementById(&quot;table_container&quot;);
@@ -969,6 +1104,68 @@
                 state.filterMatchValue = e.target.checked;
                 render();
             };
+
+            const searchTypeIds = {
+                &quot;chk_search_type_number&quot;: &quot;number&quot;,
+                &quot;chk_search_type_string&quot;: &quot;string&quot;,
+                &quot;chk_search_type_bool&quot;: &quot;bool&quot;,
+                &quot;chk_search_type_xml&quot;: &quot;xml&quot;,
+                &quot;chk_search_type_array&quot;: &quot;array&quot;,
+                &quot;chk_search_type_binary&quot;: &quot;binary&quot;
+            };
+            for (const [id, key] of Object.entries(searchTypeIds)) {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.onchange = (e) => {
+                        state.searchTypes[key] = e.target.checked;
+                        render();
+                    };
+                }
+            }
+
+            const filterTypeIds = {
+                &quot;chk_filter_number&quot;: &quot;number&quot;,
+                &quot;chk_filter_string&quot;: &quot;string&quot;,
+                &quot;chk_filter_bool&quot;: &quot;bool&quot;,
+                &quot;chk_filter_xml&quot;: &quot;xml&quot;,
+                &quot;chk_filter_array&quot;: &quot;array&quot;,
+                &quot;chk_filter_binary&quot;: &quot;binary&quot;
+            };
+            for (const [id, key] of Object.entries(filterTypeIds)) {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.onchange = (e) => {
+                        state.filterTypes[key] = e.target.checked;
+                        render();
+                    };
+                }
+            }
+
+            const btnSearchOptions = document.getElementById(&quot;btn_search_options&quot;);
+            if (btnSearchOptions &amp;&amp; searchDropdown) {
+                btnSearchOptions.onclick = (e) => {
+                    e.stopPropagation();
+                    const show = searchDropdown.style.display === &quot;block&quot;;
+                    hideAllDropdowns();
+                    searchDropdown.style.display = show ? &quot;none&quot; : &quot;block&quot;;
+                };
+                searchDropdown.onclick = (e) => {
+                    e.stopPropagation();
+                };
+            }
+
+            const btnFilterFunnel = document.getElementById(&quot;btn_filter_funnel&quot;);
+            if (btnFilterFunnel &amp;&amp; filterDropdown) {
+                btnFilterFunnel.onclick = (e) => {
+                    e.stopPropagation();
+                    const show = filterDropdown.style.display === &quot;block&quot;;
+                    hideAllDropdowns();
+                    filterDropdown.style.display = show ? &quot;none&quot; : &quot;block&quot;;
+                };
+                filterDropdown.onclick = (e) => {
+                    e.stopPropagation();
+                };
+            }
 
             const searchInput = document.getElementById(&quot;search_input&quot;);
             const searchClearBtn = document.getElementById(&quot;search_clear_btn&quot;);
@@ -1235,9 +1432,19 @@
                 let result = [];
                 collectAllRecursively(state.elements, &quot;&quot;, result);
 
+                result = result.filter(item => {
+                    const t = getElementValType(item.el.value);
+                    return isTypeFiltered(t, state.filterTypes);
+                });
+
                 if (state.searchText) {
                     const search = state.searchText.toLowerCase();
                     result = result.filter(item => {
+                        const t = getElementValType(item.el.value);
+                        if (!isTypeFiltered(t, state.searchTypes)) {
+                            return false;
+                        }
+
                         const nameMatch = state.filterMatchName &amp;&amp; item.el.name.toLowerCase().includes(search);
                         const pathMatch = state.filterMatchPath &amp;&amp; item.path.toLowerCase().includes(search);
                         
@@ -1258,8 +1465,19 @@
 
                 if (state.searchText) {
                     collectCurrentFolderRecursively(currentFolder, state.currentPathArr, result);
+
+                    result = result.filter(item => {
+                        const t = getElementValType(item.el.value);
+                        return isTypeFiltered(t, state.filterTypes);
+                    });
+
                     const search = state.searchText.toLowerCase();
                     result = result.filter(item => {
+                        const t = getElementValType(item.el.value);
+                        if (!isTypeFiltered(t, state.searchTypes)) {
+                            return false;
+                        }
+
                         const nameMatch = state.filterMatchName &amp;&amp; item.el.name.toLowerCase().includes(search);
                         const absolutePath = item.pathArr.join('.');
                         const pathMatch = state.filterMatchPath &amp;&amp; absolutePath.toLowerCase().includes(search);
@@ -1275,6 +1493,11 @@
                             pathArr: [...state.currentPathArr, el.name],
                             el: el
                         });
+                    });
+
+                    result = result.filter(item => {
+                        const t = getElementValType(item.el.value);
+                        return isTypeFiltered(t, state.filterTypes);
                     });
                 }
 
@@ -1430,6 +1653,16 @@
             const pathBar = document.getElementById(&quot;path_bar&quot;);
             pathBar.innerHTML = &quot;&quot;;
 
+            if (state.viewMode === 'flat') {
+                const flatNode = document.createElement(&quot;span&quot;);
+                flatNode.className = &quot;path-node last-node&quot;;
+                flatNode.innerText = &quot;平铺模式&quot;;
+                flatNode.style.fontWeight = &quot;bold&quot;;
+                flatNode.style.color = &quot;#333333&quot;;
+                pathBar.appendChild(flatNode);
+                return;
+            }
+
             const rootNode = document.createElement(&quot;span&quot;);
             rootNode.className = &quot;path-node root-node&quot; + (state.currentPathArr.length === 0 ? &quot; last-node&quot; : &quot;&quot;);
             rootNode.innerText = &quot;根目录&quot;;
@@ -1489,7 +1722,7 @@
             }
 
             const pathBarContainer = document.getElementById(&quot;path_bar_container&quot;);
-            if (hasData &amp;&amp; state.viewMode === 'nested') {
+            if (hasData) {
                 pathBarContainer.style.display = &quot;flex&quot;;
                 renderPathBar();
             } else {

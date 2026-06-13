@@ -525,7 +525,6 @@
         }
         .context-menu-item:hover {
             background-color: #eaeaea;
-            color: #ffffff;
         }
         #path_dropdown_menu {
             max-height: 200px;
@@ -541,6 +540,14 @@
             background-color: #e0e0e0;
             margin: 4px 0;
         }
+        .dropdown-panel {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            background-color: #ffffff;
+            border: 1px solid #b4b4b4;
+            border-radius: 4px;
+            padding: 10px;
+            z-index: 100;
+        }
     </style>
 </head>
 <body>
@@ -554,7 +561,7 @@
                 <button id="btn_save" disabled>保存 Sol 文件</button>
                 <button id="btn_edit" disabled>修改变量</button>
                 <button id="btn_new">新增变量</button>
-                <select id="select_view_mode" style="margin-left: 10px;">
+                <select id="select_view_mode">
                     <option value="nested">层级嵌套</option>
                     <option value="flat">平铺显示</option>
                 </select>
@@ -563,19 +570,57 @@
         <div class="bottom-row">
             <div id="stats_label" class="stats-label" style="display:none"></div>
             <div class="search-controls">
-                <span class="search-label">搜索匹配：</span>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="chk_match_name" checked>
-                    <span>变量名</span>
-                </label>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="chk_match_path" checked>
-                    <span>路径</span>
-                </label>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="chk_match_value" checked>
-                    <span>值</span>
-                </label>
+                <div style="position: relative; display: inline-flex; align-items: center;">
+                    <button id="btn_search_options" style="height: 24px; padding: 0px 8px; font-size: 12px; display: flex; align-items: center; gap: 4px; background: white; border: 1px solid #b4b4b4; border-radius: 4px;">
+                        <span>搜索选项</span>
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div id="search_options_dropdown" class="dropdown-panel" style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #b4b4b4; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-radius: 4px; padding: 10px; z-index: 100; min-width: 180px; margin-top: 4px; text-align: left;">
+                        <div style="font-weight: bold; margin-bottom: 6px; font-size: 11px; color: #555; user-select: none;">搜索匹配</div>
+                        <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; padding-left: 4px;">
+                            <label class="checkbox-container" style="font-size: 12px;">
+                                <input type="checkbox" id="chk_match_name" checked>
+                                <span>变量名</span>
+                            </label>
+                            <label class="checkbox-container" style="font-size: 12px;">
+                                <input type="checkbox" id="chk_match_path" checked>
+                                <span>路径</span>
+                            </label>
+                            <label class="checkbox-container" style="font-size: 12px;">
+                                <input type="checkbox" id="chk_match_value" checked>
+                                <span>值</span>
+                            </label>
+                        </div>
+                        <div style="border-top: 1px solid #e0e0e0; margin: 8px 0;"></div>
+                        <div style="font-weight: bold; margin-bottom: 6px; font-size: 11px; color: #555; user-select: none;">类型</div>
+                        <div style="display: flex; flex-direction: column; gap: 6px; padding-left: 4px;">
+                            <label class="checkbox-container" style="font-size: 12px;">
+                                <input type="checkbox" id="chk_search_type_number" checked>
+                                <span>数值</span>
+                            </label>
+                            <label class="checkbox-container" style="font-size: 12px;">
+                                <input type="checkbox" id="chk_search_type_string" checked>
+                                <span>字符串</span>
+                            </label>
+                            <label class="checkbox-container" style="font-size: 12px;">
+                                <input type="checkbox" id="chk_search_type_bool" checked>
+                                <span>布尔值</span>
+                            </label>
+                            <label class="checkbox-container" style="font-size: 12px;">
+                                <input type="checkbox" id="chk_search_type_xml" checked>
+                                <span>XML数据</span>
+                            </label>
+                            <label class="checkbox-container" style="font-size: 12px;">
+                                <input type="checkbox" id="chk_search_type_array" checked>
+                                <span>数组(Array)</span>
+                            </label>
+                            <label class="checkbox-container" style="font-size: 12px;">
+                                <input type="checkbox" id="chk_search_type_binary" checked>
+                                <span>二进制数据</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 <div class="search-input-wrapper">
                     <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                     <input type="text" id="search_input" placeholder="搜索...">
@@ -593,8 +638,44 @@
                 <div>拖拽 Sol 文件到这里进行解析<br>或点击“新增变量”新建一个Sol文件</div>
             </div>
         </div>
-        <div id="path_bar_container" class="path-bar-container" style="display:none;">
-            <div class="path-bar" id="path_bar"></div>
+        <div id="path_bar_container" class="path-bar-container" style="display:none; justify-content: space-between; align-items: center; position: relative;">
+            <div class="path-bar" id="path_bar" style="flex: 1;"></div>
+            <div style="position: relative; display: flex; align-items: center; height: 100%; border-left: 1px solid #d0d0d0; padding-left: 8px;">
+                <button id="btn_filter_funnel" style="background: none; border: none; padding: 4px; display: flex; align-items: center; cursor: pointer;" title="过滤选项">
+                    <svg class="funnel-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #555555;">
+                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                    </svg>
+                </button>
+                <div id="filter_options_dropdown" class="dropdown-panel" style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #b4b4b4; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-radius: 4px; padding: 10px; z-index: 100; min-width: 180px; margin-top: 4px; text-align: left;">
+                    <div style="font-weight: bold; margin-bottom: 6px; font-size: 11px; color: #555; user-select: none;">显示过滤</div>
+                    <div style="display: flex; flex-direction: column; gap: 6px; padding-left: 4px;">
+                        <label class="checkbox-container" style="font-size: 12px;">
+                            <input type="checkbox" id="chk_filter_number" checked>
+                            <span>数值</span>
+                        </label>
+                        <label class="checkbox-container" style="font-size: 12px;">
+                            <input type="checkbox" id="chk_filter_string" checked>
+                            <span>字符串</span>
+                        </label>
+                        <label class="checkbox-container" style="font-size: 12px;">
+                            <input type="checkbox" id="chk_filter_bool" checked>
+                            <span>布尔值</span>
+                        </label>
+                        <label class="checkbox-container" style="font-size: 12px;">
+                            <input type="checkbox" id="chk_filter_xml" checked>
+                            <span>XML数据</span>
+                        </label>
+                        <label class="checkbox-container" style="font-size: 12px;">
+                            <input type="checkbox" id="chk_filter_array" checked>
+                            <span>数组(Array)</span>
+                        </label>
+                        <label class="checkbox-container" style="font-size: 12px;">
+                            <input type="checkbox" id="chk_filter_binary" checked>
+                            <span>二进制数据</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="table_container" class="table-container" style="display:none">
             <table class="sol-table">
@@ -637,8 +718,53 @@
             editModal: null,
             newModal: null,
             viewMode: "nested",
-            currentPathArr: []
+            currentPathArr: [],
+            searchTypes: {
+                number: true,
+                string: true,
+                bool: true,
+                xml: true,
+                array: true,
+                binary: true
+            },
+            filterTypes: {
+                number: true,
+                string: true,
+                bool: true,
+                xml: true,
+                array: true,
+                binary: true
+            }
         };
+
+        function getElementValType(value) {
+            if (value === "Null" || value === "Unsupported" || value == null) {
+                return -1;
+            }
+            if (typeof value === 'object') {
+                if ('Number' in value) return 0;
+                if ('String' in value) return 1;
+                if ('Bool' in value) return 2;
+                if ('Xml' in value) return 3;
+                if ('Object' in value) return 4;
+                if ('Binary' in value) return 5;
+            }
+            return -1;
+        }
+
+        function isTypeFiltered(typeVal, typeConfig) {
+            if (typeVal === -1) return true;
+            const mapping = {
+                0: 'number',
+                1: 'string',
+                2: 'bool',
+                3: 'xml',
+                4: 'array',
+                5: 'binary'
+            };
+            const key = mapping[typeVal];
+            return !!typeConfig[key];
+        }
 
         function getCurrentFolderElements() {
             let current = state.elements;
@@ -720,9 +846,18 @@
 
             document.getElementById("select_view_mode").onchange = (e) => setViewMode(e.target.value);
 
+            const searchDropdown = document.getElementById("search_options_dropdown");
+            const filterDropdown = document.getElementById("filter_options_dropdown");
+
+            function hideAllDropdowns() {
+                if (searchDropdown) searchDropdown.style.display = "none";
+                if (filterDropdown) filterDropdown.style.display = "none";
+            }
+
             window.addEventListener("click", () => {
                 hideContextMenu();
                 hidePathDropdown();
+                hideAllDropdowns();
             });
 
             const tableContainer = document.getElementById("table_container");
@@ -763,6 +898,68 @@
                 state.filterMatchValue = e.target.checked;
                 render();
             };
+
+            const searchTypeIds = {
+                "chk_search_type_number": "number",
+                "chk_search_type_string": "string",
+                "chk_search_type_bool": "bool",
+                "chk_search_type_xml": "xml",
+                "chk_search_type_array": "array",
+                "chk_search_type_binary": "binary"
+            };
+            for (const [id, key] of Object.entries(searchTypeIds)) {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.onchange = (e) => {
+                        state.searchTypes[key] = e.target.checked;
+                        render();
+                    };
+                }
+            }
+
+            const filterTypeIds = {
+                "chk_filter_number": "number",
+                "chk_filter_string": "string",
+                "chk_filter_bool": "bool",
+                "chk_filter_xml": "xml",
+                "chk_filter_array": "array",
+                "chk_filter_binary": "binary"
+            };
+            for (const [id, key] of Object.entries(filterTypeIds)) {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.onchange = (e) => {
+                        state.filterTypes[key] = e.target.checked;
+                        render();
+                    };
+                }
+            }
+
+            const btnSearchOptions = document.getElementById("btn_search_options");
+            if (btnSearchOptions && searchDropdown) {
+                btnSearchOptions.onclick = (e) => {
+                    e.stopPropagation();
+                    const show = searchDropdown.style.display === "block";
+                    hideAllDropdowns();
+                    searchDropdown.style.display = show ? "none" : "block";
+                };
+                searchDropdown.onclick = (e) => {
+                    e.stopPropagation();
+                };
+            }
+
+            const btnFilterFunnel = document.getElementById("btn_filter_funnel");
+            if (btnFilterFunnel && filterDropdown) {
+                btnFilterFunnel.onclick = (e) => {
+                    e.stopPropagation();
+                    const show = filterDropdown.style.display === "block";
+                    hideAllDropdowns();
+                    filterDropdown.style.display = show ? "none" : "block";
+                };
+                filterDropdown.onclick = (e) => {
+                    e.stopPropagation();
+                };
+            }
 
             const searchInput = document.getElementById("search_input");
             const searchClearBtn = document.getElementById("search_clear_btn");
@@ -1029,9 +1226,19 @@
                 let result = [];
                 collectAllRecursively(state.elements, "", result);
 
+                result = result.filter(item => {
+                    const t = getElementValType(item.el.value);
+                    return isTypeFiltered(t, state.filterTypes);
+                });
+
                 if (state.searchText) {
                     const search = state.searchText.toLowerCase();
                     result = result.filter(item => {
+                        const t = getElementValType(item.el.value);
+                        if (!isTypeFiltered(t, state.searchTypes)) {
+                            return false;
+                        }
+
                         const nameMatch = state.filterMatchName && item.el.name.toLowerCase().includes(search);
                         const pathMatch = state.filterMatchPath && item.path.toLowerCase().includes(search);
                         
@@ -1052,8 +1259,19 @@
 
                 if (state.searchText) {
                     collectCurrentFolderRecursively(currentFolder, state.currentPathArr, result);
+
+                    result = result.filter(item => {
+                        const t = getElementValType(item.el.value);
+                        return isTypeFiltered(t, state.filterTypes);
+                    });
+
                     const search = state.searchText.toLowerCase();
                     result = result.filter(item => {
+                        const t = getElementValType(item.el.value);
+                        if (!isTypeFiltered(t, state.searchTypes)) {
+                            return false;
+                        }
+
                         const nameMatch = state.filterMatchName && item.el.name.toLowerCase().includes(search);
                         const absolutePath = item.pathArr.join('.');
                         const pathMatch = state.filterMatchPath && absolutePath.toLowerCase().includes(search);
@@ -1069,6 +1287,11 @@
                             pathArr: [...state.currentPathArr, el.name],
                             el: el
                         });
+                    });
+
+                    result = result.filter(item => {
+                        const t = getElementValType(item.el.value);
+                        return isTypeFiltered(t, state.filterTypes);
                     });
                 }
 
@@ -1224,6 +1447,16 @@
             const pathBar = document.getElementById("path_bar");
             pathBar.innerHTML = "";
 
+            if (state.viewMode === 'flat') {
+                const flatNode = document.createElement("span");
+                flatNode.className = "path-node last-node";
+                flatNode.innerText = "平铺模式";
+                flatNode.style.fontWeight = "bold";
+                flatNode.style.color = "#333333";
+                pathBar.appendChild(flatNode);
+                return;
+            }
+
             const rootNode = document.createElement("span");
             rootNode.className = "path-node root-node" + (state.currentPathArr.length === 0 ? " last-node" : "");
             rootNode.innerText = "根目录";
@@ -1283,7 +1516,7 @@
             }
 
             const pathBarContainer = document.getElementById("path_bar_container");
-            if (hasData && state.viewMode === 'nested') {
+            if (hasData) {
                 pathBarContainer.style.display = "flex";
                 renderPathBar();
             } else {
