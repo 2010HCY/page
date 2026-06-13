@@ -360,9 +360,12 @@
             padding: 5px 10px 10px 10px;
             overflow: hidden;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
         #dropzone_container {
-            height: 100%;
+            flex: 1;
+            min-height: 0;
             width: 100%;
         }
         #dropzone {
@@ -392,7 +395,8 @@
         .table-container {
             border: 1px solid #b4b4b4;
             background-color: #ffffff;
-            height: 100%;
+            flex: 1;
+            min-height: 0;
             overflow-y: auto;
             position: relative;
         }
@@ -409,10 +413,35 @@
             font-size: 13px;
             padding: 6px 12px;
             border-bottom: 1px solid #b4b4b4;
-            border-right: 1px solid #e0e0e0;
+            border-right: none;
             position: sticky;
             top: 0;
             z-index: 1;
+        }
+        .col-resizer {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 8px;
+            cursor: col-resize;
+            user-select: none;
+            z-index: 10;
+        }
+        .col-resizer::before {
+            content: &quot;&quot;;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 3px;
+            width: 1px;
+            height: 100%;
+            background-color: #e0e0e0;
+            transition: background-color 0.1s, width 0.1s;
+        }
+        .col-resizer:hover::before, .col-resizer.resizing::before {
+            background-color: #8a8a8a;
+            width: 2px;
+            left: 3px;
         }
         .sol-table thead th:last-child {
             border-right: none;
@@ -432,13 +461,13 @@
             background-color: #eaeaea;
         }
         .sol-table tbody tr.selected {
-            background-color: #0078d7 !important;
-            color: #ffffff !important;
+            background-color: #0078d7;
+            color: #ffffff;
         }
         .sol-table tbody td {
             padding: 4px 12px;
             font-size: 13px;
-            border-right: 1px solid #e0e0e0;
+            border-right: none; /* 移除原生右边框 */
             border-bottom: 1px solid #e0e0e0;
             white-space: nowrap;
             overflow: hidden;
@@ -566,6 +595,158 @@
             color: #282828;
             user-select: none;
         }
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: base-select;
+            background-color: #ffffff;
+            border: 1px solid #b4b4b4;
+            border-radius: 6px;
+            padding: 5px 28px 5px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            color: #282828;
+            outline: none;
+            transition: background-color 0.15s, border-color 0.15s;
+            background-image: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23555555' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>&quot;);
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 11px;
+        }
+        select:hover {
+            background-color: #eaeaea;
+            border-color: #8a8a8a;
+        }
+        select:focus {
+            border-color: #0078d7;
+            outline: none;
+            box-shadow: none;
+        }
+        select::picker(select) {
+            appearance: base-select;
+            border: 1px solid #b4b4b4;
+            border-radius: 6px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            padding: 4px 0;
+        }
+        select option {
+            padding: 6px 12px;
+            background-color: transparent;
+            color: #282828;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background-color 0.1s;
+        }
+        select option:hover,
+        select option:focus,
+        select option:active {
+            background-color: #eaeaea;
+            color: #282828;
+        }
+        select option::checkmark {
+            display: none;
+        }
+        select::picker-icon {
+            display: none !important;
+        }
+        .path-bar-container {
+            background-color: #ffffff;
+            border: 1px solid #b4b4b4;
+            border-bottom: none;
+            padding: 0px 8px;
+            display: flex;
+            align-items: center;
+            height: 32px;
+            flex-shrink: 0;
+            user-select: none;
+        }
+        .path-bar {
+            display: flex;
+            align-items: stretch;
+            gap: 0px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            color: #333333;
+            width: 100%;
+            height: 100%;
+        }
+        .path-node {
+            padding: 0 8px;
+            background-color: transparent;
+            border: none;
+            border-radius: 0px;
+            cursor: pointer;
+            transition: background-color 0.1s;
+            color: #333333;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        .path-node:hover:not(.last-node) {
+            background-color: #f0f0f0;
+        }
+        .path-node.root-node {
+            font-weight: normal;
+            color: #333333;
+        }
+        .path-node.last-node {
+            background-color: transparent;
+            border: none;
+            color: #333333;
+            cursor: default;
+            pointer-events: none;
+        }
+        .path-separator {
+            color: #555555;
+            font-weight: normal;
+            cursor: pointer;
+            padding: 0 6px;
+            border-radius: 0px;
+            transition: background-color 0.1s;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        .path-separator:hover {
+            background-color: #f0f0f0;
+        }
+        .context-menu {
+            position: fixed;
+            background: #ffffff;
+            border: 1px solid #b4b4b4;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+            border-radius: 4px;
+            padding: 4px 0;
+            z-index: 1000;
+            min-width: 130px;
+        }
+        .context-menu-item {
+            padding: 6px 16px;
+            cursor: default;
+            font-size: 13px;
+            color: #282828;
+            user-select: none;
+        }
+        .context-menu-item:hover {
+            background-color: #eaeaea;
+            color: #ffffff;
+        }
+        #path_dropdown_menu {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .context-menu-item.disabled {
+            color: #b4b4b4;
+            pointer-events: none;
+            background: transparent;
+        }
+        .context-menu-separator {
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 4px 0;
+        }
     </style>
 </head>
 <body>
@@ -574,11 +755,15 @@
     <header class=&quot;top-panel&quot;>
         <div class=&quot;top-row&quot;>
             <div class=&quot;header-logo&quot;>SOL 编辑器</div>
-            <div class=&quot;action-buttons&quot;>
+            <div class=&quot;action-buttons&quot; style=&quot;align-items: center;&quot;>
                 <button id=&quot;btn_open&quot;>打开 Sol 文件</button>
                 <button id=&quot;btn_save&quot; disabled>保存 Sol 文件</button>
                 <button id=&quot;btn_edit&quot; disabled>修改变量</button>
                 <button id=&quot;btn_new&quot;>新增变量</button>
+                <select id=&quot;select_view_mode&quot; style=&quot;margin-left: 10px;&quot;>
+                    <option value=&quot;nested&quot;>层级嵌套</option>
+                    <option value=&quot;flat&quot;>平铺显示</option>
+                </select>
             </div>
         </div>
         <div class=&quot;bottom-row&quot;>
@@ -614,6 +799,9 @@
                 <div>拖拽 Sol 文件到这里进行解析<br>或点击“新增变量”新建一个Sol文件</div>
             </div>
         </div>
+        <div id=&quot;path_bar_container&quot; class=&quot;path-bar-container&quot; style=&quot;display:none;&quot;>
+            <div class=&quot;path-bar&quot; id=&quot;path_bar&quot;></div>
+        </div>
         <div id=&quot;table_container&quot; class=&quot;table-container&quot; style=&quot;display:none&quot;>
             <table class=&quot;sol-table&quot;>
                 <colgroup>
@@ -635,6 +823,8 @@
     </main>
 
     <div id=&quot;modal_overlay&quot; class=&quot;modal-overlay&quot; style=&quot;display:none&quot;></div>
+    <div id=&quot;context_menu&quot; class=&quot;context-menu&quot; style=&quot;display:none&quot;></div>
+    <div id=&quot;path_dropdown_menu&quot; class=&quot;context-menu&quot; style=&quot;display:none&quot;></div>
 
     <script type=&quot;module&quot;>
         import init, { parse_sol, serialize_sol } from './SolEditor.js';
@@ -645,17 +835,73 @@
             elements: [],
             encoding: &quot;AMF0&quot;,
             selectedPath: null,
+            selectedPathArr: null,
             searchText: &quot;&quot;,
             filterMatchName: true,
             filterMatchPath: true,
             filterMatchValue: true,
             editModal: null,
-            newModal: null
+            newModal: null,
+            viewMode: &quot;nested&quot;,
+            currentPathArr: []
         };
+
+        function getCurrentFolderElements() {
+            let current = state.elements;
+            for (const seg of state.currentPathArr) {
+                const found = current.find(e => e.name === seg);
+                if (found &amp;&amp; found.value &amp;&amp; typeof found.value === 'object' &amp;&amp; 'Object' in found.value) {
+                    current = found.value.Object;
+                } else {
+                    return [];
+                }
+            }
+            return current;
+        }
+
+        function getFolderByPathArr(elements, pathArr) {
+            if (!pathArr || pathArr.length === 0) return elements;
+            let current = elements;
+            for (const seg of pathArr) {
+                const found = current.find(e => e.name === seg);
+                if (!found) return null;
+                if (found.value &amp;&amp; typeof found.value === 'object' &amp;&amp; 'Object' in found.value) {
+                    current = found.value.Object;
+                } else {
+                    return null;
+                }
+            }
+            return current;
+        }
+
+        function deleteElementByPathArr(pathArr) {
+            if (!pathArr || pathArr.length === 0) return false;
+            const parentArr = pathArr.slice(0, -1);
+            const targetName = pathArr[pathArr.length - 1];
+            const folder = getFolderByPathArr(state.elements, parentArr);
+            if (folder) {
+                const idx = folder.findIndex(e => e.name === targetName);
+                if (idx !== -1) {
+                    folder.splice(idx, 1);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function collectCurrentFolderRecursively(elements, prefixArr, result) {
+            for (const el of elements) {
+                const currentPathArr = [...prefixArr, el.name];
+                result.push({ pathArr: currentPathArr, el: el });
+                if (el.value &amp;&amp; typeof el.value === 'object' &amp;&amp; 'Object' in el.value) {
+                    collectCurrentFolderRecursively(el.value.Object, currentPathArr, result);
+                }
+            }
+        }
 
         async function run() {
             try {
-                await init('./SolEditor.wasm'); 
+                await init({ module_or_path: './SolEditor.wasm' });
                 setupStaticEvents();
                 render();
             } catch (err) {
@@ -677,6 +923,39 @@
 
             document.getElementById(&quot;btn_new&quot;).onclick = () => openNewModal();
             document.getElementById(&quot;btn_edit&quot;).onclick = () => openEditForSelected();
+
+            document.getElementById(&quot;select_view_mode&quot;).onchange = (e) => setViewMode(e.target.value);
+
+            window.addEventListener(&quot;click&quot;, () => {
+                hideContextMenu();
+                hidePathDropdown();
+            });
+
+            const tableContainer = document.getElementById(&quot;table_container&quot;);
+            tableContainer.oncontextmenu = (e) => {
+                const hasData = state.filepath !== null || state.elements.length > 0;
+                if (!hasData) return;
+
+                e.preventDefault();
+                hidePathDropdown();
+
+                const tr = e.target.closest(&quot;tr&quot;);
+                if (tr &amp;&amp; tr.parentNode.tagName === &quot;TBODY&quot;) {
+                    const path = tr.dataset.path;
+                    if (path) {
+                        const items = getDisplayItems();
+                        const item = items.find(it => it.path === path);
+                        if (item) {
+                            state.selectedPath = item.path;
+                            state.selectedPathArr = item.pathArr;
+                            render();
+                            showContextMenu(e.clientX, e.clientY, item);
+                            return;
+                        }
+                    }
+                }
+                showContextMenu(e.clientX, e.clientY, null);
+            };
 
             document.getElementById(&quot;chk_match_name&quot;).onchange = (e) => {
                 state.filterMatchName = e.target.checked;
@@ -727,6 +1006,9 @@
                 }
             };
             dropzone.onclick = () => fileInput.click();
+            
+            initResizableColumns(); 
+            window.addEventListener('resize', positionResizers);
         }
 
         async function loadFile(file) {
@@ -740,10 +1022,177 @@
                 state.elements = result.elements;
                 state.encoding = result.encoding;
                 state.selectedPath = null;
+                state.selectedPathArr = null;
+                state.currentPathArr = [];
                 render();
             } catch (err) {
                 alert(&quot;加载失败: &quot; + err);
             }
+        }
+
+        function setViewMode(mode) {
+            state.viewMode = mode;
+            state.selectedPath = null;
+            state.selectedPathArr = null;
+            
+            const selectViewMode = document.getElementById(&quot;select_view_mode&quot;);
+            if (selectViewMode &amp;&amp; selectViewMode.value !== mode) {
+                selectViewMode.value = mode;
+            }
+            render();
+        }
+
+        function showPathDropdown(anchor, index) {
+            const menu = document.getElementById(&quot;path_dropdown_menu&quot;);
+            menu.innerHTML = &quot;&quot;;
+            
+            const pathArrAtNode = state.currentPathArr.slice(0, index);
+            const folderElements = getFolderByPathArr(state.elements, pathArrAtNode);
+            if (!folderElements) return;
+
+            const subFolders = folderElements.filter(el => el.value &amp;&amp; typeof el.value === 'object' &amp;&amp; 'Object' in el.value);
+
+            if (subFolders.length === 0) {
+                const emptyItem = document.createElement(&quot;div&quot;);
+                emptyItem.className = &quot;context-menu-item disabled&quot;;
+                emptyItem.innerText = &quot;(无子目录)&quot;;
+                menu.appendChild(emptyItem);
+            } else {
+                subFolders.forEach(el => {
+                    const item = document.createElement(&quot;div&quot;);
+                    item.className = &quot;context-menu-item&quot;;
+                    item.innerText = el.name;
+                    item.onclick = (e) => {
+                        e.stopPropagation();
+                        state.currentPathArr = [...pathArrAtNode, el.name];
+                        state.selectedPath = null;
+                        state.selectedPathArr = null;
+                        menu.style.display = &quot;none&quot;;
+                        render();
+                    };
+                    menu.appendChild(item);
+                });
+            }
+
+            menu.style.display = &quot;block&quot;;
+            const rect = anchor.getBoundingClientRect();
+            let left = rect.left;
+            let top = rect.bottom + window.scrollY;
+            
+            const menuWidth = menu.offsetWidth;
+            const menuHeight = menu.offsetHeight;
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            
+            if (left + menuWidth > screenWidth) {
+                left = screenWidth - menuWidth - 5;
+            }
+            if (top + menuHeight > screenHeight) {
+                top = rect.top + window.scrollY - menuHeight;
+                if (top < 0) top = 5;
+            }
+            menu.style.left = `${left}px`;
+            menu.style.top = `${top}px`;
+            
+            hideContextMenu();
+        }
+
+        function hidePathDropdown() {
+            const menu = document.getElementById(&quot;path_dropdown_menu&quot;);
+            menu.style.display = &quot;none&quot;;
+        }
+
+        function showContextMenu(clientX, clientY, item) {
+            const menu = document.getElementById(&quot;context_menu&quot;);
+            menu.innerHTML = &quot;&quot;;
+
+            if (item) {
+                const isObject = item.el.value &amp;&amp; typeof item.el.value === 'object' &amp;&amp; 'Object' in item.el.value;
+
+                if (state.viewMode === 'nested' &amp;&amp; isObject) {
+                    const openItem = document.createElement(&quot;div&quot;);
+                    openItem.className = &quot;context-menu-item&quot;;
+                    openItem.innerText = &quot;打开&quot;;
+                    openItem.onclick = (e) => {
+                        e.stopPropagation();
+                        state.currentPathArr = [...item.pathArr];
+                        state.selectedPath = null;
+                        state.selectedPathArr = null;
+                        state.searchText = &quot;&quot;;
+                        const searchInput = document.getElementById(&quot;search_input&quot;);
+                        if (searchInput) searchInput.value = &quot;&quot;;
+                        const searchClearBtn = document.getElementById(&quot;search_clear_btn&quot;);
+                        if (searchClearBtn) searchClearBtn.style.display = &quot;none&quot;;
+                        menu.style.display = &quot;none&quot;;
+                        render();
+                    };
+                    menu.appendChild(openItem);
+                }
+
+                const editItem = document.createElement(&quot;div&quot;);
+                editItem.className = &quot;context-menu-item&quot;;
+                editItem.innerText = &quot;修改变量&quot;;
+                editItem.onclick = (e) => {
+                    e.stopPropagation();
+                    menu.style.display = &quot;none&quot;;
+                    openEditForSelected();
+                };
+                menu.appendChild(editItem);
+
+                const deleteItem = document.createElement(&quot;div&quot;);
+                deleteItem.className = &quot;context-menu-item&quot;;
+                deleteItem.innerText = &quot;删除&quot;;
+                deleteItem.onclick = (e) => {
+                    e.stopPropagation();
+                    menu.style.display = &quot;none&quot;;
+                    state.deleteConfirm = {
+                        name: item.el.name,
+                        pathArr: item.pathArr
+                    };
+                    render();
+                };
+                menu.appendChild(deleteItem);
+
+                const sep = document.createElement(&quot;div&quot;);
+                sep.className = &quot;context-menu-separator&quot;;
+                menu.appendChild(sep);
+            }
+
+            const newItem = document.createElement(&quot;div&quot;);
+            newItem.className = &quot;context-menu-item&quot;;
+            newItem.innerText = &quot;新建变量&quot;;
+            newItem.onclick = (e) => {
+                e.stopPropagation();
+                menu.style.display = &quot;none&quot;;
+                openNewModal();
+            };
+            menu.appendChild(newItem);
+
+            menu.style.display = &quot;block&quot;;
+            const menuWidth = menu.offsetWidth;
+            const menuHeight = menu.offsetHeight;
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+
+            let left = clientX;
+            let top = clientY;
+
+            if (clientX + menuWidth > screenWidth) {
+                left = screenWidth - menuWidth - 5;
+            }
+            if (clientY + menuHeight > screenHeight) {
+                top = screenHeight - menuHeight - 5;
+            }
+
+            menu.style.left = `${left}px`;
+            menu.style.top = `${top}px`;
+            
+            hidePathDropdown();
+        }
+
+        function hideContextMenu() {
+            const menu = document.getElementById(&quot;context_menu&quot;);
+            menu.style.display = &quot;none&quot;;
         }
 
         function saveFile() {
@@ -782,22 +1231,71 @@
         }
 
         function getDisplayItems() {
-            let result = [];
-            collectAllRecursively(state.elements, &quot;&quot;, result);
+            if (state.viewMode === 'flat') {
+                let result = [];
+                collectAllRecursively(state.elements, &quot;&quot;, result);
 
-            if (state.searchText) {
-                const search = state.searchText.toLowerCase();
-                result = result.filter(item => {
-                    const nameMatch = state.filterMatchName &amp;&amp; item.el.name.toLowerCase().includes(search);
-                    const pathMatch = state.filterMatchPath &amp;&amp; item.path.toLowerCase().includes(search);
-                    
-                    const valStr = getValueString(item.el.value).toLowerCase();
-                    const valMatch = state.filterMatchValue &amp;&amp; valStr.includes(search);
+                if (state.searchText) {
+                    const search = state.searchText.toLowerCase();
+                    result = result.filter(item => {
+                        const nameMatch = state.filterMatchName &amp;&amp; item.el.name.toLowerCase().includes(search);
+                        const pathMatch = state.filterMatchPath &amp;&amp; item.path.toLowerCase().includes(search);
+                        
+                        const valStr = getValueString(item.el.value).toLowerCase();
+                        const valMatch = state.filterMatchValue &amp;&amp; valStr.includes(search);
 
-                    return nameMatch || pathMatch || valMatch;
-                });
+                        return nameMatch || pathMatch || valMatch;
+                    });
+                }
+                return result.map(item => ({
+                    pathArr: item.path.split('.'),
+                    path: item.path,
+                    el: item.el
+                }));
+            } else {
+                const currentFolder = getCurrentFolderElements();
+                let result = [];
+
+                if (state.searchText) {
+                    collectCurrentFolderRecursively(currentFolder, state.currentPathArr, result);
+                    const search = state.searchText.toLowerCase();
+                    result = result.filter(item => {
+                        const nameMatch = state.filterMatchName &amp;&amp; item.el.name.toLowerCase().includes(search);
+                        const absolutePath = item.pathArr.join('.');
+                        const pathMatch = state.filterMatchPath &amp;&amp; absolutePath.toLowerCase().includes(search);
+                        
+                        const valStr = getValueString(item.el.value).toLowerCase();
+                        const valMatch = state.filterMatchValue &amp;&amp; valStr.includes(search);
+
+                        return nameMatch || pathMatch || valMatch;
+                    });
+                } else {
+                    currentFolder.forEach(el => {
+                        result.push({
+                            pathArr: [...state.currentPathArr, el.name],
+                            el: el
+                        });
+                    });
+                }
+
+                return result.map(item => ({
+                    pathArr: item.pathArr,
+                    path: item.pathArr.join('.'),
+                    el: item.el
+                }));
             }
-            return result;
+        }
+
+        function countNestedItems(elements) {
+            if (!elements || !Array.isArray(elements)) return 0;
+            let count = 0;
+            for (const el of elements) {
+                count++;
+                if (el.value &amp;&amp; typeof el.value === 'object' &amp;&amp; 'Object' in el.value) {
+                    count += countNestedItems(el.value.Object);
+                }
+            }
+            return count;
         }
 
         function getValueString(value) {
@@ -807,7 +1305,10 @@
                 if ('Number' in value) return value.Number.toString();
                 if ('String' in value) return value.String;
                 if ('Bool' in value) return value.Bool ? &quot;True&quot; : &quot;False&quot;;
-                if ('Object' in value) return `[分类对象 / 包含 ${value.Object.length} 个项目]`;
+                if ('Object' in value) {
+                    const totalCount = countNestedItems(value.Object);
+                    return `[分类对象 / 包含 ${totalCount} 个项目]`;
+                }
                 if ('Binary' in value) return `[二进制数据 / ${value.Binary.length} 字节]`;
                 if ('Xml' in value) return &quot;[XML 数据]&quot;;
             }
@@ -913,7 +1414,9 @@
 
         function openNewModal() {
             let defaultPath = &quot;&quot;;
-            if (state.selectedPath) {
+            if (state.viewMode === 'nested') {
+                defaultPath = state.currentPathArr.join('.');
+            } else if (state.selectedPath) {
                 const lastDot = state.selectedPath.lastIndexOf('.');
                 if (lastDot !== -1) {
                     defaultPath = state.selectedPath.substring(0, lastDot);
@@ -921,6 +1424,49 @@
             }
             state.newModal = { dotPath: defaultPath, name: &quot;&quot;, valStr: &quot;&quot;, valBool: true, valType: 1 };
             render();
+        }
+
+        function renderPathBar() {
+            const pathBar = document.getElementById(&quot;path_bar&quot;);
+            pathBar.innerHTML = &quot;&quot;;
+
+            const rootNode = document.createElement(&quot;span&quot;);
+            rootNode.className = &quot;path-node root-node&quot; + (state.currentPathArr.length === 0 ? &quot; last-node&quot; : &quot;&quot;);
+            rootNode.innerText = &quot;根目录&quot;;
+            rootNode.onclick = (e) => {
+                e.stopPropagation();
+                state.currentPathArr = [];
+                state.selectedPath = null;
+                state.selectedPathArr = null;
+                render();
+            };
+            pathBar.appendChild(rootNode);
+
+            state.currentPathArr.forEach((seg, index) => {
+                const sep = document.createElement(&quot;span&quot;);
+                sep.className = &quot;path-separator&quot;;
+                sep.innerText = &quot; > &quot;;
+                sep.onclick = (e) => {
+                    e.stopPropagation();
+                    showPathDropdown(e.currentTarget, index);
+                };
+                pathBar.appendChild(sep);
+
+                const node = document.createElement(&quot;span&quot;);
+                const isLast = (index === state.currentPathArr.length - 1);
+                node.className = &quot;path-node&quot; + (isLast ? &quot; last-node&quot; : &quot;&quot;);
+                node.innerText = seg;
+                if (!isLast) {
+                    node.onclick = (e) => {
+                        e.stopPropagation();
+                        state.currentPathArr = state.currentPathArr.slice(0, index + 1);
+                        state.selectedPath = null;
+                        state.selectedPathArr = null;
+                        render();
+                    };
+                }
+                pathBar.appendChild(node);
+            });
         }
 
         function render() {
@@ -934,10 +1480,20 @@
                 statsLabel.innerText = `找到变量：${countVars(state.elements)}   编码：${state.encoding}`;
                 document.getElementById(&quot;dropzone_container&quot;).style.display = &quot;none&quot;;
                 document.getElementById(&quot;table_container&quot;).style.display = &quot;block&quot;;
+                
+                positionResizers();
             } else {
                 statsLabel.style.display = &quot;none&quot;;
                 document.getElementById(&quot;dropzone_container&quot;).style.display = &quot;block&quot;;
                 document.getElementById(&quot;table_container&quot;).style.display = &quot;none&quot;;
+            }
+
+            const pathBarContainer = document.getElementById(&quot;path_bar_container&quot;);
+            if (hasData &amp;&amp; state.viewMode === 'nested') {
+                pathBarContainer.style.display = &quot;flex&quot;;
+                renderPathBar();
+            } else {
+                pathBarContainer.style.display = &quot;none&quot;;
             }
 
             const tbody = document.getElementById(&quot;table_body&quot;);
@@ -945,27 +1501,62 @@
             const items = getDisplayItems();
             items.forEach(item => {
                 const tr = document.createElement(&quot;tr&quot;);
+                tr.dataset.path = item.path;
                 if (state.selectedPath === item.path) {
                     tr.classList.add(&quot;selected&quot;);
                 }
+
+                const isObject = item.el.value &amp;&amp; typeof item.el.value === 'object' &amp;&amp; 'Object' in item.el.value;
+
                 tr.innerHTML = `
                     <td>${escapeHtml(item.el.name)}</td>
                     <td>${escapeHtml(item.path)}</td>
                     <td>${escapeHtml(getValueString(item.el.value))}</td>
                 `;
-                tr.onclick = () => {
+                tr.onclick = (e) => {
+                    e.stopPropagation();
                     state.selectedPath = item.path;
+                    state.selectedPathArr = item.pathArr;
                     render();
                 };
-                tr.ondblclick = () => {
+                tr.ondblclick = (e) => {
+                    e.stopPropagation();
                     state.selectedPath = item.path;
-                    openEditForSelected();
+                    state.selectedPathArr = item.pathArr;
+                    if (state.viewMode === 'nested' &amp;&amp; isObject) {
+                        state.currentPathArr = [...item.pathArr];
+                        state.selectedPath = null;
+                        state.selectedPathArr = null;
+                        state.searchText = &quot;&quot;;
+                        const searchInput = document.getElementById(&quot;search_input&quot;);
+                        if (searchInput) searchInput.value = &quot;&quot;;
+                        const searchClearBtn = document.getElementById(&quot;search_clear_btn&quot;);
+                        if (searchClearBtn) searchClearBtn.style.display = &quot;none&quot;;
+                        render();
+                    } else {
+                        openEditForSelected();
+                    }
                 };
                 tbody.appendChild(tr);
             });
 
             const modalOverlay = document.getElementById(&quot;modal_overlay&quot;);
-            if (state.editModal) {
+            if (state.deleteConfirm) {
+                modalOverlay.style.display = &quot;flex&quot;;
+                modalOverlay.innerHTML = `
+                    <div class=&quot;modal&quot; style=&quot;width: 320px;&quot;>
+                        <div class=&quot;modal-title&quot; style=&quot;margin-bottom: 10px;&quot;>删除确认</div>
+                        <div style=&quot;font-size: 13px; color: #333333; margin-bottom: 20px; line-height: 1.5;&quot;>
+                            确定要删除变量 &quot;<strong>${escapeHtml(state.deleteConfirm.name)}</strong>&quot; 吗？
+                        </div>
+                        <div class=&quot;modal-footer&quot;>
+                            <button id=&quot;modal_delete_cancel&quot;>取消</button>
+                            <button id=&quot;modal_delete_confirm&quot; class=&quot;primary-btn&quot; style=&quot;background-color: #f44336; color: white; border-color: #d32f2f;&quot;>确定删除</button>
+                        </div>
+                    </div>
+                `;
+                setupDeleteConfirmEvents();
+            } else if (state.editModal) {
                 modalOverlay.style.display = &quot;flex&quot;;
                 modalOverlay.innerHTML = `
                     <div class=&quot;modal&quot;>
@@ -1070,6 +1661,24 @@
             } else {
                 modalOverlay.style.display = &quot;none&quot;;
             }
+        }
+
+        function setupDeleteConfirmEvents() {
+            const btnCancel = document.getElementById(&quot;modal_delete_cancel&quot;);
+            const btnConfirm = document.getElementById(&quot;modal_delete_confirm&quot;);
+
+            btnCancel.onclick = () => {
+                state.deleteConfirm = null;
+                render();
+            };
+
+            btnConfirm.onclick = () => {
+                deleteElementByPathArr(state.deleteConfirm.pathArr);
+                state.selectedPath = null;
+                state.selectedPathArr = null;
+                state.deleteConfirm = null;
+                render();
+            };
         }
 
         function setupEditModalEvents() {
@@ -1225,6 +1834,100 @@
         }
 
         run();
+        
+        function positionResizers() {
+            const container = document.getElementById('table_container');
+            if (!container || container.style.display === 'none') return;
+            
+            const table = container.querySelector('.sol-table');
+            const ths = table.querySelectorAll('thead th');
+            const resizers = container.querySelectorAll('.col-resizer');
+            
+            const containerRect = container.getBoundingClientRect();
+            
+            ths.forEach((th, index) => {
+                if (index === ths.length - 1) return;
+                const resizer = resizers[index];
+                if (resizer) {
+                    const thRect = th.getBoundingClientRect();
+                    const left = thRect.right - containerRect.left;
+                    resizer.style.left = (left - 4) + 'px';
+                }
+            });
+        }
+
+        function initResizableColumns() {
+            const container = document.getElementById('table_container');
+            const table = container.querySelector('.sol-table');
+            const cols = table.querySelectorAll('colgroup col');
+            const ths = table.querySelectorAll('thead th');
+            const existing = container.querySelectorAll('.col-resizer');
+            existing.forEach(r => r.remove());
+            
+            ths.forEach((th, index) => {
+                if (index === ths.length - 1) return;
+                
+                const resizer = document.createElement('div');
+                resizer.className = 'col-resizer';
+                resizer.dataset.index = index;
+                container.appendChild(resizer);
+                
+                let startX;
+                let startWidths = [];
+                
+                resizer.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    startX = e.clientX;
+                    
+                    const totalWidth = table.offsetWidth;
+                    startWidths[index] = parseFloat(cols[index].style.width) || (ths[index].offsetWidth / totalWidth * 100);
+                    startWidths[index + 1] = parseFloat(cols[index + 1].style.width) || (ths[index + 1].offsetWidth / totalWidth * 100);
+                    
+                    resizer.classList.add('resizing');
+                    document.body.style.cursor = 'col-resize';
+                    document.body.style.userSelect = 'none';
+                    
+                    const onMouseMove = (e) => {
+                        const currentX = e.clientX;
+                        const deltaX = currentX - startX;
+                        const deltaPercent = (deltaX / totalWidth) * 100;
+                        
+                        let newWidthSelf = startWidths[index] + deltaPercent;
+                        let newWidthNext = startWidths[index + 1] - deltaPercent;
+                        
+                        const minPercent = 6;
+                        if (newWidthSelf < minPercent) {
+                            const diff = minPercent - newWidthSelf;
+                            newWidthSelf = minPercent;
+                            newWidthNext -= diff;
+                        }
+                        if (newWidthNext < minPercent) {
+                            const diff = minPercent - newWidthNext;
+                            newWidthNext = minPercent;
+                            newWidthSelf -= diff;
+                        }
+                        
+                        cols[index].style.width = `${newWidthSelf}%`;
+                        cols[index + 1].style.width = `${newWidthNext}%`;
+                        
+                        positionResizers();
+                    };
+                    
+                    const onMouseUp = () => {
+                        resizer.classList.remove('resizing');
+                        document.body.style.cursor = '';
+                        document.body.style.userSelect = '';
+                        document.removeEventListener('mousemove', onMouseMove);
+                        document.removeEventListener('mouseup', onMouseUp);
+                    };
+                    
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                });
+            });
+            
+            positionResizers();
+        }
     </script>
 </body>
 </html>" title="FlashSol编辑器网页版" allow="geolocation; microphone; camera; display-capture; fullscreen; clipboard-read; clipboard-write" allowfullscreen="true"></iframe>
